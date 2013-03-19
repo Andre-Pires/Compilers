@@ -1,0 +1,21 @@
+   0  $accept : file $end
+
+   1  file :
+
+state 0
+	$accept : . file $end  (0)
+	file : .  (1)
+
+	.  reduce 1
+
+	file  goto 1
+
+
+state 1
+	$accept : file . $end  (0)
+
+	$end  accept
+
+
+30 terminals, 2 nonterminals
+2 grammar rules, 2 states

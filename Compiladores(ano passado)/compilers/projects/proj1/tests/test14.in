@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+int x;
+
+/* successor */
+/* successor */
+int s(int x){
+  return x + 1;
+}

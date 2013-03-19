@@ -1,0 +1,32 @@
+init: 	i = call iread, 0
+	j = call iread, 0
+	t1 = i
+	t2 = 3 + 3
+	xy[t1] = t2
+	t3 = j
+	t4 = 7 - 3
+	xy[t3] = t4
+        t5 = i
+	t6 = j
+        if t5 >= t6 goto L1
+	goto L2
+L1:	b = 0
+	t7 = j
+	t8 = 2
+        if t7 > t8 goto L3
+	goto L4
+L3:	z = 0
+	goto L6
+L4:	z = 1
+	goto L6
+L6:	goto L5
+L2:	b = 1
+	z = 1
+	goto L5
+L5: 	t7 = b
+	putparam t7
+  	call iwrite, 1
+	t8 = z
+	putparam t8
+  	call iwrite, 1
+	halt

@@ -1,0 +1,19 @@
+C3E Simulator 07/10/07, 22:55:13
+1
+*** Symbol table dump ***
+init = 0
+create = 8
+start = 5
+k = 1
+count = 18
+nodes = 0
+res = 1
+idx = 1
+L1 = 21
+t0 = 1
+L2 = 24
+L3 = 32
+t1 = 0
+L4 = 27
+t2 = 1
+t3 = 1

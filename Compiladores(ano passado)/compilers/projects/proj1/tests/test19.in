@@ -1,0 +1,18 @@
+typedef struct {
+  int a;
+  int b[10];
+  int *ptr;
+}
+
+void main(int argc, char *argv){
+  int y;
+  char *c;
+
+  y = 1;
+  c = (char*)malloc(sizeof(int));
+  if(y & c) {
+
+  } else {
+
+  }
+}

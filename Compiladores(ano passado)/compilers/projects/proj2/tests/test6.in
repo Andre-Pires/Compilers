@@ -1,0 +1,11 @@
+void fac(float n){
+  float facn;
+  float i;
+  facn=1;
+  i=1;
+  while(i<=n){
+    facn=facn * i;
+    i=i + 1;
+  };
+  return facn;
+}

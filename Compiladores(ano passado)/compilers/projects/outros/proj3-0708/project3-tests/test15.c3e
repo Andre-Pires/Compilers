@@ -1,0 +1,27 @@
+init: 	x = call iread, 0
+	y = call iread, 0
+	i = 0
+L1:	if i < 10 goto L2
+	goto L3
+L2:	xy[i] = 0
+	t1 = i + 1
+	i = t1
+	goto L1
+L3:	xy[x] = 1
+	xy[y] = 2
+	idx = call findNonZero, 0
+	putparam idx
+	call iwrite, 1
+	halt
+
+findNonZero: 	j = 0
+L4:		if j < 10 goto L5
+		goto L7
+L5:		t2 = xy[j]
+		if t2 == 0 goto L6
+		t3 = xy[j]
+		return t3
+L6:		t4 = j + 1
+		j = t4
+		goto L4
+L7:		return 0

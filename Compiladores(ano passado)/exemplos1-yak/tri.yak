@@ -1,0 +1,16 @@
+program triangulos {
+  number a, b, c.
+  a = b = c = 0.
+  read a.  read b.  read c.
+  if a < 1 | b < 1 | c < 1 {
+    write "As dimensoes dos lados do triangulo devem ser todas positivas\n". }
+  elif a + b <= c | a + c <= b | c + b <= a {
+    write "Não é triângulo\n". }
+  elif a == b & b == c {
+    write "O triângulo é equilátero\n". }
+  elif a == b | b == c | c == a {
+    write "O triângulo é isósceles\n". }
+  else {
+    write "O triângulo é escaleno\n". }.
+  return 0.
+}

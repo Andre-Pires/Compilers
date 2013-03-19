@@ -1,0 +1,25 @@
+C3E Simulator 07/10/07, 22:55:13
+20
+*** Symbol table dump ***
+init = 0
+n = 6
+sum = 20
+i = 6
+L1 = 3
+t1 = 6
+t2 = 6
+L2 = 7
+L3 = 20
+t3 = 3
+t4 = 5
+xy = 0
+t5 = 5
+t6 = 3
+t7 = 17
+t8 = 20
+adder = 24
+t9 = 6
+t10 = 20
+y = 17
+x = 3
+t11 = 20

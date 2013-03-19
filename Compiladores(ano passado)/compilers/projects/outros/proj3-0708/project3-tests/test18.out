@@ -1,0 +1,28 @@
+C3E Simulator 07/10/07, 22:55:13
+8
+*** Symbol table dump ***
+init = 0
+n = 5
+k = 8
+L5 = 2
+L6 = 4
+L7 = 8
+table = 0
+t6 = 16
+fib = 31
+fillTable = 16
+idx = 5
+i = 6
+L0 = 18
+L1 = 20
+L2 = 29
+i1 = 4
+t1 = 5
+i2 = 3
+t2 = 3
+t3 = 8
+t4 = 6
+t5 = 8
+L3 = 35
+L4 = 38
+res = 8

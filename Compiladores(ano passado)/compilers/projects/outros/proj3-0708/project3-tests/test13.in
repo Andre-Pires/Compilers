@@ -1,0 +1,39 @@
+int nodes[8];
+int start;
+int njump;
+
+void create(){
+  nodes[0] = 0;
+  nodes[1] = 0;
+  nodes[2] = 0;
+  nodes[3] = 2;
+  nodes[4] = 3;
+  nodes[5] = 1;
+  nodes[6] = 3;
+  nodes[7] = 4;
+}
+
+int count(int start){
+  int idx;
+  int res;
+
+  res = 0;
+  idx = start;
+  while(1){
+    if(nodes[idx] == 0){
+      return res;
+    }
+    idx = nodes[idx];
+    res = res + 1;
+  }
+  return 0;
+}
+
+void main(){
+  int k;
+
+  create();
+  start = iread();
+  k = count(start);
+  iwrite(k);
+}

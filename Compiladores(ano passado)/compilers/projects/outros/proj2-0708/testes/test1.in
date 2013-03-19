@@ -1,0 +1,16 @@
+int odd(int n){
+  int x;
+  int a[10];
+
+  x = a[0];
+  if(n==0){
+    return x;
+  }
+  else{
+    m= n - 1;
+    if(odd(n))
+      return 0;
+    else
+      return 1;
+  }
+}

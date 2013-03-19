@@ -1,0 +1,21 @@
+1 257 qwerty
+1 258 13456
+1 271 int
+1 257 x
+1 59 ;
+4 271 int
+4 257 s
+4 40 (
+4 271 int
+4 257 x
+4 41 )
+4 123 {
+5 278 return
+5 257 x
+5 43 +
+5 258 1
+5 59 ;
+5 125 }
+3 277 while
+3 278 return
+#Total Number of Tokens Matched was 20

@@ -1,0 +1,45 @@
+init:  	n = call iread, 0
+	i = 0
+L1:	if i == n goto L2
+        c = call cread, 0
+	string[i] = c
+	t = i + 1
+	i = t
+	goto L1
+L2:	i = 0
+	putparam n
+	putparam 2
+	lim = call intdiv, 2
+L5:	if i == lim  goto L4
+	t = i + 1
+	idx1 = n - t
+	c1 = string[idx1]
+	c2 = string[i]
+	string[idx1] = c2
+	string[i] = c1
+	t = i + 1
+	i = t
+	goto L5
+L4:	i = 0
+L3:	if i == n goto Lend
+	c = string[i]
+	putparam c
+	call cwrite, 1
+	t = i + 1
+	i = t
+	goto L3
+Lend:	halt
+#
+#
+#
+#
+intdiv: getparam b
+	getparam a
+	res = 0
+	if a < b goto L6
+	goto L7
+L7:	if a < b goto L6
+	res = res + 1
+	a = a - b
+	goto L7
+L6: 	return res

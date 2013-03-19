@@ -1,0 +1,10 @@
+program a import argc, argv
+function number argc.
+function string argv : number i.
+{
+  write "argc = ", argc, "\n".
+  if argc > 1 {
+    write "argv[1] = ", argv(1), "\n".
+  }.
+  return 0.
+}

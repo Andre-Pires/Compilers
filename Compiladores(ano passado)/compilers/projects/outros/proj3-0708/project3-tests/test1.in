@@ -1,0 +1,12 @@
+/* straight line code with scalars and no input */
+int xy[10];
+int b;
+int z;
+void main(){
+  int i;
+
+  i = 7;
+  z = 3;
+  b = i + z;
+  iwrite(b);
+}

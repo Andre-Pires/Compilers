@@ -1,0 +1,22 @@
+ Number of Registers: 6
+	r4 = ARP + 8
+	r4 = *r4
+	r4 = r4 + 1
+	r3 = ARP + 12
+	r3 = *r3
+	r2 = r4 + r3
+	r3 = r3 + 2
+	r1 = r3 *2
+	r0 = r2 + r4
+	r5 = ARP + 20
+	*r5 = r0
+	r5 = ARP + 16
+	*r5 = r1
+	r5 = ARP + 4
+	*r5 = r2
+	r5 = ARP + 12
+	*r5 = r3
+	r5 = ARP + 8
+	*r5 = r4
+ Number Load Operations: 2
+ Number Store Operations: 5

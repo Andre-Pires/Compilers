@@ -1,0 +1,8 @@
+void main(int a){
+  int x;
+  void y;
+  x=a * 3.4;
+  if(x==x){
+    x=3.78;
+  };
+}

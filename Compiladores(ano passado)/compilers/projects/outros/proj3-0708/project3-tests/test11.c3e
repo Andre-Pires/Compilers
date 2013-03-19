@@ -1,0 +1,59 @@
+init:	l1 = call iread, 0
+	i = 0
+L12:	if i < l1 goto L10
+	goto L11
+L10:	c = call cread, 0
+	str1[i] = c
+	t5 = i + 1
+	i = t5
+	goto L12
+L11:	l2 = call iread, 0
+	j = 0
+L13:	if j < l2 goto L14
+	goto L15
+L14:	c = call cread, 0
+	str2[j] = c
+	t6 = j + 1
+	j = t6
+	goto L13
+L15:	if l1 >= l2 goto L16
+	k = call findOccur, 0
+	goto L17
+L16:	k = 0
+	goto L17
+L17:	putparam k
+	call iwrite, 1
+	halt
+
+match:	getparam idx
+	p = 0
+	q = idx
+L1:	if p < l1 goto L2
+	goto L3
+L2:	c1 = str1[p]
+	c2 = str2[q]
+	if c1 != c2 goto L4
+	goto L5
+L4:	return 0
+L5:	t1 = p + 1
+	p = t1
+	t2 = q + 1
+	q = t2
+	goto L1
+L3: 	return 1
+
+findOccur: res = 0
+	n = l2 - l1
+	n = n + 1
+	j = 0
+L8:	if j < n goto L6
+	goto L7
+L6:	putparam j
+	m = call match, 1
+	if m != 1 goto L9
+	t4 = res + 1
+	res = t4
+L9:	t3 = j + 1
+	j = t3
+	goto L8
+L7:	return res

@@ -1,0 +1,18 @@
+1 270 typedef
+1 274 struct
+1 123 {
+2 271 int
+2 257 a
+2 59 ;
+3 271 int
+3 257 b
+3 91 [
+3 258 10
+3 93 ]
+3 59 ;
+4 271 int
+4 42 *
+4 257 ptr
+4 59 ;
+5 125 }
+#Total Number of Tokens Matched was 17

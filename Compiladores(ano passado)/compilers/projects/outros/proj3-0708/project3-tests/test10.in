@@ -1,0 +1,24 @@
+/* straight line code with scalars, arrays one input, while loop and function calls */
+int xy[10];
+
+int adder(int x, int y){
+  return (x+y);
+}
+
+void main(){
+  int n;
+  int i;
+  int sum;
+  int t1;
+
+  n = iread();
+  sum = 0;
+  i = 0;
+  while (i < n){
+   xy[i] = iread();
+   t1 = xy[i];
+   sum = adder(sum,t1);
+   i = i + 1;
+  }
+  iwrite(sum);
+}

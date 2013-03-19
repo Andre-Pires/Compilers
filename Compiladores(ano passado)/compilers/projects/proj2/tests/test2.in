@@ -1,0 +1,7 @@
+float f(int a){
+  int x;
+  x=x + a * (int)3.4;
+  while(3.5){
+    x=3.78;
+  };
+}

@@ -1,0 +1,25 @@
+C3E Simulator 07/10/07, 22:55:13
+sugat
+*** Symbol table dump ***
+init = 0
+n = 5
+i = 5
+L1 = 2
+L2 = 8
+c = 116
+string = 0
+t = 5
+lim = 2
+intdiv = 31
+L5 = 12
+L4 = 22
+idx1 = 3
+c1 = 117
+c2 = 97
+L3 = 23
+Lend = 30
+b = 2
+a = 1
+res = 2
+L6 = 40
+L7 = 36

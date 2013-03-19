@@ -1,0 +1,7 @@
+/* test6: #include */
+
+#include "test7.in"
+
+main(){
+ print(s(0));}
+}

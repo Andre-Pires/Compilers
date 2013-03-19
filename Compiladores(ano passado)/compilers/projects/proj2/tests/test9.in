@@ -1,0 +1,3 @@
+int exp4(int x){
+  return (int)((float)x * ((float)x * ((float)x * ((float)x * 1.2))));
+}

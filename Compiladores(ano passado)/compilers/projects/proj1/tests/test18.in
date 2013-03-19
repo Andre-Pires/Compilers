@@ -1,0 +1,17 @@
+typedef struct {
+  int a;
+  int b[10];
+  int *ptr;
+}
+
+void main(int argc, char *argv){
+  int y;
+
+  x = 1;
+  y = sizeof(int);
+  if(y & x) {
+
+  } else {
+
+  }
+}

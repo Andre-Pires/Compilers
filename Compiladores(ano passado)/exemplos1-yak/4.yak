@@ -1,0 +1,8 @@
+program a
+string x = "hello world\n".
+{
+  number i.
+  read i.
+  write "x[", i, "] = ", x[i], "\n".
+  return 0.
+}

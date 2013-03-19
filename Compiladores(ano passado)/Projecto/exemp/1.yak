@@ -1,0 +1,1 @@
+program a { number x. x = 12. write "x = ", x, "\n". return 0. }

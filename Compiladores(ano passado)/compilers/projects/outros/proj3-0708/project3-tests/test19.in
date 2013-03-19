@@ -1,0 +1,62 @@
+int numeros[10];
+
+void le_escreve_numeros(int accao){
+  int x;
+  int n;
+
+  x = 0;
+  while (x < 4){
+    if(accao == 1){
+      n = iread();
+      numeros[x] = n;
+    } else {
+      n = numeros[x];
+      iwrite(n);
+    }
+    x = x + 1;
+  }
+}
+
+void ordena_numeros(){
+  int x;
+  int idx;
+  int tmp;
+  int tmp0;
+  int tmp1;
+  int alter;
+  int trocas;
+  int alterado;
+
+  trocas = 0;
+  alterado = 1;
+  while(alterado == 1){
+    x = 1;
+    alterado = 0;
+    while (x < 4){
+      idx = x - 1;
+      tmp0 = numeros[idx];
+      tmp1 = numeros[x];
+      if (tmp0 > tmp1) {
+	alter = numeros[x];
+        idx = x - 1;
+	tmp = numeros[idx];
+        numeros[x] = tmp;
+        idx = x - 1;
+	numeros[idx] = alter;
+	alterado = 1;
+        trocas = trocas + 1;
+      }
+      x = x + 1;
+    }
+  }
+  return trocas;
+}
+
+void main(){
+  int trocas;
+
+  le_escreve_numeros(1);
+  trocas = ordena_numeros();
+  le_escreve_numeros(0);
+  iwrite(trocas);
+}

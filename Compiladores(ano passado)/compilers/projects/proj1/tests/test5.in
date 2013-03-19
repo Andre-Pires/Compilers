@@ -1,0 +1,13 @@
+/* test5 
+
+fib(x) = if(x=0 or x=1) 
+         then 1
+         else fib(x-1)+fib(x-2)
+
+*/
+
+int fib(int x){
+  int tmp1;int tmp2;int tmp3;
+  char c;
+  if(x<2)then return 1;else{tmp1=x - 1;tmp2=tmp1 - 1;tmp3=fib(tmp1);tmp4=fib(tmp2);return tmp3 + tmp4;}
+}

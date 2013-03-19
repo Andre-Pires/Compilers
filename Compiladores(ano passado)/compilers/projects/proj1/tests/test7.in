@@ -1,0 +1,5 @@
+int x;
+
+/* successor */
+int s(int x){
+  return x + 1;}

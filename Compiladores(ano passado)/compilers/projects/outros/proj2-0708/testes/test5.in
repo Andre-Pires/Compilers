@@ -1,0 +1,12 @@
+int fac(int n){
+  int t1;
+  int t2;
+  if(n < 2) 
+    return 1;
+  else 
+/*  return fac(n - 1) * n; */
+    t1 = n - 1;
+    m=fac(t1); 
+    t2 = m * n;
+    return t2; 
+}

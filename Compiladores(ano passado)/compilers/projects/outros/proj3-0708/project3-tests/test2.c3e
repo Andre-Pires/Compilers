@@ -1,0 +1,8 @@
+init: 	i = 7
+	t1 = i
+	xy[t1] = 3
+	t2 = i
+	b = xy[t2]
+	putparam b
+  	call iwrite, 1
+	halt

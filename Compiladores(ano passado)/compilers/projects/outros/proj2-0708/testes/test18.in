@@ -1,0 +1,61 @@
+#include <test15.in>
+
+struct node *empty(){
+  return 0;
+}
+
+struct node *insert(int x, struct node *l){
+  struct node *y;
+  y=malloc(sizeof(struct node));
+  y -> elem=x;
+  y -> next=l;
+  return y;
+}
+
+int isempty(struct node *l){
+  return l==0;
+}
+
+int head(struct node *l){
+  return l->elem;
+}
+
+int tail(struct node *l){
+  return l->next;
+}
+
+int last(int x,struct node *l){
+  struct node *tmp;
+  while(~isempty(l)){
+    tmp=l;
+    l=l->next;
+  }
+  return tmp->elem;
+}
+
+int listsum_iter(struct node *l){
+  int sum;
+  int tmp;
+  sum=0;
+  while(~isempty(l)){
+    tmp=l->elem;
+    sum=sum + tmp;
+    l=l->next;
+  }
+  return sum;
+}
+
+int listsum_rec(struct node *l){
+  int tmp1;
+  int tmp2;
+  if(isempty(l)) return 0;
+  else{
+    tmp1=l->elem;
+    tmp2=listsum_rec(l->next);
+    return tmp1 + tmp2;
+  }
+}
+
+int neg(int x){
+  return -1;
+}

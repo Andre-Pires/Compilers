@@ -1,0 +1,93 @@
+#! /bin/bash
+##--##--##--##--##--##--##--##--##--##--##--##--##
+## useful flags for this script: -y
+## (the same used with the diff command)
+#
+
+## how to:    put this script the the project's folder, where is the Makefile;
+##        and the 'tests' folder.
+##            this will use the colordiff command if you wish
+#
+
+x="a.out";
+testsfolder="tests/";
+diff="diff -y";
+
+# uncoment the following line if you have the 'colordiff' tool installed
+[ `which "colordiff"` ] && diff="colordiff -y";
+
+
+# tests name and extensions-settings  - accepts by default the tests named: "test*.in"
+name="test";
+ext_out=".out";
+ext_res=".res";
+ext_in=".in";
+ext_map=".map";
+##--##--##--##--##--##--##--##--##--##--##--##--##
+# force_show="true";
+
+
+printf "\n\e[01;32mCompiling... \e[01;00m\n\n";
+make || exit 1;
+
+printf "\n\n\e[01;32mTesting...\e[01;00m\n\n";
+[ -e "${testsfolder}" ] && cd "${testsfolder}" || exit 1;
+
+#[ ! -e "${x}" ] && ln -s ../${x} ./;
+
+for input in `ls "${name}"*"${ext_in}"`
+    do
+	
+    output=${input//"${ext_in}"/"${ext_out}"};
+    result=${input//"${ext_in}"/"${ext_res}"};
+    map=${input//"${ext_in}"/"${ext_map}"};
+    [ -e "${result}" ] && rm -f "${result}";
+
+    printf "\e[01;34m(${input})\e[01;00m \t \t \t \t \t \t ";
+    if [ -e "${map}" ]
+	then
+	    #nregs=`cat "${map}" | wc -l`;
+	    #regs=`echo "${nregs} - 1" | bc`;
+	    regs="4";
+	    ../${x} "${input}" "${regs}" "${map}" > "${result}" || exit 1;
+	else
+	    ../${x} < "${input}" > "${result}" || exit 1;
+    fi
+
+
+    X=`diff "${output}" "${result}"`;
+    
+    if [ ! -e "${output}" ]
+	then
+	printf "\e[01;31m(error: output testfile not found)\e[00;00m\n";
+	elif [ "$X" == "" ]
+	then
+	printf "\e[01;36m(ok)\e[00;00m\n";
+	else
+	    printf "\e[01;31m(not ok)\e[00;00m\n";
+	fi
+	
+	if [[ "$X" != "" || "${force_show}" == "true" ]]
+	    then
+		[ -e "${map}" ] && printf "\e[01;32mmap:\e[01;00m\n\e[01;31m";
+		[ -e "${map}" ] && cat -n "${map}";
+		printf "\e[01;32minput:\e[01;00m\n\e[01;31m";
+		cat -n "${input}";
+		printf "\e[01;00m";
+		[[ "$X" != "" || "$*" != "" ]] && printf "\n\e[01;32mexpected output: \t \t \t \t \t \tresult:\e[01;00m\n";
+		${diff} $* "${output}" "${result}";
+		read;
+		printf "\n--------------------------------------------------------------\n";
+	fi
+	
+	mv -f "${result}" ".${result}~";
+	
+done
+	
+[ -e "${x}" ] && rm -f ./${x};
+	
+cd ..;
+printf "\n\e[01;32mDone.\e[00;00m\n";
+	
+exit 0;
+

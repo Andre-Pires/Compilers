@@ -1,0 +1,41 @@
+init:   n = call iread, 0
+	k = 0
+L5:	if(k < 16) goto L6
+	goto L7
+L6:	table[k] = 0
+        t6 = k + 1
+	k = t6
+	goto L5
+L7:	table[0] = 1
+  	table[1] = 1
+	putparam n
+  	k = call fib, 1
+	putparam k
+  	call iwrite, 1
+	halt
+
+fillTable: getparam idx
+	i = 2
+L0:  	if (i <= idx) goto L1
+	goto L2
+L1: 	i1 = i - 1
+        t1 = table[i1]
+        i2 = i - 2
+        t2 = table[i2]
+	t3 = t1 + t2
+        table[i] = t3
+	t4 = i + 1
+        i = t4
+	goto L0
+L2:	return
+
+fib:	getparam idx
+	t5 = table[idx]
+  	if(t5 == 0) goto L3
+	goto L4
+L3:    	putparam idx
+	call fillTable, 1
+	goto L4
+L4:	t5 = table[idx]
+ 	res = t5
+  	return res

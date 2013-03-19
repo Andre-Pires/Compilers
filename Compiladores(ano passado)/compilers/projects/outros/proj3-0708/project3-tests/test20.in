@@ -1,0 +1,53 @@
+char string[16];
+int n;
+
+int intdiv(int a, int b){
+  int res;
+
+  res = 0;
+  while(a >= b){
+    res = res + 1;
+    a = a - b;
+  }
+  return res;
+}
+
+void main(){
+  int i;
+  int lim;
+  char c;
+  int tmp;
+  int idx;
+  char c1;
+  char c2;
+
+  n = iread();
+  i = 0;
+  while(i != n){
+    c = cread();
+    string[i] = c;
+    i = i + 1;
+  }
+
+  i = 0;
+  lim = intdiv(n,2);
+  while(i != lim){
+
+    tmp = i + 1;
+    idx = n - tmp;
+    c1 = string[idx];
+    c2 = string[i];
+    string[idx] = c2;
+    string[i] = c1;
+    i = i + 1;
+  }
+
+  i = 0;
+  while(i != n){
+    c = string[i];
+    cwrite(c);
+    i = i + 1;
+  }
+
+}
+

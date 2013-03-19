@@ -1,0 +1,9 @@
+program powfunc {
+  number a, b.
+  write "calculo de potencias inteiras\nintroduza a base: ".
+  read a.
+  write "introduza o expoente: ".
+  read b.
+  write a, "^", b, " = ", a ** b, "\n".
+  return 0.
+}

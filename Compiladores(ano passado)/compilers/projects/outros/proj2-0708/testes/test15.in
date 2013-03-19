@@ -1,0 +1,13 @@
+struct node {
+  int elem;
+  struct node *next;
+} Node;
+
+struct node {
+  int elem;
+  struct node *next;
+};
+
+typedef struct A {
+ int a;
+} sA;

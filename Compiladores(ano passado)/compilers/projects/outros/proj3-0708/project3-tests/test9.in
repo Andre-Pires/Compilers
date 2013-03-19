@@ -1,0 +1,17 @@
+/* straight line code with scalars, arrays one input and while loop */
+int xy[10];
+void main(){
+  int n;
+  int i;
+  int sum;
+
+  n = iread();
+  sum = 0;
+  i = 0;
+  while (i < n){
+   xy[i] = iread();
+   sum = sum + xy[i];
+   i = i + 1;
+  }
+  iwrite(sum);
+}

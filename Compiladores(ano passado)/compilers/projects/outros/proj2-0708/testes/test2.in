@@ -1,0 +1,12 @@
+int even(int n){
+  int m;
+  if(n==0)
+    return 1;
+  else{
+    m= n - 1;
+    if(odd(n))
+      return 1;
+    else
+      return 0;
+  }
+}

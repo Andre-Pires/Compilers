@@ -1,0 +1,14 @@
+#include <test16.in>
+
+int main(){
+  struct node *l;
+  int i;
+  int sum;
+  i=0;
+  while(i<10){
+    l=insert(i,l);    
+    i=i + 1;
+  }
+  sum=listsum_rec(l);  
+  print_int(sum);
+}

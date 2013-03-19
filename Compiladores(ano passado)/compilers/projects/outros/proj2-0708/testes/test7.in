@@ -1,0 +1,33 @@
+int sum;
+int a[10];
+int b[10];
+
+int  read();
+void write(int c);
+
+void init(){
+  int i;
+
+  i = 0;
+  while(i < 10){
+    a[i] = 0;
+    b[i] = 0;
+    i = i + 1;
+  }
+  sum=0;
+}
+
+int findMax(int idx){
+
+}
+
+void main(int argc, char *argv){
+  int i;
+  int m;
+  int max;
+
+  init();
+  max = read();
+  m = findMax(max);
+}
+

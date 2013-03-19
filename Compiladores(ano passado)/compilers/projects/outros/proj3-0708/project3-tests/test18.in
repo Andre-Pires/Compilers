@@ -1,0 +1,51 @@
+int table[16];
+
+void fillTable(int idx){
+  int i;
+  int i1;
+  int i2;
+  int t1;
+  int t2;
+
+  i = 2;
+  while(i <= idx){
+    i1 = i - 1;
+    t1 = table[i1];
+    i2 = i - 2;
+    t2 = table[i2];
+    table[i] = t1 + t2;
+    i = i + 1;
+  }
+}
+
+int fib(int idx){
+  int res;
+  int t;
+
+  t = table[idx];
+  if(t == 0){
+    fillTable(idx);
+  }
+  t = table[idx];
+  res = t;
+  return res;
+}
+
+void main(){
+  int idx;
+  int n;
+  int k;
+
+  n = iread();
+  k = 0;
+  while(k < 16){
+    table[k] = 0;
+    k = k + 1;
+  }
+
+  table[0] = 1;
+  table[1] = 1;
+
+  k = fib(n);
+  iwrite(k);
+}

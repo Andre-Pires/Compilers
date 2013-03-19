@@ -1,0 +1,34 @@
+int xy[10];
+int a;
+int b;
+
+int findFirstNonZero(){
+  j = 0; 
+  while (j < 10){
+    if(xy[j] != 0){
+      return xy[j];
+    }
+    j = j + 1;
+  }
+  return 0;
+}
+
+void main(){
+  int i;
+  int x;
+  int y;
+
+  x = iread();
+  y = iread();
+  
+  i = 0; 
+  while (i < 10){
+    xy[i] = 0;
+    i = i + 1;
+  }
+  xy[x] = 1;
+  xy[y] = 2;
+
+  idx = findFirstNonZero();
+  iwrite(idx);
+}

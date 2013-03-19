@@ -1,0 +1,53 @@
+               init:   putparam 1
+                       call le_escreve_numeros, 1
+                       t13 = call ordena_numeros, 0
+                       trocas@1 = t13
+                       putparam 0
+                       call le_escreve_numeros, 1
+                       putparam trocas@1
+                       call iwrite, 1
+                       halt
+  le_escreve_numeros:  getparam accao
+                       x = 0
+                 l11:  if x < 4 goto l13
+                       goto l23
+                 l13:  if accao == 1 goto l15
+                       goto l18
+                 l15:  t2 = call iread, 0
+                       numeros[x] = t2
+                       goto l20
+                 l18:  t3 = numeros[x]
+                       putparam t3
+                       call iwrite, 1
+                 l20:  t1 = x + 1
+                       x = t1
+                       goto l11
+                 l23:  return 
+      ordena_numeros:  trocas = 0
+                       alterado = 1
+                 l26:  if alterado == 1 goto l28
+                       goto l50
+                 l28:  x = 1
+		       alterado = 0
+                 l29:  if x < 4 goto l31
+                       goto l49
+                 l31:  t5 = x - 1
+                       t6 = numeros[t5]
+                       t7 = numeros[x]
+                       if t6 > t7 goto l36
+                       goto l46
+                 l36:  t8 = numeros[x]
+                       alter = t8
+                       t9 = x - 1
+                       t10 = numeros[t9]
+                       numeros[x] = t10
+                       t11 = x - 1
+                       numeros[t11] = alter
+                       alterado = 1
+                       t12 = trocas + 1
+                       trocas = t12
+                 l46:  t4 = x + 1
+                       x = t4
+                       goto l29
+                 l49:  goto l26
+                 l50:  return trocas

@@ -1,0 +1,70 @@
+#! /bin/bash
+
+##--##--##--##--##--##--##--##--##--##--##--##--##
+## useful flags for this script: -y
+## (the same used with the diff command)
+#
+ x="a.out";
+ testsfolder="tests/";
+ diff="diff";
+ [ `which "colordiff"` ] && diff="colordiff";
+
+ # tests name and extensions-settings 
+ name="test";
+ ext_out=".out";
+ ext_res=".res";
+ ext_in=".in";
+##--##--##--##--##--##--##--##--##--##--##--##--##
+ showresults="true";
+
+
+ printf "\n\e[01;32mCompiling... \e[01;00m\n\n";
+ make || exit 1;
+ 
+ printf "\n\n\e[01;32mTesting...\e[01;00m\n\n";
+ [ -e "${testsfolder}" ] && cd "${testsfolder}" || exit 1;
+
+ [ ! -e "${x}" ] && ln -s ../${x} ./;
+
+ for input in `ls "${name}"*"${ext_in}"`
+  do
+
+   output=${input//"${ext_in}"/"${ext_out}"};
+   result=${input//"${ext_in}"/"${ext_res}"};
+   [ -e "${result}" ] && rm -f "${result}";
+
+   printf "\e[01;34m(${input})\e[01;00m \t \t \t \t \t \t ";
+   ./${x} < "${input}" > "${result}" || exit 1;
+   X=`diff "${output}" "${result}"`;
+
+   if [ ! -e "${output}" ]
+    then
+     printf "\e[01;31m(error: output testfile not found)\e[00;00m\n";
+   elif [ "$X" == "" ]
+    then
+     printf "\e[01;36m(ok)\e[00;00m\n";
+   else
+     printf "\e[01;31m(not ok)\e[00;00m\n";
+   fi
+
+   if [[ "$X" != "" || "$showresults" == "true" ]]
+    then
+     printf "\e[01;32minput:\e[01;00m\n\e[01;31m";
+     cat -n "${input}";
+     printf "\e[01;00m";
+     [ "$*" != "" ] && printf "\n\e[01;32mexpected output: \t \t \t \t \t \tresult:\e[01;00m\n";
+     ${diff} $* "${output}" "${result}";
+     read;
+     printf "\n--------------------------------------------------------------\n";
+   fi
+
+   mv -f "${result}" ".${result}~";
+
+ done
+ 
+ [ -e "${x}" ] && rm -f ./${x};
+
+ cd ..;
+ printf "\n\e[01;32mDone.\e[00;00m\n";
+
+exit 0;

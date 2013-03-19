@@ -1,0 +1,7 @@
+/* test4, mistake in comment * /
+
+int f(int x){
+  int y; int z;
+  char c;
+  if(x < 1)then return 1;else{y=x - 1;z=f(y);return x * z;}
+}

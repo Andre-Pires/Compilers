@@ -1,0 +1,10 @@
+#include <test7.in>
+#include <stdio.h>
+#include <test3.in>
+
+int x;
+int s(int x){
+  return x + 1;
+}
+
+#include <test2.in>

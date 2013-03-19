@@ -1,0 +1,22 @@
+C3E Simulator 07/10/07, 22:55:13
+1
+*** Symbol table dump ***
+init = 0
+x = 2
+y = 3
+i = 10
+L1 = 3
+L2 = 5
+L3 = 9
+xy = 0
+t1 = 10
+idx = 1
+findNonZero = 16
+j = 2
+L4 = 17
+L5 = 19
+L7 = 26
+t2 = 1
+L6 = 23
+t3 = 1
+t4 = 2

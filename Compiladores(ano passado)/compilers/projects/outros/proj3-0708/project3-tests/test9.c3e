@@ -1,0 +1,21 @@
+init: 	n = call iread, 0
+	sum = 0
+	i = 0
+L1:	t1 = i
+	t2 = n
+	if t1 < t2 goto L2
+	goto L3
+L2:	t3 = call iread, 0
+	t4 = i
+	xy[t4] = t3
+	t5 = i
+	t6 = xy[t5]
+	t7 = sum + t6
+	sum = t7
+	t8 = i + 1
+	i = t8
+	goto L1
+L3:	t9 = sum
+	putparam t9
+	call iwrite, 1
+	halt

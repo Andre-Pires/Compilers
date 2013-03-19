@@ -1,0 +1,18 @@
+init: 	i = call iread, 0
+	j = call iread, 0
+	t1 = i
+	t2 = 3
+	xy[t1] = t2
+	t3 = j
+	t4 = 7
+	xy[t3] = t4
+	t5 = j
+	t6 = xy[t5]
+	b = t6
+	t7 = i
+	t8 = xy[t7]
+	z = t8
+	t9 = b + z
+	putparam t9
+  	call iwrite, 1
+	halt

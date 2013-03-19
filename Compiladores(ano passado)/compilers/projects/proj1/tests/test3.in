@@ -1,0 +1,8 @@
+/* this is a comment in test3 */
+
+int f(int x){
+  int y;int z;
+  if(x <= 1)then 
+    return 1; 
+  else { y=x - 1; z=f(y); return x * z; }
+}

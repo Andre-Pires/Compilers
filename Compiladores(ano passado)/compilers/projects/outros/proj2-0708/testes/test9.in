@@ -1,0 +1,24 @@
+int sum;
+
+typedef struct {
+  int x;
+  int y;
+} Coord;
+
+struct Coord* A;
+struct Coord* B;
+
+void init(){
+  sum = 0;
+  A = nil;
+  B = nil;
+}
+
+void f(int n){
+  int m;
+  m=n;
+  while(m>0){
+    sum = sum + m;
+  }
+}
+

@@ -1,0 +1,6 @@
+ Number of Registers: 4
+	r2 = ARP + 4
+	r2 = *r2
+	r2 = r2
+ Number Load Operations: 1
+ Number Store Operations: 0

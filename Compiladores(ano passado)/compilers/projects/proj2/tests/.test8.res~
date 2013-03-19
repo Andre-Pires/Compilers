@@ -1,0 +1,2 @@
+warning: type cast int to float, line 2
+type error: int expression expected, line 2

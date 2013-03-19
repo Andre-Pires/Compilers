@@ -1,0 +1,33 @@
+init:	call create, 0
+	start = call iread, 0
+	putparam start
+	k = call count, 1
+	putparam k
+	call iwrite, 1
+	halt
+
+create: nodes[0] = 0
+	nodes[1] = 0
+	nodes[2] = 0
+	nodes[3] = 2
+	nodes[4] = 3
+	nodes[5] = 1
+	nodes[6] = 3
+	nodes[7] = 4
+	return
+
+count:  getparam start
+	res = 0
+	idx = start
+L1:	t0 = 1
+	if t0 != 0 goto L2
+	goto L3
+L2:	t1 = nodes[idx]
+	if t1 != 0 goto L4
+	return res
+L4:	t2 = nodes[idx]
+	idx = t2
+	t3 = res + 1
+	res = t3
+	goto L1
+L3:	return 0

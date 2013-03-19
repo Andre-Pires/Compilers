@@ -1,0 +1,9 @@
+float exp(float x, int e){
+  int i;
+  float n_exp_e;
+  i=1;
+  n_exp_e=1;
+  while(i<=e)
+    n_exp_e*=x;
+  return n_exp_e;
+}

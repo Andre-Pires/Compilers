@@ -1,0 +1,71 @@
+program histograma import argc, argv, atoi
+
+function number cruzes : number x = {
+  if x > 50 {
+    write "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX...".
+  }
+  else {
+    loop x > 0 {
+      write "X".
+      x = x - 1.
+    }.
+  }.
+  return 0.
+}
+
+function number argc .
+function string argv : number n .
+function number atoi : string str .
+
+{
+  vector tab;
+  number lower, upper, step, rand, val.
+
+  if argc < 4 {
+    write "USAGE: histograma lower-limit upper-limit step [random]\n".
+    return 1.
+  }.
+  lower = atoi(argv(1)).
+  upper = atoi(argv(2)).
+  if lower >= upper {
+    write "invalid argument: lower >= upper\n".
+    return 1.
+  }.
+  step = atoi(argv(3)).
+  if step <= 0 {
+    write "invalid argument: step <= 0\n".
+    return 1.
+  }.
+  val = (upper-lower+1)/step.
+  tab # val.
+  loop val > 0 { val = val - 1. tab[val] = 0. }.
+  if argc > 4 {
+    number seed.
+    rand = atoi(argv(4)).
+    if rand <= 0 {
+      write "invalid argument: rand <= 0\n".
+      return 1.
+    }.
+    seed = 100001.
+    loop rand-- > 0 {
+      seed = (seed * 125) % 2796203.
+      val = seed % (upper-lower+1) + lower.
+      tab[(val-lower)/step] = tab[(val-lower)/step] + 1.
+    }.
+  }
+  else {
+    read val.
+    loop val >= lower & val <= upper {
+      tab[(val-lower)/step] = tab[(val-lower)/step] + 1.
+      read val.
+    }.
+  }.
+  val = lower.
+  loop val <= upper {
+    write tab[(val-lower)/step], " de ", val, " a ", val+step-1, ": ".
+    cruzes(tab[(val-lower)/step]).
+    write "\n".
+    val = val + step.
+  }.
+  return 0.
+}

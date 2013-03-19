@@ -1,0 +1,27 @@
+int sum;
+int a[10];
+int b[10];
+
+void init(){
+  int i;
+
+  i = 0;
+  while(i < 10){
+    a[i] = 0;
+    b[i] = 0;
+    i = i + 1;
+  }
+  sum=0;
+}
+
+void g(int n){
+  int m;
+
+  init();
+  m = n;
+  while(m >= 0){
+    sum = sum + m;
+    a[m] = sum;
+    m = m - 1;
+  }
+}

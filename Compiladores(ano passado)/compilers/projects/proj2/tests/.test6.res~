@@ -1,0 +1,4 @@
+warning: type cast int to float, line 4
+warning: type cast int to float, line 5
+warning: type cast int to float, line 8
+type error: illegal usage of void, line 10

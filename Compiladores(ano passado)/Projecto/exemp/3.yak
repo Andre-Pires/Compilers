@@ -1,0 +1,8 @@
+program a
+vector x = 1, 2, 3, 5, 7, 9.
+{
+  number i.
+  read i.
+  write "x[", i, "] = ", x[i], "\n".
+  return 0.
+}

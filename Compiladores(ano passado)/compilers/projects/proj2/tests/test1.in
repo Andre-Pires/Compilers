@@ -1,0 +1,8 @@
+float f(int a){
+  int x;
+  float y;
+  x=12;
+  y=23;
+  x=3.78;
+  return 0;
+}

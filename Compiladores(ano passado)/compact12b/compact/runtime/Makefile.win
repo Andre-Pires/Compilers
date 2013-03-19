@@ -1,0 +1,31 @@
+.SUFFIXES: .asm .obj .exe
+ID=run
+VER=0e
+LANG=$(ID)
+DIR=$$HOME\lib
+CFLAGS=
+BID=$(ID)-$(VER)
+
+OS=win.obj
+
+CC=cl
+AS=nasm -fwin32
+YACC=byacc
+LEX=flex -l
+
+all: $(LANG).lib
+
+$(LANG).lib: lib.obj dbl.obj $(OS)
+	lib /out:$@ $?
+
+install: $(LANG).lib
+	copy $? $(DIR)
+
+dbl.obj: dbl.c
+	$(CC) $(CFLAGS) -DPOSTFIX -c $<
+
+.asm.obj:
+	$(AS) $?
+
+clean:
+	del /F /Q $(LANG).lib *.obj

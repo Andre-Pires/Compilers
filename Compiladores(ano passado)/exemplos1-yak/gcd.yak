@@ -1,0 +1,21 @@
+program gcd // maior divisor comum entre dois numeros inteiros positivos
+{
+  number a, b.
+  a = b = 0.
+  read a.
+  read b.
+  if a <= 0 | b <= 0 {
+    write "Os numeros devem ser inteiros positivos\n". }
+  else {
+    number m, d, i.
+    m = a. d = 1.
+    if a > b { m = b. }.
+    i = 2.
+    loop i <= m {
+      if a % i == 0 & b % i == 0 { d = i. }.
+      i = i + 1.
+    }.
+    write d, " e' o maior divisor comum entre ", a, " e ", b, "\n".
+  }.
+  return 0.
+}

@@ -1,0 +1,25 @@
+/* straight line code with scalars, arrays two inputs and simple control flow */
+int xy[10];
+int b;
+int z;
+void main(){
+  int i;
+  int j;
+
+  i = iread();
+  j = iread();
+  xy[i] = 3 + 3;
+  xy[j] = 7 - 3;
+  if (i >= j){
+    b = 0;
+    if (j > 2)
+      z = 0;
+    else 
+      z = 1;
+  } else {
+    b = 1;
+    z = 1;
+  }
+  iwrite(b);
+  iwrite(z);
+}

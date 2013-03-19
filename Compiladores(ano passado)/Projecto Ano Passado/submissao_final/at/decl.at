@@ -1,0 +1,25 @@
+use const int a;
+use int b;
+const int grosa = 144;
+int x;
+int y = 1;
+
+use const real R;
+use real r;
+const real pi = 3.14159265;
+real eng = 12K5;
+real cent = 1.E-3;
+real pre = .2;
+real pos = 4.;
+
+use const string s;
+const string S = "abc";
+const string S1 = "abcd";
+string s1;
+string S2 = "abcde";
+string S3 = "abcdef";
+
+<int> v;
+<int> v1 = 0;
+use const <string> names;
+const <int> null = 0;

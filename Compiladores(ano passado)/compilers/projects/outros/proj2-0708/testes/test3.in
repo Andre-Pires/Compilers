@@ -1,0 +1,13 @@
+#include <test2.in>
+
+int a[100];
+int b[20];
+
+void main(){
+  int x; int y; int z;
+  read(x); read(y);
+  z= x + y;
+  if(even(x)) print();
+  else if(even(y)) print(y);
+       else if(even(z)){print(z);}
+}

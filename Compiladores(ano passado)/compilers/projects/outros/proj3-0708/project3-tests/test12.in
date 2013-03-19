@@ -1,0 +1,71 @@
+int l1;
+char str1[80];
+int l2;
+char str2[80];
+
+int match(int idx){
+  int p;
+  int q;
+  char c1;
+  char c2;
+
+  p = 0;
+  q = idx;
+  while(p < l1){
+    c1 = str1[p];
+    c2 = str2[q];
+    if(c1 != c2){
+      return 0;
+    }
+    p = p + 1;
+    q = q + 1;
+  }
+  return 1;
+}
+
+int findOccurences(){
+  int j;
+  int n;
+  int res;
+
+  res = 0;
+  n = l2 - l1;
+  n = n + 1;
+  j = 0;
+  while(j < n){
+    m = match(j);
+    if(m == 1){
+      res = res + 1;
+    }
+    j = j + 1;
+  }
+  return res;
+}
+
+void main(){
+  int i;
+  int k;
+
+  /* reads string 1 */
+  l1 = iread();
+  i = 0;
+  while(i < l1){
+    str1[i] = cread();
+    i = i + 1;
+  }
+
+  /* reads string 2 */
+  l2 = iread();
+  i = 0;
+  while(i < l2){
+    str2[i] = cread();
+    i = i + 1;
+  }
+
+  if(l1 < l2)
+    k = findOccurences();
+  else
+    k = 0;
+  iwrite(k);
+}
+

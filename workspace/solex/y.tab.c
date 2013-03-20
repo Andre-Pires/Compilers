@@ -33,7 +33,7 @@ Executar os exemplos (apenas com redirecção):
 
 Para garantir que as expressões regulares reconhecem correctamente as sequências de entrada deve adicionar o modo debug (-d) ao flex.
 Ao executar os diversos exemplos deve verificar quais as expressões regulares que as reconhecem cada uma das sequências de entrada.
-As expressões regulares são identificadas pelo número da linha em que se encontram no ficheiro lex.
+As expressões regulares são Identificadas pelo número da linha em que se encontram no ficheiro lex.
 */   
 #include <stdio.h>
 #include <stdlib.h>
@@ -109,6 +109,9 @@ extern int YYPARSE_DECL();
 #define INC 282
 #define DEC 283
 #define ATRIB 284
+#define ADDR 285
+#define POINTER 286
+#define UMINUS 287
 #define YYERRCODE 256
 static const short yylhs[] = {                           -1,
     0,
@@ -138,24 +141,25 @@ static const short yycheck[] = {                         -1,
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 284
+#define YYMAXTOKEN 287
 #if YYDEBUG
 static const char *yyname[] = {
 
-"end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"'!'",0,0,0,"'%'","'&'",0,"'('","')'","'*'","'+'",0,"'-'",0,"'/'",0,0,0,0,0,0,0,
+0,0,0,0,0,"'<'",0,"'>'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"'['",0,"']'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"'|'",
+0,"'~'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INTEGER","NUMBER","IDENTIF",
-"STRING","WHILE","IF","END","RETURN","VOID","PUBLIC","CONST","THEN","ELSE","DO",
-"FOR","IN","STEP","UPTO","DOWNTO","BREAK","CONTINUE","GE","LE","EQ","NE","INC",
-"DEC","ATRIB",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INTEGER","NUMBER","IDENTIF","STRING","WHILE","IF",
+"END","RETURN","VOID","PUBLIC","CONST","THEN","ELSE","DO","FOR","IN","STEP",
+"UPTO","DOWNTO","BREAK","CONTINUE","GE","LE","EQ","NE","INC","DEC","ATRIB",
+"ADDR","POINTER","UMINUS",
 };
 static const char *yyrule[] = {
-"$accept : file",
-"file :",
+"$accept : ficheiro",
+"ficheiro :",
 
 };
 #endif
@@ -193,7 +197,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 42 "solex.y"
+#line 56 "solex.y"
 int main()
 {
   while (yylex())
@@ -205,7 +209,7 @@ void yyerror(char *s)
 {
   printf("%s\n", s);
 }
-#line 208 "y.tab.c"
+#line 212 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */

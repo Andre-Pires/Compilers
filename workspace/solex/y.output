@@ -1,21 +1,21 @@
-   0  $accept : file $end
+   0  $accept : ficheiro $end
 
-   1  file :
+   1  ficheiro :
 
 state 0
-	$accept : . file $end  (0)
-	file : .  (1)
+	$accept : . ficheiro $end  (0)
+	ficheiro : .  (1)
 
 	.  reduce 1
 
-	file  goto 1
+	ficheiro  goto 1
 
 
 state 1
-	$accept : file . $end  (0)
+	$accept : ficheiro . $end  (0)
 
 	$end  accept
 
 
-30 terminals, 2 nonterminals
+48 terminals, 2 nonterminals
 2 grammar rules, 2 states

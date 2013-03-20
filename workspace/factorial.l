@@ -1,26 +1,31 @@
-%{ 
+%{
 /* factorial.l,v 1.0 2013/02/18 12:00:00 */
-#include <stdlib.h> 
-#include <string.h> 
-#include "y.tab.h"  
+#include <stdlib.h>
+#include <string.h>
+#include "y.tab.h"
+
 void yyerror(char *s);
 int nested;
-%} 
+char string[200];
+char * buffer;
+%}
 
 DECIMAL 0|[1-9][0-9]*
-OCTAL 0[0-9]+
-BIN 0b(0|1)+
-EXP [Ee][+-]?{DECIMAL}
-REAL {DECIMAL}"."{DECIMAL}({EXP})?
+DIG [0-9]+
+OCTAL 0([0-9])+
+BIN (0b|0B)(0|1)+
+EXP [Ee][+-]?{DIG}
+REAL {DIG}"."{DIG}({EXP})?
 
 
-%x COMMENTS
+%x COMMENTS STR
 
 %%
+
 "++"				return INC;
 "--"				return DEC;
 ":="				return ATRIB;
-"=="				return EQ;
+"="					return EQ;
 ">="				return GE;
 "<="				return LE;
 "<>"				return NE;
@@ -43,26 +48,65 @@ REAL {DECIMAL}"."{DECIMAL}({EXP})?
 "break"				return BREAK;
 "continue"			return CONTINUE;
 
-[ \t\n\r]+		; /* ignore whitespace */ 
+[ \t\n\r]+		;	/* ignore whitespace */
 
-"==".*\n		;/*Comentarios linha*/
+"==".*\n		;	/*Comentarios linha*/
 
-"=<"	{BEGIN COMMENTS; nested = 0; /*Comentarios extensos*/}
-<COMMENTS>"=<" 	{++nested;}
-<COMMENTS>"=>"	{if(--nested <= 0) BEGIN INITIAL;}
-<COMMENTS>.|\n	;
+"=<"					{BEGIN COMMENTS; nested = 0; /*Comentarios extensos*/}
+<COMMENTS>"=<" 				{++nested;}
+<COMMENTS>"=>"				{if(--nested <= 0) BEGIN INITIAL;}
+<COMMENTS>.|\n				;
 
-[A-Za-z][A-Za-z0-9_]*		{ yylval.s = strdup(yytext); return IDENTIF; /* Identificador */} 
-\"[^"]*|(\")*\"				{ yytext[yyleng-1] = 0; yylval.s = strdup(yytext+1); return STRING; /*String */}
-{OCTAL}						{ yylval.i = strtol(yytext, 0, 8); return INTEGER; /* Literal - Octal */} 
-{DECIMAL}					{ yylval.i = strtol(yytext, 0, 10); return INTEGER; /* Literal - Inteiro */} 
-{BIN}						{ yylval.i = strtol(yytext, 0, 2); return INTEGER; /* Literal - Binario */}
-{REAL}						{ yylval.i = strtol(yytext, 0, 36); return NUMBER; /* Literal - Real !!!!!!!!! Qual é a base? !!!!!!!!*/}
-[-+*/%<>=!|&~]				return *yytext; /* Operadores de expressoes */ 
-[#\[\]{}();,]				return *yytext; /*Delimitadores e separadores */ 
+[A-Za-z][A-Za-z0-9_]*		{ yylval.s = strdup(yytext); return IDENTIF; /* Identificador */}
 
-.							yyerror("Unknown character"); 
+\"						{ BEGIN STR; buffer = (char *) malloc(sizeof(char)); buffer[0] = '\0';}
+<STR>\\n					{ buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\n"); }
+<STR>\\t					{ buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\t"); }
+<STR>\\r					{ buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\r"); }
+<STR>\\\"					{ buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\""); }
+<STR>([^"\\])|(\\[0-9a-fA-F][0-9a-fA-F]?)	{ buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + strlen(yytext) + 1)); strcat(buffer, yytext); }
+<STR>\"						{ BEGIN INITIAL; yytext[yyleng-1] = 0;
+					  			buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + strlen(yytext) + 1)); 
+					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRING;}
+<STR>.						yyerror("Unknown character");
 
-%% 
-int yywrap(void) { return 1; } 
+{DECIMAL}					{ yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
+						   		else{	
+						   				errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string);  
+								   }
+							}
+
+{OCTAL}						{ yylval.i = strtol(yytext, 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
+							   	else{
+							   			errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string); 
+								   }
+							}
+
+{BIN}						{ yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
+						   		else{
+						   				errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string);  
+								   }
+							}
+
+{REAL}						{ yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
+						   		else{
+						   				errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string);  
+								   }
+							}
+
+[-+*/%<>=!|&~]				return *yytext; /* Operadores de expressoes */
+[#\[\]{}();,]				return *yytext; /* Delimitadores e separadores */
+
+.							yyerror("Unknown character");
+
+%%
+int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }

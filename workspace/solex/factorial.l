@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "y.tab.h"
-#define MAXIMO 2147483647
 
 void yyerror(char *s);
 int nested;
@@ -12,10 +11,11 @@ char * buffer;
 %}
 
 DECIMAL 0|[1-9][0-9]*
-OCTAL 0[0-9]+
+DIG [0-9]+
+OCTAL 0([0-9])+
 BIN (0b|0B)(0|1)+
-EXP [Ee][+-]?{DECIMAL}
-REAL {DECIMAL}"."{DECIMAL}{EXP}?
+EXP [Ee][+-]?{DIG}
+REAL {DIG}"."{DIG}({EXP})?
 
 
 %x COMMENTS STR
@@ -70,24 +70,38 @@ REAL {DECIMAL}"."{DECIMAL}{EXP}?
 					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRING;}
 <STR>.						yyerror("Unknown character");
 
+{DECIMAL}					{ yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
+						   		else{	
+						   				errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string);  
+								   }
+							}
 
+{OCTAL}						{ yylval.i = strtol(yytext, 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
+							   	else{
+							   			errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string); 
+								   }
+							}
 
+{BIN}						{ yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
+						   		else{
+						   				errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string);  
+								   }
+							}
 
+{REAL}						{ yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
+						   		else{
+						   				errno = 0; 
+										sprintf(string, "LEX error: Number %s caused overflow", yytext);
+										yyerror(string);  
+								   }
+							}
 
-
-{OCTAL}|{DECIMAL}|{BIN}	{ if(atoi(yytext) == MAXIMO && yytext[yyleng-1] != '7')  /* devia ser o strtol pq ele da errange
-					   {
-						sprintf(string, "Lexical error: Value %s caused overflow", yytext);
-						yyerror(string);  
-					   }
-					   yylval.i = atoi(yytext); return INTEGER;  }
-
-
-
-
-
-
-{REAL}						{ yylval.d = strtol(yytext, 0, 10); return NUMBER; /* Literal - Real */}
 [-+*/%<>=!|&~]				return *yytext; /* Operadores de expressoes */
 [#\[\]{}();,]				return *yytext; /* Delimitadores e separadores */
 

@@ -72,7 +72,6 @@ REAL {DIG}"."{DIG}({EXP})?
 
 {DECIMAL}					{ errno = 0; yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
 						   		else{	
-						   				errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }

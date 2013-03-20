@@ -681,7 +681,7 @@ static yyconst flex_int16_t yy_rule_linenum[48] =
        35,   36,   37,   38,   39,   40,   41,   42,   43,   44,
        45,   46,   47,   48,   49,   51,   53,   55,   56,   57,
        58,   60,   62,   63,   64,   65,   66,   67,   68,   71,
-       73,   81,   89,   97,  105,  106,  108
+       73,   81,   88,   95,  102,  103,  105
     } ;
 
 static yy_state_type *yy_state_buf=0, *yy_state_ptr=0;
@@ -1317,7 +1317,7 @@ yyerror("Unknown character");
 case 41:
 YY_RULE_SETUP
 #line 73 "factorial.l"
-{ yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
+{ errno = 0; yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
 						   		else{	
 						   				errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
@@ -1328,9 +1328,8 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 81 "factorial.l"
-{ yylval.i = strtol(yytext, 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
+{ errno = 0; yylval.i = strtol(yytext, 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
 							   	else{
-							   			errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string); 
 								   }
@@ -1338,10 +1337,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 89 "factorial.l"
-{ yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
+#line 88 "factorial.l"
+{ errno = 0; yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
 						   		else{
-						   				errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }
@@ -1349,10 +1347,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 97 "factorial.l"
-{ yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
-						   		else{
-						   				errno = 0; 
+#line 95 "factorial.l"
+{ errno = 0; yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
+						   		else{ 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }
@@ -1360,25 +1357,25 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 105 "factorial.l"
+#line 102 "factorial.l"
 return *yytext; /* Operadores de expressoes */
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 106 "factorial.l"
+#line 103 "factorial.l"
 return *yytext; /* Delimitadores e separadores */
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 108 "factorial.l"
+#line 105 "factorial.l"
 yyerror("Unknown character");
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 110 "factorial.l"
+#line 107 "factorial.l"
 ECHO;
 	YY_BREAK
-#line 1382 "lex.yy.c"
+#line 1379 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 			case YY_STATE_EOF(COMMENTS):
 			case YY_STATE_EOF(STR):
@@ -2500,7 +2497,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 110 "factorial.l"
+#line 107 "factorial.l"
 
 
 int yywrap(void) { return 1; }

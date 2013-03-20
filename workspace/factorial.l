@@ -70,7 +70,7 @@ REAL {DIG}"."{DIG}({EXP})?
 					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRING;}
 <STR>.						yyerror("Unknown character");
 
-{DECIMAL}					{ yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
+{DECIMAL}					{ errno = 0; yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
 						   		else{	
 						   				errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
@@ -78,25 +78,22 @@ REAL {DIG}"."{DIG}({EXP})?
 								   }
 							}
 
-{OCTAL}						{ yylval.i = strtol(yytext, 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
+{OCTAL}						{ errno = 0; yylval.i = strtol(yytext, 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
 							   	else{
-							   			errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string); 
 								   }
 							}
 
-{BIN}						{ yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
+{BIN}						{ errno = 0; yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
 						   		else{
-						   				errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }
 							}
 
-{REAL}						{ yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
-						   		else{
-						   				errno = 0; 
+{REAL}						{ errno = 0; yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
+						   		else{ 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }

@@ -70,6 +70,8 @@ REAL {DIG}"."{DIG}({EXP})?
 					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRING;}
 <STR>.						yyerror("Unknown character");
 
+
+
 {DECIMAL}					{ errno = 0; yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
 						   		else{	
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);

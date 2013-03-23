@@ -719,7 +719,7 @@ char *yytext_ptr;
 #include "y.tab.h"
 
 void yyerror(char *s);
-int octais();
+char * octais();
 int nested;
 char string[200];
 char * buffer;
@@ -1328,7 +1328,7 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 83 "factorial.l"
-{ errno = 0; octais();/*yylval.i = strtol(yytext, 0, 8);*/ if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
+{ errno = 0; yylval.i = strtol(octais(), 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
 							   	else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string); 
@@ -2503,8 +2503,8 @@ void yyfree (void * ptr )
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
 
-/*---------------retornar 1 ou 0 para se saber se há ou não overflow-----------------------------------------------*/
-int octais(){
+/*--------------overflow -- OCTAIS ---------------------------------------------*/
+char * octais(){
 	
 
 	int carry_new, carry_old;
@@ -2525,36 +2525,39 @@ int octais(){
 
   	for (i = size; i >= 0; --i) num[i] = (letras[i])-48; /* converte para inteiro */
 
-  	for (; size >= 0; --size)
+  	for (i = size; i >= 0; --i)
   	{
-  		if (num[size] > 7) {
+  		if (num[i] > 7) {
 			
 			carry_new = 1;
 
-  		 	if(num[size] == 9) num[size] = 1 + carry_old;
+  		 	if(num[i] == 9) num[i] = 1 + carry_old;
   		 	
-  		 	else num[size] = 0 + carry_old;
+  		 	else num[i] = 0 + carry_old;
 
   		}
   		if (carry_old == 1)
   		{
 
-	  		if(num[size] == 7) {
+	  		if(num[i] == 7) {
 
 				carry_new = 1;
-				num[size] = 0;
+				num[i] = 0;
 	  		    
-	  		}else num[size]++;
+	  		}else num[i]++;
   		}	
 
   		/* altera o valor de carry para a proxima iteracao */
   		if (carry_new == 1) carry_old = carry_new;
 
   		else carry_new = 0;
-  		/*---------------------------------------------------------------*/
 
-  		printf("%d -------<\n", num[size]);
+  		printf("%d -------<\n", num[i]);
   	}
 
-	return 0;
+  	for (i = size; i >= 0; --i) {letras[i] = (char) num[i]+48; /* converte para string */}
+
+  	printf("%s\n", letras);
+
+	return letras;
 }

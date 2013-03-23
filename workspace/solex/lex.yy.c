@@ -2555,7 +2555,7 @@ char * octais(){
   		printf("%d -------<\n", num[i]);
   	}
 
-  	for (i = size; i >= 0; --i) {letras[i] = (char) num[i]+48; /* converte para string */}
+  	for (i = size; i >= 0; --i) {letras[i] = num[i]+48; /* converte para string */}
 
   	printf("%s\n", letras);
 

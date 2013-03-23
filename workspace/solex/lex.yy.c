@@ -677,11 +677,11 @@ int yy_flex_debug = 1;
 
 static yyconst flex_int16_t yy_rule_linenum[48] =
     {   0,
-       25,   26,   27,   28,   29,   30,   31,   32,   33,   34,
-       35,   36,   37,   38,   39,   40,   41,   42,   43,   44,
-       45,   46,   47,   48,   49,   51,   53,   55,   56,   57,
-       58,   60,   62,   63,   64,   65,   66,   67,   68,   71,
-       73,   81,   88,   95,  102,  103,  105
+       26,   27,   28,   29,   30,   31,   32,   33,   34,   35,
+       36,   37,   38,   39,   40,   41,   42,   43,   44,   45,
+       46,   47,   48,   49,   50,   52,   54,   56,   57,   58,
+       59,   61,   63,   64,   65,   66,   67,   68,   69,   72,
+       76,   83,   90,   97,  104,  105,  107
     } ;
 
 static yy_state_type *yy_state_buf=0, *yy_state_ptr=0;
@@ -719,11 +719,12 @@ char *yytext_ptr;
 #include "y.tab.h"
 
 void yyerror(char *s);
+int octais();
 int nested;
 char string[200];
 char * buffer;
 
-#line 727 "lex.yy.c"
+#line 728 "lex.yy.c"
 
 #define INITIAL 0
 #define COMMENTS 1
@@ -972,10 +973,10 @@ YY_DECL
 	register int yy_act;
     
 /* %% [7.0] user's declarations go here */
-#line 23 "factorial.l"
+#line 24 "factorial.l"
 
 
-#line 979 "lex.yy.c"
+#line 980 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -1110,216 +1111,215 @@ do_action:	/* This label is used only to access EOF actions. */
 /* %% [13.0] actions go here */
 case 1:
 YY_RULE_SETUP
-#line 25 "factorial.l"
+#line 26 "factorial.l"
 return INC;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 26 "factorial.l"
+#line 27 "factorial.l"
 return DEC;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 27 "factorial.l"
+#line 28 "factorial.l"
 return ATRIB;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 28 "factorial.l"
+#line 29 "factorial.l"
 return EQ;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 29 "factorial.l"
+#line 30 "factorial.l"
 return GE;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "factorial.l"
+#line 31 "factorial.l"
 return LE;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "factorial.l"
+#line 32 "factorial.l"
 return NE;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 32 "factorial.l"
+#line 33 "factorial.l"
 return VOID;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 33 "factorial.l"
+#line 34 "factorial.l"
 return INTEGER;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 34 "factorial.l"
+#line 35 "factorial.l"
 return STRING;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 35 "factorial.l"
+#line 36 "factorial.l"
 return PUBLIC;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 36 "factorial.l"
+#line 37 "factorial.l"
 return NUMBER;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 37 "factorial.l"
+#line 38 "factorial.l"
 return CONST;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 38 "factorial.l"
+#line 39 "factorial.l"
 return IF;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 39 "factorial.l"
+#line 40 "factorial.l"
 return THEN;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 40 "factorial.l"
+#line 41 "factorial.l"
 return ELSE;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 41 "factorial.l"
+#line 42 "factorial.l"
 return WHILE;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 42 "factorial.l"
+#line 43 "factorial.l"
 return DO;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 43 "factorial.l"
+#line 44 "factorial.l"
 return FOR;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 44 "factorial.l"
+#line 45 "factorial.l"
 return IN;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 45 "factorial.l"
+#line 46 "factorial.l"
 return STEP;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 46 "factorial.l"
+#line 47 "factorial.l"
 return UPTO;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 47 "factorial.l"
+#line 48 "factorial.l"
 return DOWNTO;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 48 "factorial.l"
+#line 49 "factorial.l"
 return BREAK;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 49 "factorial.l"
+#line 50 "factorial.l"
 return CONTINUE;
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 51 "factorial.l"
+#line 52 "factorial.l"
 ;	/* ignore whitespace */
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 53 "factorial.l"
+#line 54 "factorial.l"
 ;	/*Comentarios linha*/
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 55 "factorial.l"
+#line 56 "factorial.l"
 {BEGIN COMMENTS; nested = 0; /*Comentarios extensos*/}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 56 "factorial.l"
+#line 57 "factorial.l"
 {++nested;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 57 "factorial.l"
+#line 58 "factorial.l"
 {if(--nested <= 0) BEGIN INITIAL;}
 	YY_BREAK
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
-#line 58 "factorial.l"
+#line 59 "factorial.l"
 ;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 60 "factorial.l"
+#line 61 "factorial.l"
 { yylval.s = strdup(yytext); return IDENTIF; /* Identificador */}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 62 "factorial.l"
+#line 63 "factorial.l"
 { BEGIN STR; buffer = (char *) malloc(sizeof(char)); buffer[0] = '\0';}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 63 "factorial.l"
+#line 64 "factorial.l"
 { buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\n"); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 64 "factorial.l"
+#line 65 "factorial.l"
 { buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\t"); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 65 "factorial.l"
+#line 66 "factorial.l"
 { buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\r"); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 66 "factorial.l"
+#line 67 "factorial.l"
 { buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + 2)); strcat(buffer, "\""); }
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
-#line 67 "factorial.l"
+#line 68 "factorial.l"
 { buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + strlen(yytext) + 1)); strcat(buffer, yytext); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 68 "factorial.l"
+#line 69 "factorial.l"
 { BEGIN INITIAL; yytext[yyleng-1] = 0;
 					  			buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + strlen(yytext) + 1)); 
 					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRING;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 71 "factorial.l"
+#line 72 "factorial.l"
 yyerror("Unknown character");
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 73 "factorial.l"
+#line 76 "factorial.l"
 { errno = 0; yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
 						   		else{	
-						   				errno = 0; 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }
@@ -1327,8 +1327,8 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 81 "factorial.l"
-{ errno = 0; yylval.i = strtol(yytext, 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
+#line 83 "factorial.l"
+{ errno = 0; octais();/*yylval.i = strtol(yytext, 0, 8);*/ if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
 							   	else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string); 
@@ -1337,7 +1337,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 88 "factorial.l"
+#line 90 "factorial.l"
 { errno = 0; yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
 						   		else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
@@ -1347,7 +1347,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 95 "factorial.l"
+#line 97 "factorial.l"
 { errno = 0; yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
 						   		else{ 
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
@@ -1357,22 +1357,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 102 "factorial.l"
+#line 104 "factorial.l"
 return *yytext; /* Operadores de expressoes */
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 103 "factorial.l"
+#line 105 "factorial.l"
 return *yytext; /* Delimitadores e separadores */
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 105 "factorial.l"
+#line 107 "factorial.l"
 yyerror("Unknown character");
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 107 "factorial.l"
+#line 109 "factorial.l"
 ECHO;
 	YY_BREAK
 #line 1379 "lex.yy.c"
@@ -2497,8 +2497,65 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 107 "factorial.l"
+#line 109 "factorial.l"
 
 
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
+
+/*---------------retornar 1 ou 0 para se saber se há ou não overflow-----------------------------------------------*/
+int octais(){
+	
+
+	int oct, novo = 0;
+	int div, minimo, i, size =1;
+	char * letras;
+	
+	letras = (char *) malloc (sizeof(yytext));
+
+	sscanf(yytext, "%s", letras);
+
+	printf("%s\n", letras);
+
+	oct = strtol(yytext, 0, 10);
+
+	if(errno == ERANGE)
+	{
+		sprintf(string, "LEX error: Number %s caused overflow", yytext);
+		yyerror(string);
+		return 1;
+	}
+
+	printf("%d  <--------------\n", oct);
+
+	/* number length */
+	novo = oct;
+  	while(novo>9){size++; novo/=10; }
+
+
+  	int num[size];
+  	for (i = size-1; i >= 0; --i) num[i] = (letras[i+1])-48; /* converte para inteiro */
+
+
+  	while(size > 0)
+  	{
+  		if (num[size] > 7) {
+  		 	
+  		 	if(num[size] = 9){
+  		 		num[size-1] += 2;
+  		 		num[size] = 1;
+  		 		printf("%d   %d    %d\n", num[0],num[size-2],num[size-1]);
+  		 	}else {
+  		 		num[size-1] += 1;
+  		 		num[size] = 0;
+  		 		printf("%d   %d    %d\n", num[0],num[size-2],num[size-1]);
+  		 	}
+
+  		} else --size;
+
+  	}
+
+  	printf("%d   %d    %d\n", num[0],num[size-2],num[size-1]);
+
+	return 0;
+}

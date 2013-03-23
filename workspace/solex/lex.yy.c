@@ -2507,8 +2507,8 @@ char *getyytext() { return yytext; }
 int octais(){
 	
 
-	int oct, carry_new, carry_old, novo = 0;
-	int div, minimo, i,  size =1;
+	int carry_new, carry_old;
+	int i,  size =1;
 	char * letras;
 
 	carry_new = carry_old = 0;
@@ -2519,26 +2519,12 @@ int octais(){
 
 	printf("%s\n", letras);
 
-	oct = strtol(yytext, 0, 10);
+	size = strlen(letras) -1;
 
-	if(errno == ERANGE)
-	{
-		sprintf(string, "LEX error: Number %s caused overflow", yytext);
-		yyerror(string);
-		return 1;
-	}
+  	int num[size+1];
 
-	printf("%d  <--------------\n", oct);
-
-	/* number length */
-	novo = oct;
-  	while(novo>9){size++; novo/=10; }
-
-
-  	int num[size];
   	for (i = size; i >= 0; --i) num[i] = (letras[i])-48; /* converte para inteiro */
 
-/* nao pode ser assim, nao tenho mais grandes ideias */
   	for (; size >= 0; --size)
   	{
   		if (num[size] > 7) {

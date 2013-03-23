@@ -2507,9 +2507,11 @@ char *getyytext() { return yytext; }
 int octais(){
 	
 
-	int oct, novo = 0;
-	int div, minimo, i, size =1;
+	int oct, carry_new, carry_old, novo = 0;
+	int div, minimo, i,  size =1;
 	char * letras;
+
+	carry_new = carry_old = 0;
 	
 	letras = (char *) malloc (sizeof(yytext));
 
@@ -2534,28 +2536,39 @@ int octais(){
 
 
   	int num[size];
-  	for (i = size-1; i >= 0; --i) num[i] = (letras[i+1])-48; /* converte para inteiro */
+  	for (i = size; i >= 0; --i) num[i] = (letras[i])-48; /* converte para inteiro */
 
-
-  	while(size > 0)
+/* nao pode ser assim, nao tenho mais grandes ideias */
+  	for (; size >= 0; --size)
   	{
   		if (num[size] > 7) {
+			
+			carry_new = 1;
+
+  		 	if(num[size] == 9) num[size] = 1 + carry_old;
   		 	
-  		 	if(num[size] = 9){
-  		 		num[size-1] += 2;
-  		 		num[size] = 1;
-  		 		printf("%d   %d    %d\n", num[0],num[size-2],num[size-1]);
-  		 	}else {
-  		 		num[size-1] += 1;
-  		 		num[size] = 0;
-  		 		printf("%d   %d    %d\n", num[0],num[size-2],num[size-1]);
-  		 	}
+  		 	else num[size] = 0 + carry_old;
 
-  		} else --size;
+  		}
+  		if (carry_old == 1)
+  		{
 
+	  		if(num[size] == 7) {
+
+				carry_new = 1;
+				num[size] = 0;
+	  		    
+	  		}else num[size]++;
+  		}	
+
+  		/* altera o valor de carry para a proxima iteracao */
+  		if (carry_new == 1) carry_old = carry_new;
+
+  		else carry_new = 0;
+  		/*---------------------------------------------------------------*/
+
+  		printf("%d -------<\n", num[size]);
   	}
-
-  	printf("%d   %d    %d\n", num[0],num[size-2],num[size-1]);
 
 	return 0;
 }

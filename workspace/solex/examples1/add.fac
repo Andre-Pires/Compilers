@@ -2,7 +2,7 @@ public void printi(integer i)
 public void println()
 public integer readi()
 public integer entry (integer argc, string *argv, string *envp) {
-  printi(readi() + 0877)
+  printi(readi() + 11777.77441e-1)
   println()
   entry := 0
 }

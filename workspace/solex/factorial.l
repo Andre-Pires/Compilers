@@ -1,6 +1,7 @@
 %{
 /* factorial.l,v 1.0 2013/02/18 12:00:00 */
 #include <stdlib.h>
+#include <limits.h>
 #include <string.h>
 #include "y.tab.h"
 
@@ -94,8 +95,8 @@ REAL {DIG}"."{DIG}({EXP})?
 								   }
 							}
 
-{REAL}						{ errno = 0; yylval.d = strtol(yytext, 0, 10); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
-						   		else{ 
+{REAL}						{ errno = 0; yylval.d = strtod(yytext, 0); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
+						   		else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }

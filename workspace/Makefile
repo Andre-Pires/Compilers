@@ -1,16 +1,28 @@
 LANG=factorial
 EXT=fac
+.SUFFIXES: .$(EXT) .asm .obj .exe
 
-LEX=flex -l
-YACC=byacc -dv
+$(LANG): $(LANG).y $(LANG).l
+	byacc -dv $(LANG).y
+	flex -l $(LANG).l
+	gcc -o $(LANG) -Wall -DYYDEBUG -I../lib lex.yy.c y.tab.c
 
-$(LANG): factorial.y $(LANG).l
-	$(YACC) factorial.y
-	$(LEX) $(LANG).l
-	gcc -o $(LANG) -DYYDEBUG lex.yy.c y.tab.c
+$(LANG).exe: $(LANG).y $(LANG).l $(LANG).brg
+	byacc -dv $(LANG).y
+	flex -l $(LANG).l
+	pburg -R -p code $(LANG).brg code.c
+	cl /nologo /Fe$(LANG).exe /DWIN32 /Zi /MLd /DYYDEBUG /I..\\lib lex.yy.c y.tab.c code.c ..\\lib\\util.lib
 
-install:: $(LANG)
-	echo "not a delivrable"
+%:%.$(EXT)
+	./$(LANG) $<
+	nasm -felf $*.asm
+	ld -o $@ $*.o -L../runtime -lrun
 
-clean::
-	rm -f *.o $(LANG) lex.yy.c y.tab.c y.tab.h y.output *~
+.$(EXT).exe:
+	./$(LANG) $<
+	nasm -fwin32 $*.asm
+	link /nologo /out:$@ $*.obj /LIBPATH:..\\runtime run.lib KERNEL32.LIB
+
+
+clean:
+	rm -f *.o $(LANG) lex.yy.c y.tab.c y.tab.h y.output code.c *.asm *.$(EXT) *~ *.obj *.exe *.ilk *.pdb

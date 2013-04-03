@@ -69,33 +69,33 @@ REAL {DIG}"."{DIG}({EXP})?
 <STR>([^"\\])|(\\[0-9a-fA-F][0-9a-fA-F]?)	{ buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + strlen(yytext) + 1)); strcat(buffer, yytext); }
 <STR>\"						{ BEGIN INITIAL; yytext[yyleng-1] = 0;
 					  			buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + strlen(yytext) + 1)); 
-					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRING;}
+					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRN;}
 <STR>.						yyerror("Unknown character");
 
 
 
-{DECIMAL}					{ errno = 0; yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INTEGER;   /* Literal - Decimal */  
+{DECIMAL}					{ errno = 0; yylval.i = strtol(yytext, 0, 10); if(errno != ERANGE) return INT;   /* Literal - Decimal */  
 						   		else{	
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }
 							}
 
-{OCTAL}						{ errno = 0; yylval.i = strtol(octais(), 0, 8); if(errno != ERANGE) return INTEGER;   /* Literal - Octal */  
+{OCTAL}						{ errno = 0; yylval.i = strtol(octais(), 0, 8); if(errno != ERANGE) return INT;   /* Literal - Octal */  
 							   	else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string); 
 								   }
 							}
 
-{BIN}						{ errno = 0; yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INTEGER;   /* Literal - Binario */  
+{BIN}						{ errno = 0; yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INT;   /* Literal - Binario */  
 						   		else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }
 							}
 
-{REAL}						{ errno = 0; yylval.d = strtod(yytext, 0); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
+{REAL}						{ errno = 0; yylval.d = strtod(yytext, 0); if(errno != ERANGE) return NUM;   /* Literal - Real */
 						   		else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  

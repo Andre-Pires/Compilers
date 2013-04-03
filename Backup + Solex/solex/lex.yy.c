@@ -715,7 +715,7 @@ char *yytext_ptr;
 #line 2 "factorial.l"
 /* factorial.l,v 1.0 2013/02/18 12:00:00 */
 #include <stdlib.h>
-#include <limits.h>
+#include <math.h>
 #include <string.h>
 #include "y.tab.h"
 
@@ -1350,8 +1350,8 @@ YY_RULE_SETUP
 case 44:
 YY_RULE_SETUP
 #line 99 "factorial.l"
-{ errno = 0; yylval.d = strtod(yytext, 0); if(errno != ERANGE) return NUMBER;   /* Literal - Real */
-						   		else{ 
+{ errno = 0; yylval.d = val = strtod(yytext, 0); if(!(errno == ERANGE && (val == HUGE_VAL || val == -HUGE_VAL))) return NUMBER;   /* Literal - Real */
+						   		else{
 										sprintf(string, "LEX error: Number %s caused overflow", yytext);
 										yyerror(string);  
 								   }

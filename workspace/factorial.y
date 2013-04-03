@@ -21,6 +21,9 @@ As expressões regulares são Identificadas pelo número da linha em que se enco
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h> 
+#include "lib/node.h"
+#include "lib/tabid.h"
+
 %}
 
 %union {
@@ -29,13 +32,14 @@ As expressões regulares são Identificadas pelo número da linha em que se enco
 	char *s;		/* symbol name or string literal */
 };
 
-%token <i> INTEGER
-%token <d> NUMBER
-%token <s> IDENTIF STRING
-%token WHILE IF END RETURN VOID PUBLIC CONST IF THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE
-%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER
+%token <i> INT
+%token <d> NUM
+%token <s> IDENTIF STRN
+%token WHILE IF END RETURN VOID PUBLIC CONST IF THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
+%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX
 
-
+%nonassoc IFX
+%nonassoc ELSE
 %right ATRIB
 %left '|'
 %left '&'
@@ -48,9 +52,13 @@ As expressões regulares são Identificadas pelo número da linha em que se enco
 %nonassoc '(' ')' '[' ']'
 %%
 
-ficheiro  : declaracao
-          | 
+ficheiro  : declaracoes
+          | /*empty*/
           ;
+
+declaracoes  : declaracao
+             | declaracoes declaracao
+             ;
 
 declaracao  :  PUBLIC tipo '*' IDENTIF init ';'
             | tipo '*' IDENTIF init ';'
@@ -88,7 +96,7 @@ init  : ATRIB INTEGER
       ;
 
 pars : ',' parametro
-     | ',' pars
+     | pars ',' parametro
      ;
 
 parametros  : parametro
@@ -100,7 +108,7 @@ parametro : tipo IDENTIF
           ;
 
 pars2 : parametro ';'
-     | pars2 ';'
+     | pars2 parametro ';'
      ;
 
 corpo : '{' '}'
@@ -110,11 +118,11 @@ corpo : '{' '}'
       ;
 
 instrucoes : instrucao
-           | instrucoes
+           | instrucoes instrucao
            ;
 
-instrucao : IF expressao THEN instrucao ELSE instrucao
-          | IF expressao THEN instrucao
+instrucao : IF expressao THEN instrucao %prec IFX
+          | IF expressao THEN instrucao ELSE instrucao
           | DO expressao WHILE instrucao 
           | FOR left_value IN expressao UPTO expressao DO instrucao 
           | FOR left_value IN expressao DOWNTO expressao DO instrucao 
@@ -127,13 +135,17 @@ instrucao : IF expressao THEN instrucao ELSE instrucao
           | left_value '#' expressao ';'
           ;
 
-expressao : INTEGER             
-    | NUMBER
-    | STRING
+expressoes  : expressoes ',' expressao
+            | expressao
+            ;
+
+expressao : INT             
+    | NUM
+    | STRN
     | left_value              
     | IDENTIF '(' expressoes ')'   
     | '(' expressao ')'       
-    | left_value '=' expressao
+    | left_value ':=' expressao %prec ATRIB
     | '-' expressao %prec UMINUS
     | INC left_value            
     | DEC left_value            
@@ -152,7 +164,8 @@ expressao : INTEGER
     | expressao LE expressao   
     | expressao '&' expressao  
     | expressao '|' expressao  
-    | '!' expressao            
+    | '~' expressao
+    | expressao '!'        
     | '&' left_value %prec ADDR
     | '*' left_value %prec POINTER
     ;
@@ -163,6 +176,7 @@ left_value: IDENTIF
 
      
 %%
+
 int main()
 {
   while (yylex())

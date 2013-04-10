@@ -1,0 +1,24 @@
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer readi()
+
+integer cnt
+
+integer fibonacci(integer n) {
+  cnt := cnt + 1
+  if n <= 1 then fibonacci := n
+  else fibonacci := fibonacci(n-1) + fibonacci(n-2)
+};
+
+public integer entry (integer argc, string *argv, string *envp) {
+  integer n
+  prints("Qual o termo da série de Fibonacci a calcular? ")
+  n := readi()
+  n := fibonacci(n)
+  printi(n)
+  println()
+  printi(cnt)
+  println()
+  entry := 0
+};

@@ -1,0 +1,26 @@
+== maior divisor comum entre dois numeros inteiros positivos
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer readi()
+
+integer a
+integer b
+
+public integer entry (integer argc, string *argv, string *envp) {
+  a := readi()
+  b := readi()
+  if a <= 0 | b <= 0 then
+    prints("Os valores devem ser positivos\n")
+  else {
+    if a <> b then
+      do {
+	if a > b then
+	  a := a - b
+	else
+	  b := b - a
+      } while a <> b
+    printi(a); println();		== maior divisor comum
+  }
+  entry := 0
+};

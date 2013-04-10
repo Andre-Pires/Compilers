@@ -1,0 +1,17 @@
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer readi()
+
+string x := "hello world\n"
+
+public integer entry (integer argc, string *argv, string *envp) {
+  integer i
+  i := readi()
+  prints("x[")
+  printi(i)
+  prints("] = ")
+  printi(x[i])
+  println()
+  entry := 0
+};

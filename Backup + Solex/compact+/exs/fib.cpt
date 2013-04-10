@@ -1,0 +1,21 @@
+# This examples includes functions.
+# Functions are supported only by c/compact
+
+cnt = 0;
+
+function fibonacci(n)
+  cnt = cnt + 1;
+  if (n <= 1) return n;
+  x = fibonacci(n-1);
+  y = fibonacci(n-2);
+  return x + y;
+end
+
+program
+  n = 0;
+  print 'Qual o termo da série de Fibonacci a calcular? ';
+  read n;
+  n = fibonacci(n);
+  print n;
+  print cnt;
+end

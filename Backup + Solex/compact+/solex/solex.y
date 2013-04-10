@@ -15,7 +15,7 @@ Executar os exemplos (apenas com redirecção):
 
 Para garantir que as expressões regulares reconhecem correctamente as sequências de entrada deve adicionar o modo debug (-d) ao flex.
 Ao executar os diversos exemplos deve verificar quais as expressões regulares que as reconhecem cada uma das sequências de entrada.
-As expressões regulares são Identificadas pelo número da linha em que se encontram no ficheiro lex.
+As expressões regulares são identificadas pelo número da linha em que se encontram no ficheiro lex.
 */   
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,33 +25,17 @@ As expressões regulares são Identificadas pelo número da linha em que se enco
 
 %union {
 	int i;			/* integer value */
-  double d;    /* double value */
 	char *s;		/* symbol name or string literal */
 };
 
-%token <i> INT
-%token <d> NUM
-%token <s> IDENTIF STRN
-%token WHILE IF END RETURN VOID PUBLIC CONST IF THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
-%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX
+%token <i> INTEGER
+%token <s> VARIABLE STRING
+%token WHILE IF PRINT READ PROGRAM FUNC END RETURN
+%token ELSE GE LE EQ NE
 
-
-%right ATRIB
-%left '|'
-%left '&'
-%nonassoc '~'
-%left EQ NE
-%left GE LE '>' '<'
-%left '+' '-'
-%left '*' '/' '%'
-%nonassoc  POINTER ADDR '!' UMINUS INC DEC
-%nonassoc '(' ')' '[' ']'
 %%
-
-ficheiro  : 
-          ;
-
-     
+file	:
+     	;
 %%
 int main()
 {

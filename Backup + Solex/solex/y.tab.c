@@ -81,10 +81,10 @@ typedef union {
 
 extern int YYPARSE_DECL();
 
-#define INTEGER 257
-#define NUMBER 258
+#define INT 257
+#define NUM 258
 #define IDENTIF 259
-#define STRING 260
+#define STRN 260
 #define WHILE 261
 #define IF 262
 #define END 263
@@ -102,16 +102,20 @@ extern int YYPARSE_DECL();
 #define DOWNTO 275
 #define BREAK 276
 #define CONTINUE 277
-#define GE 278
-#define LE 279
-#define EQ 280
-#define NE 281
-#define INC 282
-#define DEC 283
-#define ATRIB 284
-#define ADDR 285
-#define POINTER 286
-#define UMINUS 287
+#define INTEGER 278
+#define STRING 279
+#define NUMBER 280
+#define GE 281
+#define LE 282
+#define EQ 283
+#define NE 284
+#define INC 285
+#define DEC 286
+#define ATRIB 287
+#define ADDR 288
+#define POINTER 289
+#define IFX 290
+#define UMINUS 291
 #define YYERRCODE 256
 static const short yylhs[] = {                           -1,
     0,
@@ -141,7 +145,7 @@ static const short yycheck[] = {                         -1,
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 287
+#define YYMAXTOKEN 291
 #if YYDEBUG
 static const char *yyname[] = {
 
@@ -152,10 +156,10 @@ static const char *yyname[] = {
 0,"'~'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INTEGER","NUMBER","IDENTIF","STRING","WHILE","IF",
-"END","RETURN","VOID","PUBLIC","CONST","THEN","ELSE","DO","FOR","IN","STEP",
-"UPTO","DOWNTO","BREAK","CONTINUE","GE","LE","EQ","NE","INC","DEC","ATRIB",
-"ADDR","POINTER","UMINUS",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INT","NUM","IDENTIF","STRN","WHILE","IF","END",
+"RETURN","VOID","PUBLIC","CONST","THEN","ELSE","DO","FOR","IN","STEP","UPTO",
+"DOWNTO","BREAK","CONTINUE","INTEGER","STRING","NUMBER","GE","LE","EQ","NE",
+"INC","DEC","ATRIB","ADDR","POINTER","IFX","UMINUS",
 };
 static const char *yyrule[] = {
 "$accept : ficheiro",
@@ -209,7 +213,7 @@ void yyerror(char *s)
 {
   printf("%s\n", s);
 }
-#line 212 "y.tab.c"
+#line 216 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */

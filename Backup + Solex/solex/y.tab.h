@@ -1,7 +1,7 @@
-#define INTEGER 257
-#define NUMBER 258
+#define INT 257
+#define NUM 258
 #define IDENTIF 259
-#define STRING 260
+#define STRN 260
 #define WHILE 261
 #define IF 262
 #define END 263
@@ -19,16 +19,20 @@
 #define DOWNTO 275
 #define BREAK 276
 #define CONTINUE 277
-#define GE 278
-#define LE 279
-#define EQ 280
-#define NE 281
-#define INC 282
-#define DEC 283
-#define ATRIB 284
-#define ADDR 285
-#define POINTER 286
-#define UMINUS 287
+#define INTEGER 278
+#define STRING 279
+#define NUMBER 280
+#define GE 281
+#define LE 282
+#define EQ 283
+#define NE 284
+#define INC 285
+#define DEC 286
+#define ATRIB 287
+#define ADDR 288
+#define POINTER 289
+#define IFX 290
+#define UMINUS 291
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

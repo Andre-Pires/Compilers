@@ -1,0 +1,13 @@
+public void prints(string s)
+public integer readi()
+integer x
+public integer entry (integer argc, string *argv, string *envp) {
+  x := readi()
+  if x > 0 then
+    prints("positivo!\n")
+  if x < 0 then
+    prints("negativo!\n")
+  if x = 0 then
+    prints("nulo!\n")
+  entry := 0
+};

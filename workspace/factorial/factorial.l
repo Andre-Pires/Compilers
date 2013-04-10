@@ -6,9 +6,9 @@
 #include "y.tab.h"
 
 void yyerror(char *s);
+char * octais();
 int nested, newline;
 char string[200];
-char * octais();
 char * buffer;
 %}
 
@@ -50,7 +50,7 @@ REAL {DIG}"."{DIG}({EXP})?
 "break"				return BREAK;
 "continue"			return CONTINUE;
 
-"\n"			if (newline == 1) {newline = 0; return ';' ;};
+(\n)+			{if(newline) {newline = 0; return ';';}}
 
 [ \t\r]+		;	/* ignore whitespace */
 
@@ -103,9 +103,11 @@ REAL {DIG}"."{DIG}({EXP})?
 										yyerror(string);  
 								   }
 							}
+
+";"							newline = 0; return *yytext;
 [)!]						newline = 1; return *yytext; /* Operadores/Delimitadores especiais*/
 [-+*/%<>=|&~]				return *yytext; /* Operadores de expressoes */
-[#\[\]{}(;,]				return *yytext; /* Delimitadores e separadores */
+[#\[\]{}(,]					return *yytext; /* Delimitadores e separadores */
 
 .							yyerror("Unknown character");
 

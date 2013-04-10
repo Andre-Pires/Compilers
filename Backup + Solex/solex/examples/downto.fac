@@ -1,0 +1,9 @@
+public void printi(integer i)
+public void println()
+integer x
+public integer entry (integer argc, string *argv, string *envp) {
+  for x in 120 downto 0 step 5 do {
+    printi(x); println()
+  }
+  entry := 0
+};

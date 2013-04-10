@@ -1,0 +1,7 @@
+public void printi(integer i)
+public void println()
+public integer entry (integer argc, string *argv, string *envp) {
+  printi(12)
+  println()
+  entry := 0
+};

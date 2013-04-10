@@ -1,0 +1,16 @@
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer readi()
+
+public integer entry (integer argc, string *argv, string *envp) {
+  prints("argc = ")
+  printi(argc)
+  println()
+  if argc > 1 then {
+    prints("argv[1] = ")
+    prints(argv[1])
+    println()
+  }
+  entry := 0
+};

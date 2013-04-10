@@ -1,0 +1,15 @@
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer readi()
+integer a
+integer b
+public integer entry (integer argc, string *argv, string *envp) {
+  prints("Comparador: maior que\n")
+  prints("Introduza dois numeros: ")
+  a := readi()
+  b := readi()
+  printi(a > b)
+  println()
+  entry := 0
+};

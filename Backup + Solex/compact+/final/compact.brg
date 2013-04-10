@@ -1,0 +1,134 @@
+%{
+/* (Compact with functions included as instructions)
+ * Instruction selection with postfix.h
+ */
+#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+#include "node.h"
+#include "tabid.h"
+#include "postfix.h"
+#include "y.tab.h"
+
+#ifndef U_
+#define U_ "_"
+#endif
+
+extern FILE *outfp;
+extern int lbl;
+extern char *mklbl(int n);
+extern char **yynames;
+
+static int stk;
+static int sameVar(NODEPTR_TYPE p) {
+  return strcmp(p->SUB(0)->value.s, p->SUB(1)->SUB(0)->value.s) ? 0x7fff : 2;
+}
+static int sameLoc(NODEPTR_TYPE p) {
+  return p->SUB(0)->value.s == p->SUB(1)->SUB(0)->value.s ? 0x7fff : 2;
+}
+
+%}
+%term LIST=';' ASSIGN='=' ADD='+' SUB='-' MUL='*' DIV='/' MOD='%' LT='<' GT='>' ARG=','
+%include "y.tab.h"
+%%
+stat:	END
+stat:	LIST(stat,stat)
+stat:	STRING		4 { char *l = mklbl(++lbl);
+			    fprintf(outfp, pfRODATA pfALIGN pfLABEL pfSTR
+				pfTEXT pfADDR pfCALL pfCALL pfTRASH,
+				l, p->value.s, l, U_"prints", U_"println", 4); }
+stat:	PRINT(reg)	3 { fprintf(outfp, pfCALL pfCALL pfTRASH,
+				U_"printi", U_"println", 4); }
+stat:	READ(VARIABLE) 3 { fprintf(outfp, pfCALL pfPUSH pfADDRA, U_"readi", p->SUB(0)->value.s); }
+stat:	READ(LOCAL) 3 { fprintf(outfp, pfCALL pfPUSH pfLOCA, U_"readi", p->SUB(0)->value.i); }
+stat:   RETURN(reg)	3 { fprintf(outfp, pfPOP pfLEAVE pfRET); }
+stat:	JZ(reg,ETIQ)	1 { fprintf(outfp, pfJZ, p->SUB(1)->value.s); }
+stat:	JNZ(reg,ETIQ)	1 { fprintf(outfp, pfJNZ, p->SUB(1)->value.s); }
+stat:	JMP		1 { fprintf(outfp, pfJMP, p->value.s); }
+stat:	LABEL		  { fprintf(outfp, pfLABEL, p->value.s); }
+stat:	ASSIGN(VARIABLE,reg)   1 { fprintf(outfp, pfADDRA, p->SUB(0)->value.s); }
+stat:	ASSIGN(LOCAL,reg)   1 { fprintf(outfp, pfLOCA, p->SUB(0)->value.i); }
+stat:	JZ(LT(reg,reg), ETIQ)	1 { fprintf(outfp, pfJGE, p->SUB(1)->value.s); }
+stat:	JZ(LE(reg,reg), ETIQ)	1 { fprintf(outfp, pfJGT, p->SUB(1)->value.s); }
+stat:	JZ(GT(reg,reg), ETIQ)	1 { fprintf(outfp, pfJLE, p->SUB(1)->value.s); }
+stat:	JZ(GE(reg,reg), ETIQ)	1 { fprintf(outfp, pfJLT, p->SUB(1)->value.s); }
+stat:	JZ(EQ(reg,reg), ETIQ)	1 { fprintf(outfp, pfJNE, p->SUB(1)->value.s); }
+stat:	JZ(NE(reg,reg), ETIQ)	1 { fprintf(outfp, pfJEQ, p->SUB(1)->value.s); }
+stat:	JNZ(LT(reg,reg), ETIQ)	1 { fprintf(outfp, pfJLT, p->SUB(1)->value.s); }
+stat:	JNZ(LE(reg,reg), ETIQ)	1 { fprintf(outfp, pfJLE, p->SUB(1)->value.s); }
+stat:	JNZ(GT(reg,reg), ETIQ)	1 { fprintf(outfp, pfJGT, p->SUB(1)->value.s); }
+stat:	JNZ(GE(reg,reg), ETIQ)	1 { fprintf(outfp, pfJGE, p->SUB(1)->value.s); }
+stat:	JNZ(EQ(reg,reg), ETIQ)	1 { fprintf(outfp, pfJEQ, p->SUB(1)->value.s); }
+stat:	JNZ(NE(reg,reg), ETIQ)	1 { fprintf(outfp, pfJNE, p->SUB(1)->value.s); }
+stat:	reg		1 { fprintf(outfp, pfTRASH, 4); }
+stat:	CALL(VARIABLE,stack)	1 {
+		fprintf(outfp, pfCALL pfTRASH, p->SUB(0)->value.s, 4*stk);
+		stk = 0;
+	      }
+stat:	ASSIGN(VARIABLE, CALL(VARIABLE,stack))	1 {
+		fprintf(outfp, pfCALL pfTRASH pfPUSH pfADDRA,
+			p->SUB(1)->SUB(0)->value.s, 4*stk, p->SUB(0)->value.s);
+		stk = 0;
+	      }
+stat:	ASSIGN(LOCAL, CALL(VARIABLE,stack))	1 {
+		fprintf(outfp, pfCALL pfTRASH pfPUSH pfLOCA,
+			p->SUB(1)->SUB(0)->value.s, 4*stk, p->SUB(0)->value.i);
+		stk = 0;
+	      }
+stack:	ARG(stack,stack)
+stack:	reg	{ stk++; }
+stack:	END
+
+reg:	VARIABLE	1 { fprintf(outfp, pfADDRV, p->value.s); }
+reg:	LOCAL		1 { fprintf(outfp, pfLOCV, p->value.i); }
+reg:	INTEGER		1 { fprintf(outfp, pfIMM, p->value.i); }
+reg:	ADD(reg,reg)	1 { fprintf(outfp, pfADD); }
+reg:	SUB(reg,reg)	1 { fprintf(outfp, pfSUB); }
+reg:	UMINUS(reg)	1 { fprintf(outfp, pfNEG); } 
+reg:	MUL(reg,reg)	1 { fprintf(outfp, pfMUL); }
+reg:	DIV(reg,reg)	1 { fprintf(outfp, pfDIV); }
+reg:	MOD(reg,reg)	1 { fprintf(outfp, pfMOD); }
+reg:	EQ(reg,reg)	1 { fprintf(outfp, pfEQ); }
+reg:	NE(reg,reg)	1 { fprintf(outfp, pfNE); }
+reg:	LT(reg,reg)	1 { fprintf(outfp, pfLT); }
+reg:	LE(reg,reg)	1 { fprintf(outfp, pfLE); }
+reg:	GE(reg,reg)	1 { fprintf(outfp, pfGE); }
+reg:	GT(reg,reg)	1 { fprintf(outfp, pfGT); }
+
+stat:	ASSIGN(VARIABLE,ADD(VARIABLE,INTEGER))	sameVar {
+		fprintf(outfp, pfADDR pfINCR, p->SUB(0)->value.s,
+			p->SUB(1)->SUB(1)->value.i); }
+stat:	ASSIGN(LOCAL,ADD(LOCAL,INTEGER))	sameLoc {
+		fprintf(outfp, pfLOCAL pfINCR, p->SUB(0)->value.i,
+			p->SUB(1)->SUB(1)->value.i); }
+%%
+
+void function(char *name, int enter, Node *body) {
+  int i;
+  extern int trace;
+
+  if(trace) printNode(body, stdout, yynames);
+  if (body == 0) /* forward declaration */
+    fprintf(outfp, pfEXTRN, name);
+  else { /* function body */
+    fprintf(outfp, pfTEXT pfALIGN pfGLOBL pfLABEL pfENTER, name, pfFUNC, name, enter);
+    if (yyselect(body) == 1) yyerror("No match for syntactic tree.");
+    fprintf(outfp, pfLEAVE pfRET); /* just in case there is no 'return' */
+    freeNode(body);
+  }
+}
+
+void program(int enter, Node *body) {
+  function("_main", enter, body);
+  fprintf(outfp, pfEXTRN pfEXTRN pfEXTRN pfEXTRN,
+  		U_"prints", U_"printi", U_"println", U_"readi");
+}
+
+void declare(char *name, int value) {
+  IDnew(INTEGER, name, 0);
+  if (value == 0)
+    fprintf(outfp, pfBSS pfALIGN pfLABEL pfBYTE pfTEXT, name, 4);
+  else
+    fprintf(outfp, pfDATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+}

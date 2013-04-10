@@ -24,39 +24,39 @@ REAL {DIG}"."{DIG}({EXP})?
 
 %%
 
-"++"				return INC;
-"--"				return DEC;
-":="				return ATRIB;
-"="					return EQ;
-">="				return GE;
-"<="				return LE;
-"<>"				return NE;
-"void"				return VOID;
-"integer"			return INTEGER;
-"string"			return STRING;
-"public"			return PUBLIC;
-"number"			return NUMBER;
-"const"				return CONST;
-"if"				return IF;
-"then"				return THEN;
-"else"				return ELSE;
-"while"				return WHILE;
-"do"				return DO;
-"for"				return FOR;
-"in"				return IN;
-"step"				return STEP;
-"upto"				return UPTO;
-"downto"			return DOWNTO;
-"break"				return BREAK;
-"continue"			return CONTINUE;
+"++"				newline = 0; return INC;
+"--"				newline = 0; return DEC;
+":="				newline = 0; return ATRIB;
+"="					newline = 0; return EQ;
+">="				newline = 0; return GE;
+"<="				newline = 0; return LE;
+"<>"				newline = 0; return NE;
+"void"				newline = 0; return VOID;
+"integer"			newline = 0; return INTEGER;
+"string"			newline = 0; return STRING;
+"public"			newline = 0; return PUBLIC;
+"number"			newline = 0; return NUMBER;
+"const"				newline = 0; return CONST;
+"if"				newline = 0; return IF;
+"then"				newline = 0; return THEN;
+"else"				newline = 0; return ELSE;
+"while"				newline = 0; return WHILE;
+"do"				newline = 0; return DO;
+"for"				newline = 0; return FOR;
+"in"				newline = 0; return IN;
+"step"				newline = 0; return STEP;
+"upto"				newline = 0; return UPTO;
+"downto"			newline = 0; return DOWNTO;
+"break"				newline = 0; return BREAK;
+"continue"			newline = 0; return CONTINUE;
 
-(\n)+			{if(newline) {newline = 0; return ';';}}
+"\n"			if(newline) {newline = 0; return ';';}
 
 [ \t\r]+		;	/* ignore whitespace */
 
-"==".*\n		;	/*Comentarios linha*/
+"==".*\n		newline = 0;	/*Comentarios linha*/
 
-"=<"					{BEGIN COMMENTS; nested = 0; /*Comentarios extensos*/}
+"=<"					{BEGIN COMMENTS;newline = 0; nested = 0; /*Comentarios extensos*/}
 <COMMENTS>"=<" 				{++nested;}
 <COMMENTS>"=>"				{if(--nested <= 0) BEGIN INITIAL;}
 <COMMENTS>.|\n				;
@@ -104,10 +104,11 @@ REAL {DIG}"."{DIG}({EXP})?
 								   }
 							}
 
-";"							newline = 0; return *yytext;
+";"							newline = 0; return *yytext; /* Operadores/Delimitadores especiais*/
 [)!]						newline = 1; return *yytext; /* Operadores/Delimitadores especiais*/
-[-+*/%<>=|&~]				return *yytext; /* Operadores de expressoes */
-[#\[\]{}(,]					return *yytext; /* Delimitadores e separadores */
+
+[-+*/%<>=|&~]				newline = 0; return *yytext; /* Operadores de expressoes */
+[#\[\]{}(,]					newline = 0; return *yytext; /* Delimitadores e separadores */
 
 .							yyerror("Unknown character");
 

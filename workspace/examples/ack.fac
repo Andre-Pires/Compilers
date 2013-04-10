@@ -3,7 +3,7 @@ public void printi(integer i)
 public void println()
 public integer atoi(string s)
 
-integer cnt := 0;
+integer cnt := 0
 integer ackermann (integer m, integer n) {
   cnt := cnt + 1
   if m = 0 then ackermann := n+1

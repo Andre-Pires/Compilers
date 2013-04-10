@@ -16,7 +16,7 @@
 %token <i> INT
 %token <d> NUM
 %token <s> IDENTIF STRN
-%token WHILE IF END RETURN VOID PUBLIC CONST IF THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
+%token WHILE IF END RETURN VOID PUBLIC CONST THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
 %token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX
 
 %nonassoc IFX
@@ -89,8 +89,8 @@ parametro : tipo IDENTIF
           ;
 
 pars2 : parametro ';'
-     | pars2 parametro ';'
-     ;
+      | pars2 parametro ';'
+      ;
 
 corpo : '{' '}'
       | '{' pars2 '}'
@@ -111,8 +111,10 @@ instrucao : IF expressao THEN instrucao %prec IFX
           | FOR left_value IN expressao DOWNTO expressao STEP expressao DO instrucao 
           | expressao ';' 
           | corpo
-          | BREAK '[' INT ']' ';'
-          | CONTINUE '[' INT ']' ';'
+          | BREAK INT ';'
+          | CONTINUE INT ';'
+          | BREAK ';'
+          | CONTINUE ';'
           | left_value '#' expressao ';'
           ;
 
@@ -121,44 +123,44 @@ expressoes  : expressoes ',' expressao
             ;
 
 expressao : INT             
-    | NUM
-    | STRN
-    | left_value              
-    | IDENTIF '(' expressoes ')'   
-    | '(' expressao ')'       
-    | left_value ':=' expressao %prec ATRIB
-    | '-' expressao %prec UMINUS
-    | INC left_value            
-    | DEC left_value            
-    | left_value INC            
-    | left_value DEC               
-    | expressao '*' expressao   
-    | expressao '/' expressao   
-    | expressao '%' expressao   
-    | expressao '+' expressao   
-    | expressao '-' expressao   
-    | expressao '>' expressao  
-    | expressao '<' expressao  
-    | expressao EQ expressao   
-    | expressao NE expressao   
-    | expressao GE expressao   
-    | expressao LE expressao   
-    | expressao '&' expressao  
-    | expressao '|' expressao  
-    | '~' expressao
-    | expressao '!'        
-    | '&' left_value %prec ADDR
-    | '*' left_value %prec POINTER
-    ;
+          | NUM
+          | STRN
+          | left_value              
+          | IDENTIF '(' expressoes ')'   
+          | '(' expressao ')'       
+          | left_value ATRIB expressao
+          | '-' expressao %prec UMINUS
+          | INC left_value            
+          | DEC left_value            
+          | left_value INC            
+          | left_value DEC               
+          | expressao '*' expressao   
+          | expressao '/' expressao   
+          | expressao '%' expressao   
+          | expressao '+' expressao   
+          | expressao '-' expressao   
+          | expressao '>' expressao  
+          | expressao '<' expressao  
+          | expressao EQ expressao   
+          | expressao NE expressao   
+          | expressao GE expressao   
+          | expressao LE expressao   
+          | expressao '&' expressao  
+          | expressao '|' expressao  
+          | '~' expressao
+          | expressao '!'        
+          | '&' left_value %prec ADDR
+          | '*' left_value %prec POINTER
+          ;
 
 left_value: IDENTIF                
-    | IDENTIF '[' expressao ']'    
-    ;
+          | IDENTIF '[' expressao ']'    
+          ;
 
      
 %%
 /*
-int main(int argc, char *argv[])
+int main()
 {
   while (yyparse())
     ;

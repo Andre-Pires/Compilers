@@ -60,10 +60,10 @@ declaracao  : PUBLIC tipo '*' IDENTIF init ';'
             | CONST tipo IDENTIF ';'
             ;
 
-tipo  : INTEGER
-      | STRING
-      | NUMBER
-      | VOID
+tipo  : VOID                 {$$ = 0;}
+      | INTEGER              {$$ = 1;}
+      | STRING               {$$ = 2;}
+      | NUMBER               {$$ = 3;}
       ;
 
 init  : ATRIB INT

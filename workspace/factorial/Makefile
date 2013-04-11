@@ -12,30 +12,30 @@ $(LANG): $(LANG).y $(LANG).l
 
 examples: clean_examples run_examples
 
-run_examples: clean_examples
-	-./factorial ../examples/ack.fac > ../examples/ack.out
-	-./factorial ../examples/add.fac > ../examples/add.out
-	-./factorial ../examples/args.fac > ../examples/args.out
-	-./factorial ../examples/break.fac > ../examples/break.out
-	-./factorial ../examples/chrindex.fac > ../examples/chrindex.out
-	-./factorial ../examples/cont.fac > ../examples/cont.out
-	-./factorial ../examples/decl.fac > ../examples/decl.out
-	-./factorial ../examples/div.fac > ../examples/div.out
-	-./factorial ../examples/downto.fac > ../examples/downto.out
-	-./factorial ../examples/fib.fac > ../examples/fib.out
-	-./factorial ../examples/gcd.fac > ../examples/gcd.out
-	-./factorial ../examples/gt.fac > ../examples/gt.out
-	-./factorial ../examples/hello.fac > ../examples/hello.out
-	-./factorial ../examples/if.fac > ../examples/if.out
-	-./factorial ../examples/intindex.fac > ../examples/intindex.out
-	-./factorial ../examples/local.fac > ../examples/local.out
-	-./factorial ../examples/logic.fac > ../examples/logic.out
-	-./factorial ../examples/pi.fac > ../examples/pi.out
-	-./factorial ../examples/printi.fac > ../examples/printi.out
-	-./factorial ../examples/strtest.fac > ../examples/strtest.out	
-	-./factorial ../examples/tri.fac > ../examples/tri.out
-	-./factorial ../examples/upto.fac > ../examples/upto.out
-	-./factorial ../examples/while.fac > ../examples/while.out
+run_examples: 
+	-YYDEBUG=1 ./factorial ../examples/ack.fac > ../examples/ack.out
+	-YYDEBUG=1 ./factorial ../examples/add.fac > ../examples/add.out
+	-YYDEBUG=1 ./factorial ../examples/args.fac > ../examples/args.out
+	-YYDEBUG=1 ./factorial ../examples/break.fac > ../examples/break.out
+	-YYDEBUG=1 ./factorial ../examples/chrindex.fac > ../examples/chrindex.out
+	-YYDEBUG=1 ./factorial ../examples/cont.fac > ../examples/cont.out
+	-YYDEBUG=1 ./factorial ../examples/decl.fac > ../examples/decl.out
+	-YYDEBUG=1 ./factorial ../examples/div.fac > ../examples/div.out
+	-YYDEBUG=1 ./factorial ../examples/downto.fac > ../examples/downto.out
+	-YYDEBUG=1 ./factorial ../examples/fib.fac > ../examples/fib.out
+	-YYDEBUG=1 ./factorial ../examples/gcd.fac > ../examples/gcd.out
+	-YYDEBUG=1 ./factorial ../examples/gt.fac > ../examples/gt.out
+	-YYDEBUG=1 ./factorial ../examples/hello.fac > ../examples/hello.out
+	-YYDEBUG=1 ./factorial ../examples/if.fac > ../examples/if.out
+	-YYDEBUG=1 ./factorial ../examples/intindex.fac > ../examples/intindex.out
+	-YYDEBUG=1 ./factorial ../examples/local.fac > ../examples/local.out
+	-YYDEBUG=1 ./factorial ../examples/logic.fac > ../examples/logic.out
+	-YYDEBUG=1 ./factorial ../examples/pi.fac > ../examples/pi.out
+	-YYDEBUG=1 ./factorial ../examples/printi.fac > ../examples/printi.out
+	-YYDEBUG=1 ./factorial ../examples/strtest.fac > ../examples/strtest.out	
+	-YYDEBUG=1 ./factorial ../examples/tri.fac > ../examples/tri.out
+	-YYDEBUG=1 ./factorial ../examples/upto.fac > ../examples/upto.out
+	-YYDEBUG=1 ./factorial ../examples/while.fac > ../examples/while.out
 	
 diff_examples: run_examples
 	-diff ../examples/ack.out ../examples/empty.out 

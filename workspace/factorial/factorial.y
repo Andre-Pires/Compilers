@@ -41,7 +41,7 @@ declaracoes  : declaracao
              | declaracoes declaracao
              ;
 
-declaracao  :  PUBLIC tipo '*' IDENTIF init ';'
+declaracao  : PUBLIC tipo '*' IDENTIF init ';'
             | tipo '*' IDENTIF init ';'
             | PUBLIC CONST tipo '*' IDENTIF init ';'
             | CONST tipo '*' IDENTIF init ';'
@@ -59,9 +59,9 @@ declaracao  :  PUBLIC tipo '*' IDENTIF init ';'
             | CONST tipo IDENTIF ';'
             ;
 
-tipo  : INTEGER 
-      | STRING 
-      | NUMBER 
+tipo  : INTEGER
+      | STRING
+      | NUMBER
       | VOID
       ;
 
@@ -72,7 +72,7 @@ init  : ATRIB INT
       | ATRIB IDENTIF
       |'(' parametros ')' corpo
       |'(' parametros ')'
-      |'(' ')' corpo 
+      |'(' ')' corpo
       |'(' ')'
       ;
 
@@ -126,7 +126,8 @@ expressao : INT
           | NUM
           | STRN
           | left_value              
-          | IDENTIF '(' expressoes ')'   
+          | IDENTIF '(' expressoes ')'
+          | IDENTIF '(' ')'
           | '(' expressao ')'       
           | left_value ATRIB expressao
           | '-' expressao %prec UMINUS

@@ -4,8 +4,9 @@ public integer readi()
 integer m
 integer x
 public integer entry (integer argc, string *argv, string *envp) {
-  m := readi()
-  if m > 0 then
+  m :=asdsad readi()
+  cenasad
+  if m > f0 then
     do {
       printi(x)
       println()

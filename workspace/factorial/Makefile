@@ -37,8 +37,6 @@ run_examples: clean_examples
 	-./factorial ../examples/upto.fac > ../examples/upto.out
 	-./factorial ../examples/while.fac > ../examples/while.out
 	
-
-/* nao interessa */
 diff_examples: run_examples
 	-diff ../examples/ack.out ../examples/empty.out 
 	-diff ../examples/add.out ../examples/empty.out

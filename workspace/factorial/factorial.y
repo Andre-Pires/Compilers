@@ -32,6 +32,7 @@
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
 
+%type <i> tipo ptr cons pub
 %%
 
 ficheiro  : declaracoes
@@ -42,23 +43,21 @@ declaracoes  : declaracao
              | declaracoes declaracao
              ;
 
-declaracao  : PUBLIC tipo '*' IDENTIF init ';'
-            | tipo '*' IDENTIF init ';'
-            | PUBLIC CONST tipo '*' IDENTIF init ';'
-            | CONST tipo '*' IDENTIF init ';'
-            | PUBLIC tipo IDENTIF init ';'
-            | tipo IDENTIF init ';'
-            | PUBLIC CONST tipo IDENTIF init ';'
-            | CONST tipo IDENTIF init ';'
-            | PUBLIC tipo '*' IDENTIF ';'
-            | tipo '*' IDENTIF ';'
-            | PUBLIC CONST tipo '*' IDENTIF ';'
-            | CONST tipo '*' IDENTIF ';'
-            | PUBLIC tipo IDENTIF ';'
-            | tipo IDENTIF ';'
-            | PUBLIC CONST tipo IDENTIF ';'
-            | CONST tipo IDENTIF ';'
+declaracao  : pub cons tipo ptr IDENTIF init ';'            {IDnew($1+$2+$3+$4, $5, 0);}
+            | pub cons tipo ptr IDENTIF ';'                 {IDnew($1+$2+$3+$4, $5, 0);}
             ;
+
+ptr   :                      {$$ = 0;}
+      | '*'                  {$$ = 4;}
+      ;
+
+cons  :                      {$$ = 0;}
+      | CONST                {$$ = 8;}
+      ;
+
+pub   :                      {$$ = 0;}
+      | PUBLIC               {$$ = 16;}
+      ;
 
 tipo  : VOID                 {$$ = 0;}
       | INTEGER              {$$ = 1;}

@@ -666,20 +666,6 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 163 "factorial.y"
-/*
-int main()
-{
-  while (yyparse())
-    ;
-  return 0;
-}
-
-void yyerror(char *s)
-{
-  printf("%s\n", s);
-*/
-#line 682 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */

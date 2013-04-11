@@ -31,6 +31,7 @@
 %left '*' '/' '%'
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
+
 %%
 
 ficheiro  : declaracoes
@@ -160,15 +161,3 @@ left_value: IDENTIF
 
      
 %%
-/*
-int main()
-{
-  while (yyparse())
-    ;
-  return 0;
-}
-
-void yyerror(char *s)
-{
-  printf("%s\n", s);
-*/

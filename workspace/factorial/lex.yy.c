@@ -631,7 +631,7 @@ char *yytext_ptr;
 void yyerror(char *s);
 char * octais();
 int nested, newline;
-char string[200];
+char string[300];
 char * buffer;
 
 #line 638 "lex.yy.c"

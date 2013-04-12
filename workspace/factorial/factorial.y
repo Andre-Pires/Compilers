@@ -32,7 +32,7 @@
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
 
-%type <i> tipo ptr cons pub
+%type <i> tipo ptr cons pub left_value expressao init
 %%
 
 ficheiro  : declaracoes
@@ -43,7 +43,8 @@ declaracoes  : declaracao
              | declaracoes declaracao
              ;
 
-declaracao  : pub cons tipo ptr IDENTIF init ';'            {IDnew($1+$2+$3+$4, $5, 0);}
+declaracao  : pub cons tipo ptr IDENTIF init ';'            {IDnew($1+$2+$3+$4, $5, 0);
+                                                            if(IDfind($5, 0) != IDfind($6, 0)) yyerror("Atribuição entre tipos diferentes.");}
             | pub cons tipo ptr IDENTIF ';'                 {IDnew($1+$2+$3+$4, $5, 0);}
             ;
 
@@ -65,11 +66,10 @@ tipo  : VOID                 {$$ = 0;}
       | NUMBER               {$$ = 3;}
       ;
 
-init  : ATRIB INT
-      | ATRIB CONST STRN
-      | ATRIB STRN
-      | ATRIB NUM
-      | ATRIB IDENTIF
+init  : ATRIB INT                     {$$ = 1;} 
+      | ATRIB cons STRN               {$$ = IDfind($2, 0) + 2;}
+      | ATRIB NUM                     {$$ = 3;}
+      | ATRIB IDENTIF                 {$$ = IDfind($2, 0);}
       |'(' parametros ')' corpo
       |'(' parametros ')'
       |'(' ')' corpo
@@ -84,8 +84,7 @@ parametros  : parametro
             | parametro pars
             ;
 
-parametro : tipo IDENTIF
-          | tipo '*' IDENTIF
+parametro : tipo ptr IDENTIF            {IDnew($1+$2, $3, 0);}
           ;
 
 pars2 : parametro ';'
@@ -122,21 +121,21 @@ expressoes  : expressoes ',' expressao
             | expressao
             ;
 
-expressao : INT             
-          | NUM
-          | STRN
+expressao : INT                           {$$ = 1;}   
+          | NUM                           {$$ = 3;}
+          | STRN                          {$$ = 2;}
           | left_value              
           | IDENTIF '(' expressoes ')'
           | IDENTIF '(' ')'
           | '(' expressao ')'       
-          | left_value ATRIB expressao
+          | left_value ATRIB expressao 
           | '-' expressao %prec UMINUS
-          | INC left_value            
-          | DEC left_value            
-          | left_value INC            
-          | left_value DEC               
-          | expressao '*' expressao   
-          | expressao '/' expressao   
+          | INC left_value                {int t = IDfind($2, 0); if(t != 1) yyerror("Incremento : Tipo inválido."); $$ = t;}
+          | DEC left_value                {int t = IDfind($2, 0); if(t != 1) yyerror("Decremento : Tipo inválido."); $$ = t;}
+          | left_value INC                {int t = IDfind($1, 0); if(t != 1) yyerror("Incremento : Tipo inválido."); $$ = t;}
+          | left_value DEC                {int t = IDfind($1, 0); if(t != 1) yyerror("Decremento : Tipo inválido."); $$ = t;}
+          | expressao '*' expressao       {$$ = mult($1, $3);}
+          | expressao '/' expressao       {$$ = mult($1, $3);}
           | expressao '%' expressao   
           | expressao '+' expressao   
           | expressao '-' expressao   
@@ -149,14 +148,22 @@ expressao : INT
           | expressao '&' expressao  
           | expressao '|' expressao  
           | '~' expressao
-          | expressao '!'        
+          | expressao '!'                {int t = IDfind($1, 0); if(t != 1) yyerror("Factorial : Tipo inválido.");} 
           | '&' left_value %prec ADDR
           | '*' left_value %prec POINTER
           ;
 
-left_value: IDENTIF                
-          | IDENTIF '[' expressao ']'    
+left_value: IDENTIF                     {$$ = IDfind($1, 0);}            
+          | IDENTIF '[' expressao ']'   {}
           ;
 
      
 %%
+
+static int mult(int name, int name2) {
+ 
+  if (name == 0 || name2 == 0 || name == 2 || name2 == 2) 
+    yyerror("Operação : Tipo inválido.");
+  if(name == 3 || name2 == 3) return 3;
+  else return 2;
+}

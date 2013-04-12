@@ -12,6 +12,9 @@ $(LANG): $(LANG).y $(LANG).l
 
 examples: clean_examples run_examples
 
+exampleack: clean_examples
+	-YYDEBUG=1 ./factorial ../examples/ack.fac > ../examples/ack.out
+
 run_examples: 
 	-YYDEBUG=1 ./factorial ../examples/ack.fac > ../examples/ack.out
 	-YYDEBUG=1 ./factorial ../examples/add.fac > ../examples/add.out

@@ -45,9 +45,9 @@ declaracoes  : declaracao
              | declaracoes declaracao
              ;
 
-declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0);
-                                                            if($3+$4 != ($6 & 0x7)) yyerror("Atribuição entre tipos diferentes.");
-                                                            if ($6 == 32) IDreplace($1+$2+$3+$4+32, $5, p); }
+declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0); 
+                                                            if(($3+$4 != ($6 & 0x7)) && ($6 != 32)) yyerror("Atribuição entre tipos diferentes.");
+                                                            if($6 == 32) IDreplace($1+$2+$3+$4+32, $5, p); }
             | pub cons tipo ptr IDENTIF ';'                 { IDnew($1+$2+$3+$4, $5, 0); }
             ;
 
@@ -87,7 +87,7 @@ parametros  : parametro               { $$ = $1; }
             | parametro pars          { $$ = $1 + $2; }
             ;
 
-parametro : tipo ptr IDENTIF          { IDnew($1+$2, $3, 0); }
+parametro : tipo ptr IDENTIF          { IDpush(); IDnew($1+$2, $3, 0); IDpop(); }
           ;
 
 pars2 : parametro ';'                           { $$ = $1; }

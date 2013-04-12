@@ -87,8 +87,8 @@ clean_examples:
 	rm -f ../examples/upto.out
 	rm -f ../examples/while.out
 
-install:: $(LANG)
+install: $(LANG)
 	cp $(LANG) ..
 
-clean::	clean_examples
+clean:
 	rm -f *.o $(LANG) lex.yy.c y.tab.c y.tab.h y.output *~

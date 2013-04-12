@@ -156,14 +156,19 @@ expressao : INT                                       { $$ = 1; }
           | expressao '&' expressao                   { if($1 != 1 || $3 != 1) yyerror("Junção Lógica : Tipo inválido."); $$ = 1; }
           | expressao '|' expressao                   { if($1 != 1 || $3 != 1) yyerror("Alternativa Lógica : Tipo inválido."); $$ = 1; }
           | '~' expressao                             { if($2 != 1) yyerror("Negação Lógica : Tipo inválido."); $$ = 1; }
-          | expressao '!'                             { if($1 != 1) yyerror("Factorial : Tipo inválido."); $$ = $1; } 
-          | '&' left_value %prec ADDR
+          | expressao '!'                             { if($1 != 1) yyerror("Factorial : Tipo inválido."); $$ = $1; }
+          | '&' left_value %prec ADDR                 
           | '*' left_value %prec POINTER
           ;
 
 left_value: IDENTIF                                   { $$ = IDfind($1, 0); }
-          | IDENTIF '[' expressao ']'                 { $$ = IDfind($1, 0); 
-                                            /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
+          | IDENTIF '[' expressao ']'                 {int x = IDfind($1, 0);
+                                                        if (((x & 0x7) == 4) || ((x & 0x7) == 5)  || ((x & 0x7) == 7)) 
+                                                              $$ = x - 4;
+                                                        else if (((x & 0x7) == 2))
+                                                              $$ = 1;
+                                                        else yyerror("Ponteiro: Tipo inválido.");
+              /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
           ;
      
 %%

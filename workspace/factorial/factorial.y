@@ -34,7 +34,7 @@ int p, nciclo;
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
 
-%type <i> tipo ptr cons pub left_value expressao init parametro parametros pars pars2 expressao expressoes
+%type <i> tipo ptr cons pub left_value init parametro parametros pars pars2 expressao expressoes declaracao
 %%
 
 ficheiro  : declaracoes
@@ -110,9 +110,9 @@ instrucao : IF expressao THEN instrucao %prec IFX
           | FOR left_value IN expressao updown expressao step DO { nciclo++; } instrucao { nciclo--; }
           | expressao ';' 
           | corpo
-          | BREAK INT ';'                             { if ($2 == 0 || $2 > nciclo) yyerror(""); }
+          | BREAK INT ';'                             { if ($2 == 0 || $2 > nciclo) yyerror("Break inválido: Fora de um ciclo"); }
           | CONTINUE INT ';'
-          | BREAK ';'                                 { if (nciclo == 0) yyerror(""); }
+          | BREAK ';'                                 { if (nciclo == 0) yyerror("Break inválido: Fora de um ciclo"); }
           | CONTINUE ';'
           | left_value '#' expressao ';'
           ;
@@ -157,8 +157,8 @@ expressao : INT                                       { $$ = 1; }
           | expressao '|' expressao                   { if($1 != 1 || $3 != 1) yyerror("Alternativa Lógica : Tipo inválido."); $$ = 1; }
           | '~' expressao                             { if($2 != 1) yyerror("Negação Lógica : Tipo inválido."); $$ = 1; }
           | expressao '!'                             { if($1 != 1) yyerror("Factorial : Tipo inválido."); $$ = $1; }
-          | '&' left_value %prec ADDR                 
-          | '*' left_value %prec POINTER
+          | '&' left_value %prec ADDR                 { $$ = $2; }
+          | '*' left_value %prec POINTER              { $$ = $2; }
           ;
 
 left_value: IDENTIF                                   { $$ = IDfind($1, 0); }

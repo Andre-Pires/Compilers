@@ -25,7 +25,7 @@ Node *newNode(NodeType t, int attrib, int nops) {
     p->line = yylineno;
     p->user = 0;
     p->state = 0;
-    p->place = -1;
+    p->info = -1;
     p->value.sub.num = nops;
     if (nops > 0) {
 	for (i = 0; i < nops; i++)
@@ -86,6 +86,33 @@ Node *subNode(int oper, int nops, ...) {
 	p->value.sub.n[i] = va_arg(ap, Node*);
     va_end(ap);
     return p;
+}
+
+Node *seqNode(int oper, int nops, ...) {
+    va_list ap;
+    Node *p, *q;
+    int i;
+
+    q = p = newNode(nodeOpr, oper, nops < 3 ? nops : 2);
+    if (p == NULL) return 0;
+    va_start(ap, nops);
+    for (i = 0; i < nops; i++) {
+	p->value.sub.n[0] = va_arg(ap, Node*);
+	if (nops - i < 3) {
+	    p->value.sub.n[1] = va_arg(ap, Node*);
+	    break;
+	} else {
+	    p->value.sub.n[1] = newNode(nodeOpr, oper, nops - i < 3 ? nops - i : 2);
+	    if (p->value.sub.n[1] == NULL) {
+	        freeNode(q);
+		q = 0;
+		break;
+	    }
+	}
+	p = p->value.sub.n[1];
+    }
+    va_end(ap);
+    return q;
 }
 
 Node *addNode(Node *base, Node *node, unsigned pos) {

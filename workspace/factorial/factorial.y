@@ -3,10 +3,12 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h> 
+#include <stdarg.h>
 #include "node.h"
 #include "tabid.h"
 
-int p, nciclo;
+char var[100];
+int p, tipo, nciclo;
 %}
 
 %union {
@@ -47,8 +49,9 @@ declaracoes  : declaracao
 
 declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0); 
                                                             if(($3+$4 != ($6 & 0x7)) && ($6 != 32)) yyerror("Atribuição entre tipos diferentes.");
-                                                            if($6 == 32){  IDreplace($1+$2+$3+$4+32, $5, p);}}
+                                                            if($6 == 32){  IDreplace($1+$2+$3+$4+32, $5, p); strcpy(var, $5);}}
             | pub cons tipo ptr IDENTIF ';'                 { IDnew($1+$2+$3+$4, $5, 0); }
+            | error ';'                                     { $$ = 0; yyerrok; }
             ;
 
 ptr   :                      { $$ = 0; }
@@ -69,21 +72,21 @@ tipo  : VOID                 { $$ = 0; }
       | NUMBER               { $$ = 3; }
       ;
 
-init  : ATRIB INT                               { $$ = 1; } 
-      | ATRIB cons STRN                         { $$ = 2; }
-      | ATRIB NUM                               { $$ = 3; }
-      | ATRIB IDENTIF                           { $$ = IDfind($2, 0)+4; }
-      |'(' parametros ')' corpo {IDpop();}      { $$ = 32; p = $2;}
-      |'(' parametros ')'                       { $$ = 32; p = $2; IDpop();}
-      |'(' ')' {IDpush();}  corpo {IDpop();}    { $$ = 0; }
-      |'(' ')'                                  { $$ = 0; }
+init  : ATRIB INT                                                                                                                          { $$ = 1; } 
+      | ATRIB cons STRN                                                                                                                    { $$ = 2; }
+      | ATRIB NUM                                                                                                                          { $$ = 3; }
+      | ATRIB IDENTIF                                                                                                                      { $$ = IDfind($2, 0)+4; }
+      |'(' parametros ')' corpo                                                                                                            { $$ = 32; p = $2; IDpop();}
+      |'(' parametros ')'                                                                                                                  { $$ = 32; p = $2; IDpop();}
+      |'(' ')' {IDpush(); tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0); if(tipo != 0) {IDnew(tipo-32, var,0);}}  corpo                 { $$ = 0; IDpop();}
+      |'(' ')'                                                                                                                             { $$ = 0; }
       ;
 
 pars : pars ',' parametro             { $$ = $1 + $3; }
      |                                { $$ = 0; }
      ;
 
-parametros  : {IDpush();} parametro pars         { $$ = $1 + $2; }
+parametros  : {IDpush(); tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0); if(tipo != 0) {IDnew(tipo-32, var,0);}} parametro pars     { $$ = $1 + $2; }
             ;
 
 parametro : tipo ptr IDENTIF                    { IDnew($1+$2, $3, 0); }
@@ -114,6 +117,7 @@ instrucao : IF expressao THEN instrucao %prec IFX
           | BREAK ';'                                 { if (nciclo == 0) yyerror("Break inválido: Fora de um ciclo"); }
           | CONTINUE ';'
           | left_value '#' expressao ';'
+          | error ';'                                     { yyerrok; }
           ;
 
 updown  : UPTO
@@ -177,7 +181,7 @@ static int oper(int name, int name2) {
   if (name == 0 || name2 == 0 || name == 2 || name2 == 2) 
     yyerror("Operação : Tipo inválido.");
   if(name == 3 || name2 == 3) return 3;
-  else return 2;
+  else return 1;
 }
 
 static int comp(int name, int name2) {

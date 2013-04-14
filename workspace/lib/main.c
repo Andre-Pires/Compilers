@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-char *ext = ".asm", *prog, *infile = "<<stdin>>", *outfile = 0;
+char *ext = ".asm", *prog, *infile = "<<stdin>>", *outfile = "out.asm";
 int errors, opt, tree, trace, yyparse(void);
 FILE *outfp;
 

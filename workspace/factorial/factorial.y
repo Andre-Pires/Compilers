@@ -69,35 +69,34 @@ tipo  : VOID                 { $$ = 0; }
       | NUMBER               { $$ = 3; }
       ;
 
-init  : ATRIB INT                     { $$ = 1; } 
-      | ATRIB cons STRN               { $$ = 2; }
-      | ATRIB NUM                     { $$ = 3; }
-      | ATRIB IDENTIF                 { $$ = IDfind($2, 0)+4; }
-      |'(' parametros ')' corpo       { $$ = 32; p = $2; IDpop();}
-      |'(' parametros ')'             { $$ = 32; p = $2; IDpop();}
-      |'(' ')' corpo                  { $$ = 0; }
-      |'(' ')'                        { $$ = 0; }
+init  : ATRIB INT                               { $$ = 1; } 
+      | ATRIB cons STRN                         { $$ = 2; }
+      | ATRIB NUM                               { $$ = 3; }
+      | ATRIB IDENTIF                           { $$ = IDfind($2, 0)+4; }
+      |'(' parametros ')' corpo {IDpop();}      { $$ = 32; p = $2;}
+      |'(' parametros ')'                       { $$ = 32; p = $2; IDpop();}
+      |'(' ')' {IDpush();}  corpo {IDpop();}    { $$ = 0; }
+      |'(' ')'                                  { $$ = 0; }
       ;
 
-pars : ',' parametro                  { $$ = $2; }
-     | pars ',' parametro             { $$ = $1 + $3; }
+pars : pars ',' parametro             { $$ = $1 + $3; }
+     |                                { $$ = 0; }
      ;
 
-parametros  : parametro               { $$ = $1; }
-            | parametro pars          { $$ = $1 + $2; }
+parametros  : {IDpush();} parametro pars         { $$ = $1 + $2; }
             ;
 
-parametro : tipo ptr IDENTIF          { IDpush(); IDnew($1+$2, $3, 0); }
+parametro : tipo ptr IDENTIF                    { IDnew($1+$2, $3, 0); }
           ;
 
 pars2 : parametro ';'                           { $$ = $1; }
       | pars2 parametro ';'                     { $$ = $1 + $2; }
       ;
 
-corpo : '{' '}' {IDpop();}
-      | '{' pars2 '}' {IDpop();}
-      | '{' instrucoes '}' {IDpop();}
-      | '{' pars2 instrucoes '}' {IDpop();}
+corpo : '{' '}'
+      | '{' pars2 '}' 
+      | '{' instrucoes '}' 
+      | '{' pars2 instrucoes '}' 
       ;
 
 instrucoes : instrucao

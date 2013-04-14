@@ -15,6 +15,9 @@ examples: clean_examples run_examples
 exampleack: clean_examples
 	-YYDEBUG=1 ./factorial ../examples/ack.fac > ../examples/ack.out
 
+exampleint: clean_examples
+	-YYDEBUG=1 ./factorial ../examples/intindex.fac > ../examples/intindex.out
+
 run_examples: 
 	-YYDEBUG=1 ./factorial ../examples/ack.fac > ../examples/ack.out
 	-YYDEBUG=1 ./factorial ../examples/add.fac > ../examples/add.out

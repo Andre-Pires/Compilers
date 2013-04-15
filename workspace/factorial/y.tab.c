@@ -25,9 +25,8 @@ static const char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 #include "node.h"
 #include "tabid.h"
 
-char var[100];
-int p, tipo, nciclo;
-#line 14 "factorial.y"
+int p, nciclo;
+#line 13 "factorial.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -40,7 +39,7 @@ typedef union {
 	char *s;		/* symbol name or string literal */
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 43 "y.tab.c"
+#line 42 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -646,7 +645,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 177 "factorial.y"
+#line 176 "factorial.y"
 
 static int oper(int name, int name2) {
  
@@ -662,7 +661,7 @@ static int comp(int name, int name2) {
   if (name == 2 && name != name2) yyerror("Comparação : Tipos incompatíveis.");
   return 1;
 }
-#line 665 "y.tab.c"
+#line 664 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -869,283 +868,283 @@ yyreduce:
     switch (yyn)
     {
 case 5:
-#line 50 "factorial.y"
+#line 49 "factorial.y"
 	{ IDnew(yystack.l_mark[-6].i+yystack.l_mark[-5].i+yystack.l_mark[-4].i+yystack.l_mark[-3].i, yystack.l_mark[-2].s, 0); if(yystack.l_mark[-4].i+yystack.l_mark[-3].i != yystack.l_mark[-1].i) yyerror("Atribuição entre tipos diferentes.");}
 break;
 case 6:
-#line 51 "factorial.y"
+#line 50 "factorial.y"
 	{ IDnew(yystack.l_mark[-5].i+yystack.l_mark[-4].i+yystack.l_mark[-3].i+yystack.l_mark[-2].i, yystack.l_mark[-1].s, 0); }
 break;
 case 7:
-#line 52 "factorial.y"
+#line 51 "factorial.y"
 	{IDnew(yystack.l_mark[-5].i+yystack.l_mark[-4].i+yystack.l_mark[-3].i+yystack.l_mark[-2].i+32, yystack.l_mark[-1].s, 0); IDpush(); }
 break;
 case 8:
-#line 52 "factorial.y"
+#line 51 "factorial.y"
 	{IDreplace(yystack.l_mark[-8].i+yystack.l_mark[-7].i+yystack.l_mark[-6].i+yystack.l_mark[-5].i+32,yystack.l_mark[-4].s, p); if((yystack.l_mark[-6].i+yystack.l_mark[-5].i) != 0) {IDnew(yystack.l_mark[-6].i+yystack.l_mark[-5].i, yystack.l_mark[-4].s, 0);} }
 break;
 case 9:
-#line 52 "factorial.y"
+#line 51 "factorial.y"
 	{ IDpop();}
 break;
 case 10:
-#line 53 "factorial.y"
+#line 52 "factorial.y"
 	{IDnew(yystack.l_mark[-6].i+yystack.l_mark[-5].i+yystack.l_mark[-4].i+yystack.l_mark[-3].i+32, yystack.l_mark[-2].s, 0); IDpush();  if((yystack.l_mark[-4].i+yystack.l_mark[-3].i) != 0) {IDnew((yystack.l_mark[-4].i+yystack.l_mark[-3].i), yystack.l_mark[-2].s,0);}}
 break;
 case 11:
-#line 53 "factorial.y"
+#line 52 "factorial.y"
 	{IDpop();}
 break;
 case 12:
-#line 54 "factorial.y"
+#line 53 "factorial.y"
 	{IDnew(yystack.l_mark[-7].i+yystack.l_mark[-6].i+yystack.l_mark[-5].i+yystack.l_mark[-4].i+32, yystack.l_mark[-3].s, 0);}
 break;
 case 13:
-#line 55 "factorial.y"
+#line 54 "factorial.y"
 	{yyerrok; }
 break;
 case 16:
-#line 60 "factorial.y"
+#line 59 "factorial.y"
 	{ yyval.i = 0; }
 break;
 case 17:
-#line 61 "factorial.y"
+#line 60 "factorial.y"
 	{ yyval.i = 4; }
 break;
 case 18:
-#line 64 "factorial.y"
+#line 63 "factorial.y"
 	{ yyval.i = 0; }
 break;
 case 19:
-#line 65 "factorial.y"
+#line 64 "factorial.y"
 	{ yyval.i = 8; }
 break;
 case 20:
-#line 68 "factorial.y"
+#line 67 "factorial.y"
 	{ yyval.i = 0; }
 break;
 case 21:
-#line 69 "factorial.y"
+#line 68 "factorial.y"
 	{ yyval.i = 16; }
 break;
 case 22:
-#line 72 "factorial.y"
+#line 71 "factorial.y"
 	{ yyval.i = 0; }
 break;
 case 23:
-#line 73 "factorial.y"
+#line 72 "factorial.y"
 	{ yyval.i = 1; }
 break;
 case 24:
-#line 74 "factorial.y"
+#line 73 "factorial.y"
 	{ yyval.i = 2; }
 break;
 case 25:
-#line 75 "factorial.y"
+#line 74 "factorial.y"
 	{ yyval.i = 3; }
 break;
 case 26:
-#line 78 "factorial.y"
+#line 77 "factorial.y"
 	{ yyval.i = 1; }
 break;
 case 27:
-#line 79 "factorial.y"
+#line 78 "factorial.y"
 	{ yyval.i = 2; }
 break;
 case 28:
-#line 80 "factorial.y"
+#line 79 "factorial.y"
 	{ yyval.i = 3; }
 break;
 case 29:
-#line 81 "factorial.y"
+#line 80 "factorial.y"
 	{ yyval.i = IDfind(yystack.l_mark[0].s, 0)+4; }
 break;
 case 30:
-#line 84 "factorial.y"
+#line 83 "factorial.y"
 	{ yyval.i = yystack.l_mark[-2].i + yystack.l_mark[0].i; }
 break;
 case 31:
-#line 85 "factorial.y"
+#line 84 "factorial.y"
 	{ yyval.i = 0; }
 break;
 case 32:
-#line 88 "factorial.y"
+#line 87 "factorial.y"
 	{ yyval.i = yystack.l_mark[-1].i + yystack.l_mark[0].i; }
 break;
 case 33:
-#line 91 "factorial.y"
+#line 90 "factorial.y"
 	{ IDnew(yystack.l_mark[-2].i+yystack.l_mark[-1].i, yystack.l_mark[0].s, 0);}
 break;
 case 34:
-#line 94 "factorial.y"
+#line 93 "factorial.y"
 	{ yyval.i = yystack.l_mark[-1].i; }
 break;
 case 35:
-#line 95 "factorial.y"
+#line 94 "factorial.y"
 	{ yyval.i = yystack.l_mark[-2].i + yystack.l_mark[-1].i; }
 break;
 case 44:
-#line 110 "factorial.y"
+#line 109 "factorial.y"
 	{ nciclo++; }
 break;
 case 45:
-#line 110 "factorial.y"
+#line 109 "factorial.y"
 	{ nciclo--; }
 break;
 case 47:
-#line 111 "factorial.y"
+#line 110 "factorial.y"
 	{ nciclo++; }
 break;
 case 48:
-#line 111 "factorial.y"
+#line 110 "factorial.y"
 	{ nciclo--; }
 break;
 case 51:
-#line 114 "factorial.y"
+#line 113 "factorial.y"
 	{ if (yystack.l_mark[-1].i == 0 || yystack.l_mark[-1].i > nciclo) yyerror("Break inválido: Fora de um ciclo"); }
 break;
 case 53:
-#line 116 "factorial.y"
+#line 115 "factorial.y"
 	{ if (nciclo == 0) yyerror("Break inválido: Fora de um ciclo"); }
 break;
 case 56:
-#line 119 "factorial.y"
+#line 118 "factorial.y"
 	{ yyerrok; }
 break;
 case 61:
-#line 130 "factorial.y"
+#line 129 "factorial.y"
 	{ yyval.i = yystack.l_mark[-2].i + yystack.l_mark[0].i; }
 break;
 case 62:
-#line 131 "factorial.y"
+#line 130 "factorial.y"
 	{ yyval.i = yystack.l_mark[0].i; }
 break;
 case 63:
-#line 134 "factorial.y"
+#line 133 "factorial.y"
 	{ yyval.i = 1; }
 break;
 case 64:
-#line 135 "factorial.y"
+#line 134 "factorial.y"
 	{ yyval.i = 3; }
 break;
 case 65:
-#line 136 "factorial.y"
+#line 135 "factorial.y"
 	{ yyval.i = 2; }
 break;
 case 66:
-#line 137 "factorial.y"
+#line 136 "factorial.y"
 	{ yyval.i = yystack.l_mark[0].i; }
 break;
 case 67:
-#line 138 "factorial.y"
+#line 137 "factorial.y"
 	{ yyval.i = IDsearch(yystack.l_mark[-3].s, 0, IDlevel(), 0) && (0x7); }
 break;
 case 68:
-#line 139 "factorial.y"
+#line 138 "factorial.y"
 	{ yyval.i = IDsearch(yystack.l_mark[-2].s, 0, IDlevel(), 0) && (0x7); }
 break;
 case 69:
-#line 140 "factorial.y"
+#line 139 "factorial.y"
 	{ yyval.i = yystack.l_mark[-1].i; }
 break;
 case 70:
-#line 141 "factorial.y"
+#line 140 "factorial.y"
 	{ if (yystack.l_mark[-2].i != yystack.l_mark[0].i) yyerror("Atribuição entre tipos diferentes."); yyval.i = yystack.l_mark[-2].i; }
 break;
 case 71:
-#line 142 "factorial.y"
+#line 141 "factorial.y"
 	{ if(yystack.l_mark[0].i == 0 || yystack.l_mark[0].i == 2) yyerror("Simétrico : Tipo inválido."); yyval.i = yystack.l_mark[0].i; }
 break;
 case 72:
-#line 143 "factorial.y"
+#line 142 "factorial.y"
 	{ if(yystack.l_mark[0].i != 1) yyerror("Incremento : Tipo inválido."); yyval.i = 1; }
 break;
 case 73:
-#line 144 "factorial.y"
+#line 143 "factorial.y"
 	{ if(yystack.l_mark[0].i != 1) yyerror("Decremento : Tipo inválido."); yyval.i = 1; }
 break;
 case 74:
-#line 145 "factorial.y"
+#line 144 "factorial.y"
 	{ if(yystack.l_mark[-1].i != 1) yyerror("Incremento : Tipo inválido."); yyval.i = 1; }
 break;
 case 75:
-#line 146 "factorial.y"
+#line 145 "factorial.y"
 	{ if(yystack.l_mark[-1].i != 1) yyerror("Decremento : Tipo inválido."); yyval.i = 1; }
 break;
 case 76:
-#line 147 "factorial.y"
+#line 146 "factorial.y"
 	{ yyval.i = oper(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 77:
-#line 148 "factorial.y"
+#line 147 "factorial.y"
 	{ yyval.i = oper(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 78:
-#line 149 "factorial.y"
+#line 148 "factorial.y"
 	{ yyval.i = oper(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 79:
-#line 150 "factorial.y"
+#line 149 "factorial.y"
 	{ yyval.i = oper(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 80:
-#line 151 "factorial.y"
+#line 150 "factorial.y"
 	{ yyval.i = oper(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 81:
-#line 152 "factorial.y"
+#line 151 "factorial.y"
 	{ yyval.i = comp(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 82:
-#line 153 "factorial.y"
+#line 152 "factorial.y"
 	{ yyval.i = comp(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 83:
-#line 154 "factorial.y"
+#line 153 "factorial.y"
 	{ yyval.i = comp(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 84:
-#line 155 "factorial.y"
+#line 154 "factorial.y"
 	{ yyval.i = comp(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 85:
-#line 156 "factorial.y"
+#line 155 "factorial.y"
 	{ yyval.i = comp(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 86:
-#line 157 "factorial.y"
+#line 156 "factorial.y"
 	{ yyval.i = comp(yystack.l_mark[-2].i, yystack.l_mark[0].i); }
 break;
 case 87:
-#line 158 "factorial.y"
+#line 157 "factorial.y"
 	{ if(yystack.l_mark[-2].i != 1 || yystack.l_mark[0].i != 1) yyerror("Junção Lógica : Tipo inválido."); yyval.i = 1; }
 break;
 case 88:
-#line 159 "factorial.y"
+#line 158 "factorial.y"
 	{ if(yystack.l_mark[-2].i != 1 || yystack.l_mark[0].i != 1) yyerror("Alternativa Lógica : Tipo inválido."); yyval.i = 1; }
 break;
 case 89:
-#line 160 "factorial.y"
+#line 159 "factorial.y"
 	{ if(yystack.l_mark[0].i != 1) yyerror("Negação Lógica : Tipo inválido."); yyval.i = 1; }
 break;
 case 90:
-#line 161 "factorial.y"
+#line 160 "factorial.y"
 	{ if(yystack.l_mark[-1].i != 1) yyerror("Factorial : Tipo inválido."); yyval.i = yystack.l_mark[-1].i; }
 break;
 case 91:
-#line 162 "factorial.y"
+#line 161 "factorial.y"
 	{ yyval.i = yystack.l_mark[0].i; }
 break;
 case 92:
-#line 163 "factorial.y"
+#line 162 "factorial.y"
 	{ yyval.i = yystack.l_mark[0].i; }
 break;
 case 93:
-#line 166 "factorial.y"
+#line 165 "factorial.y"
 	{ yyval.i = IDfind(yystack.l_mark[0].s, 0); }
 break;
 case 94:
-#line 167 "factorial.y"
+#line 166 "factorial.y"
 	{int x = IDfind(yystack.l_mark[-3].s, 0);
                                                         if (((x & 0x4) == 4)) 
                                                               yyval.i = x - 4;
@@ -1154,7 +1153,7 @@ case 94:
                                                         else yyerror("Ponteiro: Tipo inválido.");
               /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
 break;
-#line 1157 "y.tab.c"
+#line 1156 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

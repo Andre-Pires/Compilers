@@ -12,11 +12,11 @@ $(LANG): $(LANG).y $(LANG).l
 
 examples: clean_examples run_examples
 
-exampleack: clean_examples
-	./factorial ../examples/ack.fac > ../examples/ack.out
-
-exampleint: clean_examples
-	-YYDEBUG=1 ./factorial ../examples/intindex.fac > ../examples/intindex.out
+myexamples: clean_examples 
+	-YYDEBUG=1 ./factorial ../exemplos_aval/recurs.fac > ../exemplos_aval/recurs.out
+	-YYDEBUG=1 ./factorial ../exemplos_aval/iter.fac > ../exemplos_aval/iter.out
+	-YYDEBUG=1 ./factorial ../exemplos_aval/recurs.fac ../exemplos_aval/fact.fac > ../exemplos_aval/fact.out
+	-YYDEBUG=1 ./factorial ../exemplos_aval/iter.fac  ../exemplos_aval/fact.fac > ../exemplos_aval/fact.out
 
 run_examples: 
 	-YYDEBUG=1 ./factorial ../examples/ack.fac > ../examples/ack.out

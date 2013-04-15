@@ -1,0 +1,9 @@
+=< factorial(integer x): calcula o factorial de x, de forma recursiva =>
+
+number factorial (integer x){
+	
+	if x < 3 then {
+		factorial := x;
+	}	
+	factorial := x * factorial(x - 1);
+};

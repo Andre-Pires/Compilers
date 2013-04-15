@@ -1,0 +1,22 @@
+=< Função que retorna a área do círculo de raio r indicado pelo utilizador =>
+
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer atoi(string s)
+
+number pi := 3.1416
+
+number areacirculo(integer r) {
+  	r := r * r
+  	areacirculo := pi * r
+};
+
+public integer entry (integer argc, string *argv, string *envp) {
+	prints("A área do círculo de raio = ")
+	printi(atoi(argv[1]))
+    prints(" é ")
+    printi(areacirculo(atoi(argv[1])))
+    println()
+  	entry := 0
+};

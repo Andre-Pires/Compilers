@@ -47,11 +47,13 @@ declaracoes  : declaracao
              | declaracoes declaracao
              ;
 
-declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0); 
-                                                            if(($3+$4 != ($6 & 0x7)) && ($6 != 32)) yyerror("Atribuição entre tipos diferentes.");
-                                                            if($6 == 32){  IDreplace($1+$2+$3+$4+32, $5, p); strcpy(var, $5);}}
+declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0); if($3+$4 != $6) yyerror("Atribuição entre tipos diferentes.");}
             | pub cons tipo ptr IDENTIF ';'                 { IDnew($1+$2+$3+$4, $5, 0); }
-            | error ';'                                     { $$ = 0; yyerrok; }
+            | pub cons tipo ptr IDENTIF {IDnew($1+$2+$3+$4+32, $5, 0); IDpush(); } '(' parametros ')' {IDreplace($1+$2+$3+$4+32,$5, p); if(($3+$4) != 0) {IDnew($3+$4, $5, 0);} }  corpo ';' { IDpop();} 
+            | pub cons tipo ptr IDENTIF '(' {IDnew($1+$2+$3+$4+32, $5, 0); IDpush(); } parametros ')'  ';'                                                      {IDreplace($1+$2+$3+$4+32,$5, p); IDpop();} 
+            | pub cons tipo ptr IDENTIF '(' ')' {IDnew($1+$2+$3+$4+32, $5, 0); IDpush();  if(($3+$4) != 0) {IDnew(($3+$4), $5,0);}}  corpo ';'                  {IDpop();}
+            | pub cons tipo ptr IDENTIF '(' ')' ';'                                                                                                             {IDnew($1+$2+$3+$4+32, $5, 0);} 
+            | error ';'                                                                                                                                         {yyerrok; }
             ;
 
 ptr   :                      { $$ = 0; }
@@ -72,24 +74,20 @@ tipo  : VOID                 { $$ = 0; }
       | NUMBER               { $$ = 3; }
       ;
 
-init  : ATRIB INT                                                                                                                          { $$ = 1; } 
-      | ATRIB cons STRN                                                                                                                    { $$ = 2; }
-      | ATRIB NUM                                                                                                                          { $$ = 3; }
-      | ATRIB IDENTIF                                                                                                                      { $$ = IDfind($2, 0)+4; }
-      |'(' parametros ')' corpo                                                                                                            { $$ = 32; p = $2; IDpop();}
-      |'(' parametros ')'                                                                                                                  { $$ = 32; p = $2; IDpop();}
-      |'(' ')' { tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0);IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}}  corpo                 { $$ = 0; IDpop();}
-      |'(' ')'                                                                                                                             { $$ = 0; }
+init  : ATRIB INT                                                          { $$ = 1; } 
+      | ATRIB cons STRN                                                    { $$ = 2; }
+      | ATRIB NUM                                                          { $$ = 3; }
+      | ATRIB IDENTIF                                                      { $$ = IDfind($2, 0)+4; }
       ;
 
 pars : pars ',' parametro             { $$ = $1 + $3; }
      |                                { $$ = 0; }
      ;
 
-parametros  : {tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0); IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}} parametro pars     { $$ = $1 + $2; }
+parametros  : parametro pars          { $$ = $1 + $2; }
             ;
 
-parametro : tipo ptr IDENTIF                    { IDnew($1+$2, $3, 0); }
+parametro : tipo ptr IDENTIF                    { IDnew($1+$2, $3, 0);}
           ;
 
 pars2 : parametro ';'                           { $$ = $1; }
@@ -136,8 +134,8 @@ expressao : INT                                       { $$ = 1; }
           | NUM                                       { $$ = 3; }
           | STRN                                      { $$ = 2; }
           | left_value                                { $$ = $1; }
-          | IDENTIF '(' expressoes ')'                { $$ = IDfind($1, 0) + $3; }
-          | IDENTIF '(' ')'                           { $$ = IDfind($1, 0); }
+          | IDENTIF '(' expressoes ')'                { $$ = IDfind($1, 0) + $3; } /* fazer o search no nivel 0 para nao confundir a funcao com a variavel */
+          | IDENTIF '(' ')'                           { $$ = IDfind($1, 0); }      /* igual */
           | '(' expressao ')'                         { $$ = $2; }
           | left_value ATRIB expressao                { if ($1 != $3) yyerror("Atribuição entre tipos diferentes."); $$ = $1; }
           | '-' expressao %prec UMINUS                { if($2 == 0 || $2 == 2) yyerror("Simétrico : Tipo inválido."); $$ = $2; }

@@ -946,7 +946,7 @@ case 23:
 break;
 case 24:
 #line 81 "factorial.y"
-	{ tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0);IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}}
+	{ tipo = IDfind(var, 0); IDprint(0,0); IDinsert(0, tipo, var, 0);IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}}
 break;
 case 25:
 #line 81 "factorial.y"
@@ -966,7 +966,7 @@ case 28:
 break;
 case 29:
 #line 89 "factorial.y"
-	{tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0); IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}}
+	{tipo = IDfind(var, 0); IDprint(0,0); IDinsert(0, tipo, var, 0); IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}}
 break;
 case 30:
 #line 89 "factorial.y"

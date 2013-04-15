@@ -1,0 +1,26 @@
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer atoi(string s)
+
+=< factorial(integer x): calcula o factorial de x, de forma recursiva =>
+
+integer factorial (integer x) {
+	
+	if(n < 3){
+		factorial := n;
+	};	
+	factorial := n * factorial(n - 1);
+};
+
+public integer entry (integer argc, string *argv, string *envp) {
+  
+
+    prints("O factorial de ")
+    printi(atoi(argv[1])))
+    prints(" é ")
+    printi(factorial(atoi(argv[1])))
+    println()
+
+  	entry := 0
+};

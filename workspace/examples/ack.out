@@ -1,0 +1,36 @@
+
+>>>ADD=
+>>>PUSH=1
+>>>ADD=
+>>>ADD=s
+>>>POP=1
+>>>ADD=prints
+ prints:48#2 prints:-1#0
+>>>PUSH=1
+>>>ADD=prints
+>>>ADD=i
+>>>POP=1
+>>>ADD=printi
+>>>ADD=println
+ println:16#0 printi:48#1 prints:48#2 printi:-1#0
+>>>PUSH=1
+>>>ADD=printi
+>>>ADD=s
+>>>POP=1
+>>>ADD=atoi
+>>>ADD=cnt
+ cnt:1#0 atoi:49#2 println:16#0 printi:48#1 prints:48#2 atoi:-1#0
+>>>PUSH=1
+>>>ADD=atoi
+>>>ADD=m
+>>>ADD=n
+>>>POP=1
+>>>ADD=ackermann
+ ackermann:33#1 cnt:1#0 atoi:49#2 println:16#0 printi:48#1 prints:48#2 ackermann:-1#0
+>>>PUSH=1
+>>>ADD=ackermann
+>>>ADD=argc
+>>>ADD=argv
+>>>ADD=envp
+>>>POP=1
+>>>ADD=entry

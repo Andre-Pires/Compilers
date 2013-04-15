@@ -3,12 +3,10 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h> 
-#include <stdarg.h>
 #include "node.h"
 #include "tabid.h"
 
-char var[100];
-int p, tipo, nciclo;
+int p, nciclo;
 %}
 
 %union {
@@ -36,22 +34,21 @@ int p, tipo, nciclo;
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
 
-%type <i> tipo ptr cons pub left_value init parametro parametros pars pars2 expressao expressoes declaracao
+%type <i> tipo ptr cons pub left_value expressao init parametro parametros pars pars2 expressao expressoes ficheiro declaracoes declaracao corpo instrucoes instrucao
 %%
 
-ficheiro  : declaracoes
-          | /*empty*/
+ficheiro  : declaracoes      {$$ = $1;}
+          | /*empty*/        {$$ = 0;}
           ;
 
-declaracoes  : declaracao
-             | declaracoes declaracao
+declaracoes  : declaracao                 {$$ = $1;}
+             | declaracoes declaracao     {$$ = $1 + $2;}
              ;
 
-declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0); 
-                                                            if(($3+$4 != ($6 & 0x7)) && ($6 != 32)) yyerror("Atribuição entre tipos diferentes.");
-                                                            if($6 == 32){  IDreplace($1+$2+$3+$4+32, $5, p); strcpy(var, $5);}}
+declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0);
+                                                                if($3+$4 != ($6 & 0x7)) yyerror("Atribuição entre tipos diferentes.");
+                                                                if ($6 == 32) IDreplace($1+$2+$3+$4+32, $5, p); }
             | pub cons tipo ptr IDENTIF ';'                 { IDnew($1+$2+$3+$4, $5, 0); }
-            | error ';'                                     { $$ = 0; yyerrok; }
             ;
 
 ptr   :                      { $$ = 0; }
@@ -72,38 +69,39 @@ tipo  : VOID                 { $$ = 0; }
       | NUMBER               { $$ = 3; }
       ;
 
-init  : ATRIB INT                                                                                                                          { $$ = 1; } 
-      | ATRIB cons STRN                                                                                                                    { $$ = 2; }
-      | ATRIB NUM                                                                                                                          { $$ = 3; }
-      | ATRIB IDENTIF                                                                                                                      { $$ = IDfind($2, 0)+4; }
-      |'(' parametros ')' corpo                                                                                                            { $$ = 32; p = $2; IDpop();}
-      |'(' parametros ')'                                                                                                                  { $$ = 32; p = $2; IDpop();}
-      |'(' ')' { tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0);IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}}  corpo                 { $$ = 0; IDpop();}
-      |'(' ')'                                                                                                                             { $$ = 0; }
+init  : ATRIB INT                     { $$ = 1; } 
+      | ATRIB cons STRN               { $$ = 2; }
+      | ATRIB NUM                     { $$ = 3; }
+      | ATRIB IDENTIF                 { $$ = IDfind($2, 0)+4; }
+      |'(' parametros ')' corpo       { $$ = 32; p = $2; }
+      |'(' parametros ')'             { $$ = 32; p = $2; }
+      |'(' ')' corpo                  { $$ = 0; }
+      |'(' ')'                        { $$ = 0; }
       ;
 
-pars : pars ',' parametro             { $$ = $1 + $3; }
-     |                                { $$ = 0; }
+pars : ',' parametro                  { $$ = $2; }
+     | pars ',' parametro             { $$ = $1 + $3; }
      ;
 
-parametros  : {tipo = IDfind(var, 0); IDinsert(0, tipo, var, 0); IDpush(); if(tipo != 0) {IDnew(tipo-32, var,0);}} parametro pars     { $$ = $1 + $2; }
+parametros  : parametro               { $$ = $1; }
+            | parametro pars          { $$ = $1 + $2; }
             ;
 
-parametro : tipo ptr IDENTIF                    { IDnew($1+$2, $3, 0); }
+parametro : tipo ptr IDENTIF          { IDnew($1+$2, $3, 0); }
           ;
 
 pars2 : parametro ';'                           { $$ = $1; }
       | pars2 parametro ';'                     { $$ = $1 + $2; }
       ;
 
-corpo : '{' '}'
-      | '{' pars2 '}' 
-      | '{' instrucoes '}' 
-      | '{' pars2 instrucoes '}' 
+corpo : '{' '}'                                 {$$ = 0;}
+      | '{' pars2 '}'                           {$$ = $2;}
+      | '{' instrucoes '}'                      {$$ = $2;}
+      | '{' pars2 instrucoes '}'                {$$ = $2 + $3;}
       ;
 
-instrucoes : instrucao
-           | instrucoes instrucao
+instrucoes : instrucao                          {$$ = $1;}
+           | instrucoes instrucao               {$$ = $1 + $2;}
            ;
 
 instrucao : IF expressao THEN instrucao %prec IFX
@@ -112,12 +110,11 @@ instrucao : IF expressao THEN instrucao %prec IFX
           | FOR left_value IN expressao updown expressao step DO { nciclo++; } instrucao { nciclo--; }
           | expressao ';' 
           | corpo
-          | BREAK INT ';'                             { if ($2 == 0 || $2 > nciclo) yyerror("Break inválido: Fora de um ciclo"); }
+          | BREAK INT ';'                             { if ($2 == 0 || $2 > nciclo) yyerror(""); }
           | CONTINUE INT ';'
-          | BREAK ';'                                 { if (nciclo == 0) yyerror("Break inválido: Fora de um ciclo"); }
+          | BREAK ';'                                 { if (nciclo == 0) yyerror(""); }
           | CONTINUE ';'
           | left_value '#' expressao ';'
-          | error ';'                                     { yyerrok; }
           ;
 
 updown  : UPTO
@@ -181,7 +178,7 @@ static int oper(int name, int name2) {
   if (name == 0 || name2 == 0 || name == 2 || name2 == 2) 
     yyerror("Operação : Tipo inválido.");
   if(name == 3 || name2 == 3) return 3;
-  else return 1;
+  else return 2;
 }
 
 static int comp(int name, int name2) {

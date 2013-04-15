@@ -7,8 +7,7 @@
 #include "node.h"
 #include "tabid.h"
 
-char var[100];
-int p, tipo, nciclo;
+int p, nciclo;
 %}
 
 %union {

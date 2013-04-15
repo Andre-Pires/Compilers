@@ -7,7 +7,7 @@ public integer entry (integer argc, string *argv, string *envp) {
   
     if argc >= 2 then {
     prints("O factorial de ")
-    printi(atoi(argv[1])))
+    printi(atoi(argv[1]))
     prints(" é ")
     printi(factorial(atoi(argv[1])))
     println()

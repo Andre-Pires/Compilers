@@ -2,7 +2,7 @@
 
 number factorial (integer x){
 	number fac
-	fac := 1
+	fac := 1.0
 
 	do {
     fac :=fac * x
@@ -10,4 +10,4 @@ number factorial (integer x){
  	} while x > 1
 	
 	factorial := fac
-}
+};

@@ -7,16 +7,31 @@ YACC=byacc -dv
 $(LANG): $(LANG).y $(LANG).l
 	$(YACC) $(LANG).y
 	$(LEX) $(LANG).l
-	make -C ../lib
-	gcc -o $(LANG) -DYYDEBUG=1 -I../lib lex.yy.c y.tab.c ../lib/libutil.a
+	make -C lib
+	gcc -o $(LANG) -DYYDEBUG=1 -I lib lex.yy.c y.tab.c lib/libutil.a
+
+iter: iter.fac fact.fac
+	./factorial $<
+	nasm -felf iter.asm
+	./factorial fact.fac
+	nasm -felf fact.asm
+	ld -o  $@ iter.o fact.o lib/libutil.a
+
+recurs: recurs.fac fact.fac
+	./factorial $<
+	nasm -felf recurs.asm
+	./factorial fact.fac
+	nasm -felf fact.asm
+	ld -o  $@ recurs.o fact.o lib/libutil.a
+
 
 examples: clean_examples run_examples
 
-myexamples: clean_examples 
-	-YYDEBUG=1 ./factorial ../exemplos_aval/recurs.fac > ../exemplos_aval/recurs.out
-	-YYDEBUG=1 ./factorial ../exemplos_aval/iter.fac > ../exemplos_aval/iter.out
-	-YYDEBUG=1 ./factorial ../exemplos_aval/recurs.fac ../exemplos_aval/fact.fac > ../exemplos_aval/fact.out
-	-YYDEBUG=1 ./factorial ../exemplos_aval/iter.fac  ../exemplos_aval/fact.fac > ../exemplos_aval/fact.out
+exampleack: clean_examples
+	./factorial ../examples/ack.fac > ../examples/ack.out
+
+exampleint: clean_examples
+	-YYDEBUG=1 ./factorial ../examples/intindex.fac > ../examples/intindex.out
 
 run_examples: 
 	-YYDEBUG=1 ./factorial ../examples/ack.fac > ../examples/ack.out
@@ -42,7 +57,7 @@ run_examples:
 	-YYDEBUG=1 ./factorial ../examples/tri.fac > ../examples/tri.out
 	-YYDEBUG=1 ./factorial ../examples/upto.fac > ../examples/upto.out
 	-YYDEBUG=1 ./factorial ../examples/while.fac > ../examples/while.out
-	
+
 diff_examples: run_examples
 	-diff ../examples/ack.out ../examples/empty.out 
 	-diff ../examples/add.out ../examples/empty.out
@@ -92,6 +107,13 @@ clean_examples:
 	rm -f ../examples/tri.out
 	rm -f ../examples/upto.out
 	rm -f ../examples/while.out
+
+clean_zip: 
+	rm -f proj.zip
+
+zip: 	clean_zip
+	zip -r proj.zip lib Makefile $(LANG).l $(LANG).y string.$(EXT) rand.$(EXT) mean.$(EXT) iter.$(EXT) recurs.$(EXT) fact.$(EXT)
+
 
 install: $(LANG)
 	cp $(LANG) ..

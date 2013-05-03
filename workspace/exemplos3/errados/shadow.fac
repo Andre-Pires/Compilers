@@ -1,0 +1,11 @@
+== ERRADO: variável local encobre argumento
+
+public void printi(integer val)
+public void println()
+
+public integer entry(integer argc, string *argv, string *envp) {
+  integer argc
+  printi(argc)
+  println()
+  entry := 0
+};

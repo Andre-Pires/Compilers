@@ -1,0 +1,47 @@
+public void prints(string s)
+public integer readi()
+integer a
+integer b
+integer c
+public integer entry (integer argc, string *argv, string *envp) {
+== introduzir as dimensões da 3 faces do triângulo
+  prints("introduza as dimensões do primeiro lado do triângulo: ")
+  a := readi()
+  prints("introduza as dimensões do segundo lado do triângulo: ")
+  b := readi()
+  prints("introduza as dimensões do terceiro lado do triângulo: ")
+  c := readi()
+
+  if a < 1 then		== face de comprimento não positivo
+    prints("As dimensões dos lados do triângulo devem ser positivas\n")
+  else
+    if b < 1 then
+      prints("As dimensões dos lados do triângulo devem ser positivas\n")
+    else
+      if c < 1 then
+	prints("As dimensões dos lados do triângulo devem ser positivas\n")
+      else
+	if a + b <= c then
+	  prints("Não é um triângulo\n")
+	else
+	  if a + c <= b then
+	    prints("Não é um triângulo\n")
+	  else
+	    if c + b <= a then
+	      prints("Não é um triângulo\n")
+	    else
+	      if a = b then
+		if b = c then
+		  prints("triângulo equiláero\n")
+		else
+		  prints("triângulo isóceles\n")
+	      else
+		if b = c then
+		  prints("triângulo isóceles\n")
+		else
+		  if a = c then
+		    prints("triângulo isóceles\n")
+		  else
+		    prints("triângulo escaleno\n")
+  entry := 0
+};

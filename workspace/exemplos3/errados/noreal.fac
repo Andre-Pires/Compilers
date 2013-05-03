@@ -1,0 +1,5 @@
+== ERRADO: literal de retorno não é válido (ao contrário do C)
+
+public number func () {
+  func := 0.
+};

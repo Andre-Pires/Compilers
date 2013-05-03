@@ -1,0 +1,19 @@
+public void bubble(string *v, integer n, void *compare) {
+  integer i
+  integer j
+
+  i := 0
+  if i < n - 1 then do {
+    j := 0
+    if j < n - 1 - i then do {
+      if compare(v[j+1], v[j]) > 0 then {
+        string tmp
+	tmp := v[j];
+	v[j] := v[j+1];
+	v[j+1] := tmp
+      }
+      j := j + 1
+    } while j < n - 1 - i
+    i := i + 1
+  } while i < n - 1
+};

@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+#include "node.h"
 #include "y.tab.h"
 
 void yyerror(char *s);
 char * octais();
-int nested, newline;
+int nested, newline, string_com;
 char string[300];
 char * buffer;
 %}
@@ -56,9 +57,11 @@ REAL {DIG}"."{DIG}({EXP})?
 
 "==".*\n		newline = 0;	/*Comentarios linha*/
 
-"=<"					{BEGIN COMMENTS;newline = 0; nested = 0; /*Comentarios extensos*/}
+"=<"					{BEGIN COMMENTS;newline = 0; nested = 0; string_com = 0; /*Comentarios extensos*/}
 <COMMENTS>"=<" 				{++nested;}
-<COMMENTS>"=>"				{if(--nested <= 0) BEGIN INITIAL;}
+<COMMENTS>"=>"				{if(--nested <= 0 && string_com == 0) BEGIN INITIAL;}
+<COMMENTS>\"				{if(string_com) --string_com; else ++string_com;}
+<COMMENTS><<EOF>>			{ yyerror("LEX error: Comments reached of file"); yyterminate(); }
 <COMMENTS>.|\n				;
 
 [A-Za-z][A-Za-z0-9_]*		{ yylval.s = strdup(yytext); newline = 1; return IDENTIF; /* Identificador */}
@@ -72,7 +75,8 @@ REAL {DIG}"."{DIG}({EXP})?
 <STR>\"						{ BEGIN INITIAL; yytext[yyleng-1] = 0;
 					  			buffer = (char *) realloc(buffer, sizeof(char) * (strlen(buffer) + strlen(yytext) + 1)); 
 					 			strcat(buffer, yytext); yylval.s = strdup(buffer); return STRN;}
-<STR>.						yyerror("Unknown character");
+<STR><<EOF>>				{yyerror("LEX error: String reached end of file");	yyterminate();}
+<STR>.						yyerror("LEX error: Unknown character");
 
 
 
@@ -109,6 +113,7 @@ REAL {DIG}"."{DIG}({EXP})?
 
 [-+*/%<>=|&~]				newline = 0; return *yytext; /* Operadores de expressoes */
 [#\[\]{}(,]					newline = 0; return *yytext; /* Delimitadores e separadores */
+
 
 .							yyerror("Unknown character");
 

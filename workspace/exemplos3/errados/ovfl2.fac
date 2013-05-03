@@ -1,0 +1,7 @@
+== ERRADO: overflow em literal inteiro decimal
+public void printi(integer i)
+public void println()
+public integer entry (integer argc, string *argv, string *envp) {
+  printi(8999999998); println()
+  entry := 0
+};

@@ -1,0 +1,9 @@
+== ERRADO: argumento de tipo errado!
+public void printi(integer val)
+public void prints(string val)
+public integer atoi(string val)
+
+public integer entry(integer argc, string *argv, string *envp) {
+  prints(atoi("12"))
+  entry := 0
+};

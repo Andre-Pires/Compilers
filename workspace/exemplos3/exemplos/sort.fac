@@ -1,0 +1,59 @@
+public void bubble(string *v, integer n, void *compare)
+public integer strcmp(string a, string b)
+public string strdup(string a)
+public string readln(string a, integer size)
+public string* new(integer b)
+public integer free(string* v)
+public void prints(string s)
+public void println()
+
+public integer entry (integer argc, string *argv, string *envp) {
+  string * base
+  string * aux;
+  string linha;
+  integer max
+  integer i
+  integer n
+  integer ret
+
+  linha # 100
+  base := new(max := 100)
+
+  i:= 0
+  ret := readln(linha, 100)
+  if ret <> 0 then do {
+    if (i = max/4) then {
+      string * novo;
+      integer n
+
+      novo := new(max * 2)
+      n := 0
+      if n < max then do {
+        novo[n] := base[n];
+	n := n + 1
+      } while n < max
+      free(base)
+      base := novo
+      max := max * 2
+    }
+    base[i] := strdup(linha)
+    i := i + 1
+    ret := readln(linha, 100)
+  } while ret <> 0
+  aux := linha
+  free(aux)
+  bubble(base, i, strcmp)
+  n := 0
+  if n < i then do {
+    linha := base[n];
+    prints(linha)
+    println()
+    aux := linha
+    free(aux)
+    n := n + 1
+  } while n < i
+  aux := linha
+  free(aux)
+  free(base)
+  entry := 0
+};

@@ -1,0 +1,8 @@
+== ERRADO: tipos diferentes na atribuição!
+public string itoa(integer val)
+
+public integer entry(integer argc, string *argv, string *envp) {
+  integer x
+  x := itoa(12)
+  entry := 0
+};

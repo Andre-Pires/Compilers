@@ -1,0 +1,6 @@
+== ERRADO: constantes ou variáveis não podem ser do tipo void!
+public void println()
+public const void null
+public integer entry (integer argc, string *argv, string *envp) {
+  entry := println()
+};

@@ -1,0 +1,138 @@
+=< Lista ligada sequencial com um inteiro de controlo:
+   size < 0: bloco livre de dimensao -size
+   size > 0: bloco ocupado de dimensao size
+   size == 0: bloco de terminacao (NULL)
+=>
+
+const integer PAGSIZ := 1024
+integer *null
+integer * base := 0
+
+public integer * brk(integer * addr)
+integer abs(integer v) { if v >= 0 then abs := v; else abs := -v; };
+
+public integer * first(integer * x, integer size) {
+  integer *base
+  do
+    if x[0] <> 0 then do {
+      if x[0] < size then break;
+      base := x
+      x := &base[abs(x[0])];
+    } while x[0] <> 0
+  while 0
+  first := x
+};
+
+public integer * new(integer size) {
+  integer * x
+  integer*aux
+
+  do {
+    if size <= 0 then { new := 0; break; }
+    size := ((size - 1) / 4 + 1) * 4
+
+    if base[0] = 0 then { == bootstrapping
+      base := brk(0)
+      aux := base
+      x := &aux[PAGSIZ*4];
+      aux := brk(x)
+      if aux < 0 then { base := 0; new := base; break; }
+      base[0] := -(PAGSIZ*4-4)
+      base[PAGSIZ-4] := 0
+    }
+
+    x := first(base, -size)
+
+    if x[0] = 0 then { == more core
+      integer n
+      integer *old
+      integer *end
+      n := PAGSIZ*4
+      if size >= PAGSIZ*4 then n := size+4
+      old := brk(0)
+      end := &old[n];
+      aux := brk(end)
+      if aux < 0 then { new := 0; break; }
+      x[0] := -(n - 4)
+      end[-1] := 0
+    }
+
+    == now x[0] contains a switable space
+    if x[0] < -(size+4) then {
+      x[size/4+1] := x[0] + size + 4
+    }
+    x[0] := size+4
+    new := &x[1];
+  } while 0
+};
+
+public integer free(integer * ptr) {
+  integer *x
+  integer *seg
+  integer *old
+  integer *aux
+
+  x := base
+  old := null
+
+  do {
+    if base[0] = 0 then { free := -1; break; }
+    if x[0] <> 0 then do {
+      if &x[1] = ptr then {
+	aux := old
+	if aux <> 0 & old[0] < 0 then {
+	  aux := x
+	  seg := &aux[abs(x[0])];
+	  if seg[0] < 0 then
+	    old[0] := old[0] - x[0] + seg[0];
+	  else
+	    old[0] := old[0] - x[0];
+	}
+	else {
+	  aux := x
+	  seg := &aux[abs(x[0])];
+	  if seg[0] < 0 then
+	    x[0] := -x[0] + seg[0];
+	  else
+	    x[0] := -x[0];
+	}
+	free := 1
+	break;
+      }
+      aux := old := x
+      x := &aux[abs(x[0])];
+    } while x[0] <> 0
+    free := 0
+    break;
+  } while 0
+};
+
+public void printi(integer i)
+public void prints(string s)
+public void println()
+
+public integer dump() {
+  integer * x
+  integer*aux
+  x := base
+
+  if base[0] = 0 then
+    dump := 0
+  else {
+    if x[0] <> 0 then do {
+      aux := x
+      prints(" ")
+      printi(x[0])
+      prints("@")
+      printi(aux)
+      x :=  &aux[abs(x[0])];
+    } while x[0] <> 0
+    aux := x
+    prints(" ")
+    printi(x[0])
+    prints("@")
+    printi(aux)
+    println()
+    dump := 1
+  }
+};

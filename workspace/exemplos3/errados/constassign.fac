@@ -1,0 +1,11 @@
+== ERRADO: atribuição a constante!
+public void printi(integer val)
+public void println()
+const integer grosa := 144
+
+public integer entry(integer argc, string *argv, string *envp) {
+  grosa := 12
+  printi(grosa)
+  println()
+  entry := 0
+};

@@ -40,9 +40,9 @@
 #ifndef YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
 typedef union {
-	int i;			/* integer value */
+  int i;      /* integer value */
   double d;    /* double value */
-	char *s;		/* symbol name or string literal */
+  char *s;    /* symbol name or string literal */
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
 extern YYSTYPE yylval;

@@ -1,0 +1,16 @@
+public void printi(integer i)
+public void println()
+public integer readi()
+integer m
+integer x
+public integer entry (integer argc, string *argv, string *envp) {
+  m := readi()
+  if m > 0 then
+    do {
+      printi(x)
+      println()
+      if x >= m then break;
+      x := x + 1
+    } while x < 20
+  entry := 0
+};

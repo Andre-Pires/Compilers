@@ -1,0 +1,10 @@
+public void prints(string s)
+public void printd(number d)
+const number pi := -0.31415E1
+
+public integer entry (integer argc, string *argv, string *envp) {
+  prints("-pi = ")
+  printd(pi)
+  prints("\n")
+  entry := 0
+};

@@ -1,0 +1,2 @@
+== ERRADO: inicialização de tipo errado!
+public integer x := "abc"

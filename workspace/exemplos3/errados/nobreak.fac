@@ -1,0 +1,8 @@
+== ERRADO: break fora de um ciclo e o argumento não é positivo
+public void prints(string s)
+
+public integer entry (integer argc, string *argv, string *envp) {
+  prints("olá pessoal!\n")
+  break 0
+  entry := 0
+};

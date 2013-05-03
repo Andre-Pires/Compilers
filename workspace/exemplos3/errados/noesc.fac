@@ -1,0 +1,6 @@
+== ERRADO: sequência de escape inválida na cadeia de caracteres!
+public void prints(string s)
+public integer entry (integer argc, string *argv, string *envp) {
+  prints("olá pessoal!\q")
+  entry := 0
+};

@@ -1,0 +1,5 @@
+== ERRADO: operador de decremento aplicado a um right-value!
+public integer entry (integer argc, string *argv, string *envp) {
+  ++ entry --;
+  entry := 0
+};

@@ -1,0 +1,11 @@
+public void printi(integer val)
+public void println()
+void * fptr := printi
+
+public integer entry(integer argc, string *argv, string *envp) {
+  fptr(argc)
+  println()
+  fptr := entry
+  if argc > 0 then fptr(argc - 1, argv, envp)
+  entry := 0
+};

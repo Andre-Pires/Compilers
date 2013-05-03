@@ -1,0 +1,10 @@
+public void printd(number val)
+public void println()
+
+public integer entry (integer argc, string *argv, string *envp) {
+  number x
+  x := argc!
+  printd(x)
+  println()
+  entry := 0
+};

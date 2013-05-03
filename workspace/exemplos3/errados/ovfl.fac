@@ -1,0 +1,6 @@
+== ERRADO: overflow em literal inteiro octal
+public void printi(integer i)
+public integer entry (integer argc, string *argv, string *envp) {
+  printi(017777777778)
+  entry := 0
+};

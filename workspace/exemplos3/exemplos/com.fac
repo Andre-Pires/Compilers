@@ -1,0 +1,11 @@
+public void prints(string s)
+=< comentario acabado
+public integer noentry (integer argc, string *argv, string *envp) {
+  prints("olá => pessoal!\n")
+  noentry := 0
+};
+=>
+public integer entry (integer argc, string *argv, string *envp) {
+  prints("olá pessoal!\n")
+  entry := 0
+};

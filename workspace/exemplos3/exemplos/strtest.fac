@@ -1,0 +1,27 @@
+== test string operations from string.fac
+public void prints(string s)
+public void printi(integer i)
+public void println()
+public integer strlen(string s)
+public string strchr(string s, integer ch)
+public string strcpy(string d, string s)
+
+public integer entry(integer argc, string *argv, string *envp) {
+  string str;
+  if argc < 3 then {
+    prints("programa necessita de 2 argumentos (strings)\n");
+    entry := 1;
+  } else {
+    prints("primeira: "); prints(argv[1]);
+    prints("\nsegunda: "); prints(argv[2]);
+    prints("\nmaior: "); printi(argv[1] > argv[2]); == use strcmp
+    prints("\nmenor: "); printi(argv[1] < argv[2]); == use strcmp
+    prints("\nigual: "); printi(argv[1] = argv[2]); == use strcmp
+    str := argv[2];
+    prints("\nstrchr: "); prints(strchr(argv[1], str[0])); == use strchr
+    str # strlen(argv[1]) + 1;
+    strcpy(str, argv[1]); == use strcpy
+    prints("\ncópia: "); prints(str); println()
+    entry := 0;
+  }
+};

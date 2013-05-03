@@ -1,0 +1,2 @@
+== ERRADO: constantes locais deve ser iniciadas!
+const integer noinit

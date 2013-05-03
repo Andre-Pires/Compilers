@@ -1,0 +1,32 @@
+=< cálculo de Pi por desenvolvimento em série Gregory-Leibniz =>
+public void prints(string s)
+public void printd(number d)
+public void println()
+public integer readi()
+
+public integer entry(integer argc, string *argv, string *envp) {
+  integer i
+  integer n
+  integer s
+  number pi
+
+  prints("cálculo de Pi por desenvolvimento em série\nIndique o número de iterações: ")
+  i := readi()
+  if i > 0 then {
+    n := 0
+    s := 1
+    pi := 0.0
+    if n < i then do {
+      pi := pi + s/(2*n+1.0)
+      s := -s
+    } while ++n < i
+    prints("pi = ")
+    printd(pi * 4)
+    println()
+  }
+  else
+    prints("O número de iterações deve ser um inteiro positivo\n")
+  entry := 0
+};
+
+

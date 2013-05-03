@@ -7,7 +7,15 @@
 #include "node.h"
 #include "tabid.h"
 
+extern void yyerror(char *s);
+extern void program(int enter, Node *body), declare(char *name, int value);
+extern void function(char *name, int enter, Node *body);
+int pos; /* local variable offset (no functions inside a function) */
+int lbl; /* label counter for generated labels */
+char *mklbl(int n); /* generate counter based label */ 
+
 int p, nciclo, nivel;
+int pos = 0;
 %}
 
 %union {
@@ -23,7 +31,7 @@ int p, nciclo, nivel;
 %token WHILE IF END RETURN VOID PUBLIC CONST THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
 %token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX
 
-%token DECL DECLS CALL NEG FACT AND OR PROG ADD SUBT MUL DIV LT GT MOD PARS INTRS PINTR
+%token CALL NEG FACT AND OR PROG ADD SUBT MUL DIV LT GT MOD PARS INTRS PINTR
 
 %nonassoc IFX
 %nonassoc ELSE
@@ -38,22 +46,21 @@ int p, nciclo, nivel;
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
 
-%type <i> tipo ptr cons pub
-%type <n> left_value init parametro parametros pars pars2 expressao expressoes declaracao declaracoes ficheiro corpo corpop instrucao instrucoes
+%type <i> tipo ptr cons pub declaracoes declaracao
+%type <n> left_value init parametro parametros pars pars2 expressao expressoes ficheiro corpo corpop instrucao instrucoes
 %%
 
-ficheiro  : declaracoes         { Node *n = uniNode(PROG, $1); 
+ficheiro  : declaracoes         { program(-pos, $1);
                                   printNode(n, 0, 0);   } 
-          | /*empty*/           { Node *n = uniNode(PROG, nilNode(0)); 
-                                  printNode(n, 0, 0);   } 
+          | /*empty*/
           ;
 
-declaracoes  : declaracao                     {$$ = uniNode(DECL, $1); }
-             | declaracoes declaracao         {$$ = binNode(DECLS, $1, $2); }
+declaracoes  : declaracao                     
+             | declaracoes declaracao         
              ;
 
-declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0); if($3+$4 != $6) yyerror("Atribuição entre tipos diferentes");}
-            | pub cons tipo ptr IDENTIF ';'                 { IDnew($1+$2+$3+$4, $5, 0); }
+declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1+$2+$3+$4, $5, 0); if($3+$4 != $6) yyerror("Atribuição entre tipos diferentes"); function($3, -pos, $9); pos = 0;}
+            | pub cons tipo ptr IDENTIF ';'                 { IDnew($1+$2+$3+$4, $5, 0); function($3, -pos, 0); pos = 0;}
             | pub cons tipo ptr IDENTIF '(' {IDnew($1+$2+$3+$4+32, $5, 0); IDpush(); } parametros ')' {IDreplace($1+$2+$3+$4+32,$5, p); if(($3+$4) != 0) {IDnew($3+$4, $5, 0);} }  corpop ';' { IDpop();} 
             | pub cons tipo ptr IDENTIF '(' ')' {IDnew($1+$2+$3+$4+32, $5, 0); IDpush();  if(($3+$4) != 0) {IDnew(($3+$4), $5,0);}}  corpo ';'                  {IDpop();}
             | pub cons tipo ptr IDENTIF '(' ')' ';'                                                                                                             {IDnew($1+$2+$3+$4+32, $5, 0);} 
@@ -72,8 +79,8 @@ cons  :                      { $$ = 0; }
       | CONST                { $$ = 8; }
       ;
 
-pub   :                      { $$ = 0; }
-      | PUBLIC               { $$ = 16; }
+pub   :                      { $$= 0; }
+      | PUBLIC               { $$= 16; }
       ;
 
 tipo  : VOID                 { $$ = 0; }
@@ -82,12 +89,12 @@ tipo  : VOID                 { $$ = 0; }
       | NUMBER               { $$ = 3; }
       ;
 
-init  : ATRIB INT                                                          { $$ = uniNode(ATRIB, intNode(INT, $2)); }  // uni ou int?
-      | ATRIB '-' INT                                                      { $$ = uniNode(ATRIB, intNode(INT, -$3)); }  // uni ou int?
-      | ATRIB cons STRN                                                    { $$ = uniNode(ATRIB, strNode(STRN, $3)); }
-      | ATRIB NUM                                                          { $$ = uniNode(ATRIB, realNode(NUM, $2)); }
-      | ATRIB '-' NUM                                                      { $$ = uniNode(ATRIB, realNode(NUM, -$3)); }
-      | ATRIB IDENTIF                                                      { $$ = uniNode(ATRIB, strNode(IDENTIF, $2)); }
+init  : ATRIB INT            { $$ = uniNode(ATRIB, intNode(INT, $2)); $$->info = 1;}
+      | ATRIB '-' INT        { $$ = uniNode(ATRIB, intNode(INT, -$3)); $$->info = 1;}
+      | ATRIB cons STRN      { $$ = uniNode(ATRIB, strNode(STRN, $3)); $$->info = 2;}
+      | ATRIB NUM            { $$ = uniNode(ATRIB, realNode(NUM, $2)); $$->info = 3;}
+      | ATRIB '-' NUM        { $$ = uniNode(ATRIB, realNode(NUM, -$3)); $$->info = 3;}
+      | ATRIB IDENTIF        { $$ = uniNode(ATRIB, strNode(IDENTIF, $2)); $$->info = IDfind($2, 0)+4;}
       ;
 
 pars : pars ',' parametro             { $$ = $1 + $3; }
@@ -97,7 +104,7 @@ pars : pars ',' parametro             { $$ = $1 + $3; }
 parametros  : parametro pars          { $$ = $1 + $2; }
             ;
 
-parametro : tipo ptr IDENTIF                    { IDnew($1+$2, $3, 0);}
+parametro : tipo ptr IDENTIF                    { IDnew($1+$2, $3, 0);} // parametros da funcao sao positivos e as variaveis locais negativas
           ;
 
 pars2 : parametro ';'                           { $$ = $1; }
@@ -140,32 +147,30 @@ expressoes  : expressoes ',' expressao                { $$ = $1 + $3; }
             | expressao                               { $$ = $1; }
             ;
 
-expressao : INT                                       { $$ = intNode(INT, $1); }
-          | NUM                                       { $$ = realNode(NUM, $1); }
-          | STRN                                      { $$ = strNode(STRN, $1); }
-          | left_value                                { $$ = $1; }
-          | IDENTIF '(' expressoes ')'                { int n; n = IDfind($1, 0) && (0x7); if(n != 0) $$ = binNode(CALL, strNode(IDENTIF, $1), $3);
-                                                                                          else {$$ = IDsearch($1, 0, IDlevel(), 0) && (0x7); }} /* fazer o search no nivel 0 para nao confundir a funcao com a variavel */
-          | IDENTIF '(' ')'                           { int n; n = IDfind($1, 0) && (0x7); if(n != 0) $$ = binNode(CALL, strNode(IDENTIF, $1), nilNode(END));
-                                                                                           else {$$ = IDsearch($1, 0, IDlevel(), 0) && (0x7); }}      /* iguanilNode(END)*/
-          | '(' expressao ')'                         { $$ = $2; }
+expressao : INT                                       { $$ = intNode(INT, $1); $$->info = 1; }
+          | NUM                                       { $$ = realNode(NUM, $1); $$->info = 3;}
+          | STRN                                      { $$ = strNode(STRN, $1); $$->info = 2;}
+          | left_value                                { $$ = $1; $$->info = 1;}
+          | IDENTIF '(' expressoes ')'                { int n; n = IDfind($1, 0) && (0x7); $$ = binNode(CALL, strNode(IDENTIF, $1), $3);  if(n != -1 && n == 4) {$$->info = n} else {$$->info = IDsearch($1, 0, IDlevel(), 0) && (0x7);}}    /* fazer o search no nivel 0 para nao confundir a funcao com a variavel */
+          | IDENTIF '(' ')'                           { int n; n = IDfind($1, 0) && (0x7); $$ = binNode(CALL, strNode(IDENTIF, $1), nilNode(END)); if(n != -1 && n == 4) { $$->info = n} else {$$->info = IDsearch($1, 0, IDlevel(), 0) && (0x7);}}                                                                                      
+          | '(' expressao ')'
           | left_value ATRIB expressao                { if ($1 != $3) yyerror("Atribuição entre tipos diferentes"); $$ = binNode('ATRIB', $1, $3); }
           | '-' expressao %prec UMINUS                { if($2 == 0 || $2 == 2) yyerror("Simétrico : Tipo inválido"); $$ = uniNode(UMINUS, $2);}
           | DEC left_value                            { if($2 != 1) yyerror("Decremento : Tipo inválido"); $$ = binNode(DEC, nilNode(END), $2); }
           | INC left_value                            { if($2 != 1) yyerror("Incremento : Tipo inválido"); $$ = binNode(INC, nilNode(END), $2); }
           | left_value INC                            { if($1 != 1) yyerror("Incremento : Tipo inválido"); $$ = binNode(INC, nilNode(END), $1); }
           | left_value DEC                            { if($1 != 1) yyerror("Decremento : Tipo inválido"); $$ = binNode(DEC, nilNode(END), $1); }
-          | expressao '*' expressao                   { oper($1, $3); $$ = binNode('MUL', $1, $3);}
-          | expressao '/' expressao                   { oper($1, $3); $$ = binNode('DIV', $1, $3);}
-          | expressao '%' expressao                   { oper($1, $3); $$ = binNode('MOD', $1, $3);}
-          | expressao '+' expressao                   { oper($1, $3); $$ = binNode('ADD', $1, $3);}   
-          | expressao '-' expressao                   { oper($1, $3); $$ = binNode('SUBT', $1, $3);}   
-          | expressao '>' expressao                   { comp($1, $3); $$ = binNode('GT', $1, $3);}
-          | expressao '<' expressao                   { comp($1, $3); $$ = binNode('LT', $1, $3);}
-          | expressao EQ expressao                    { comp($1, $3); $$ = binNode('EQ', $1, $3);}
-          | expressao NE expressao                    { comp($1, $3); $$ = binNode('NE', $1, $3);}
-          | expressao GE expressao                    { comp($1, $3); $$ = binNode('GE', $1, $3);}
-          | expressao LE expressao                    { comp($1, $3); $$ = binNode('LE', $1, $3);}
+          | expressao '*' expressao                   { $$ = binNode('MUL', $1, $3); $$->info = oper($1, $3); }
+          | expressao '/' expressao                   { $$ = binNode('DIV', $1, $3); $$->info = oper($1, $3); }
+          | expressao '%' expressao                   { $$ = binNode('MOD', $1, $3);  $$->info = oper($1, $3); }
+          | expressao '+' expressao                   { $$ = binNode('ADD', $1, $3); $$->info = oper($1, $3); }   
+          | expressao '-' expressao                   { $$ = binNode('SUBT', $1, $3); $$->info = oper($1, $3);}   
+          | expressao '>' expressao                   { $$ = binNode('GT', $1, $3); $$->info = comp($1, $3); }
+          | expressao '<' expressao                   { $$ = binNode('LT', $1, $3); $$->info = comp($1, $3); }
+          | expressao EQ expressao                    { $$ = binNode('EQ', $1, $3); $$->info = comp($1, $3); }
+          | expressao NE expressao                    { $$ = binNode('NE', $1, $3); $$->info = comp($1, $3); }
+          | expressao GE expressao                    { $$ = binNode('GE', $1, $3); $$->info = comp($1, $3); }
+          | expressao LE expressao                    { $$ = binNode('LE', $1, $3); $$->info = comp($1, $3); }
           | expressao '&' expressao                   { if($1 != 1 || $3 != 1) yyerror("Junção Lógica : Tipo inválido"); $$ = binNode('AND', $1, $3); }
           | expressao '|' expressao                   { if($1 != 1 || $3 != 1) yyerror("Alternativa Lógica : Tipo inválido"); $$ = binNode('OR', $1, $3); }
           | '~' expressao                             { if($2 != 1) yyerror("Negação Lógica : Tipo inválido"); $$ = uniNode(NEG, $2); }
@@ -174,7 +179,7 @@ expressao : INT                                       { $$ = intNode(INT, $1); }
           | '*' left_value %prec POINTER              { $$ = uniNode(POINTER, $2); }
           ;
 
-left_value: IDENTIF                                   { $$ = IDfind($1, 0); }
+left_value: IDENTIF                                   { $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, 0); } // deslocamento as variaveis para o place, para sber se é global
           | IDENTIF '[' expressao ']'                 {int x = IDfind($1, 0);
                                                         if (((x & 0x4) == 4)) 
                                                               $$ = x - 4;
@@ -194,17 +199,17 @@ static void mkcall(char *func, long eargs) {
   if (fargs != eargs) yyerror("wrong number of arguments in function call");
 }
 
-static int oper(int name, int name2) {
+static int oper(Node * name, Node * name2) {
  
-  if (name == 0 || name2 == 0 || name == 2 || name2 == 2) 
+  if (name->info == 0 || name2->info == 0 || name->info == 2 || name2->info == 2) 
     yyerror("Operação : Tipo inválido.");
-  if(name == 3 || name2 == 3) return 3;
+  if(name->info == 3 || name2->info == 3) return 3;
   else return 1;
 }
 
-static int comp(int name, int name2) {
+static int comp(Node * name, Node * name2) {
  
-  if (name == 0 || name2 == 0) yyerror("Comparação : Tipo inválido.");
-  if (name == 2 && name != name2) yyerror("Comparação : Tipos incompatíveis.");
+  if (name->info == 0 || name2->info == 0) yyerror("Comparação : Tipo inválido.");
+  if (name->info == 2 && name->info != name2->info) yyerror("Comparação : Tipos incompatíveis.");
   return 1;
 }

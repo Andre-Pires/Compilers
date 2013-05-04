@@ -30,7 +30,7 @@ public integer entry (integer argc, string *argv, string *envp) {
       n := 0
       if n < max then do {
         novo[n] := base[n];
-	n := n + 1
+	      n := n + 1
       } while n < max
       free(base)
       base := novo

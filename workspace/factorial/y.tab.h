@@ -56,7 +56,11 @@
 #define INIT 312
 #define NIL 313
 #define PNTR 314
-#define UMINUS 315
+#define EXPS 315
+#define EXP 316
+#define MALL 317
+#define BODY 318
+#define UMINUS 319
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

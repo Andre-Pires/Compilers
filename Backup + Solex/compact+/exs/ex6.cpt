@@ -1,6 +1,0 @@
-program
-  x=0;
-  read x;
-  x=x+12;
-  print x;
-end

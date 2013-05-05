@@ -60,7 +60,12 @@
 #define EXP 316
 #define MALL 317
 #define BODY 318
-#define UMINUS 319
+#define JZ 319
+#define ETIQ 320
+#define LABEL 321
+#define JNZ 322
+#define JMP 323
+#define UMINUS 324
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

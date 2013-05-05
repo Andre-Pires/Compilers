@@ -31,7 +31,7 @@ int pos = 0;
 %token WHILE IF END RETURN VOID PUBLIC CONST THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
 %token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX
 
-%token CALL NEG FACT AND OR PROG ADD SUBT MUL DIV LT GT MOD PARAMS PARS2 PARS INTRS PINTR INTR DECL DECLS INIT NIL PNTR EXPS EXP MALL BODY
+%token CALL NEG FACT AND OR PROG ADD SUBT MUL DIV LT GT MOD PARAMS PARS2 PARS INTRS PINTR INTR DECL DECLS INIT NIL PNTR EXPS EXP MALL BODY JZ ETIQ LABEL JNZ JMP
 
 %nonassoc IFX
 %nonassoc ELSE
@@ -49,7 +49,7 @@ int pos = 0;
 %type <n> left_value init expressao expressoes corpo corpop instrucao instrucoes pars2 declaracoes declaracao tipo ptr cons pub parametro parametros pars updown step
 %%
 
-ficheiro  : declaracoes                      {Node * n = uniNode(PROG, $1); printNode(n, 0, yynames); /*yyselect(n);*/}
+ficheiro  : declaracoes                      {Node * n = uniNode(PROG, $1); printNode(n, 0, 0); /*yyselect(n);*/}
           | /*empty*/
           ;
 
@@ -254,6 +254,7 @@ char *mklbl(int n) {
   static char buf[20];
   sprintf(buf, "_i%d", n);
   return strdup(buf);
+}
 
 char **yynames =
 #if YYDEBUG > 0

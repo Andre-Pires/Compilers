@@ -1,13 +1,13 @@
 yydebug: state 0, reading 266 (PUBLIC)
 yydebug: state 0, shifting to state 2
 yydebug: state 2, reducing by rule 21 (pub : PUBLIC)
-yydebug: after reduction, shifting from state 0 to state 4
-yydebug: state 4, reading 265 (VOID)
-yydebug: state 4, reducing by rule 18 (cons :)
-yydebug: after reduction, shifting from state 4 to state 9
-yydebug: state 9, shifting to state 11
+yydebug: after reduction, shifting from state 0 to state 6
+yydebug: state 6, reading 265 (VOID)
+yydebug: state 6, reducing by rule 18 (cons :)
+yydebug: after reduction, shifting from state 6 to state 10
+yydebug: state 10, shifting to state 11
 yydebug: state 11, reducing by rule 22 (tipo : VOID)
-yydebug: after reduction, shifting from state 9 to state 15
+yydebug: after reduction, shifting from state 10 to state 15
 yydebug: state 15, reading 259 (IDENTIF)
 yydebug: state 15, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 15 to state 17
@@ -36,22 +36,22 @@ yydebug: state 43, reducing by rule 8 ($$2 :)
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reading 59 (';')
 yydebug: state 72, reducing by rule 14 (corpop :)
-yydebug: after reduction, shifting from state 72 to state 118
-yydebug: state 118, shifting to state 147
+yydebug: after reduction, shifting from state 72 to state 119
+yydebug: state 119, shifting to state 147
 yydebug: state 147, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
 yydebug: after reduction, shifting from state 0 to state 5
 yydebug: state 5, reducing by rule 3 (declaracoes : declaracao)
-yydebug: after reduction, shifting from state 0 to state 6
-yydebug: state 6, reading 266 (PUBLIC)
-yydebug: state 6, shifting to state 2
+yydebug: after reduction, shifting from state 0 to state 4
+yydebug: state 4, reading 266 (PUBLIC)
+yydebug: state 4, shifting to state 2
 yydebug: state 2, reducing by rule 21 (pub : PUBLIC)
-yydebug: after reduction, shifting from state 6 to state 4
-yydebug: state 4, reading 265 (VOID)
-yydebug: state 4, reducing by rule 18 (cons :)
-yydebug: after reduction, shifting from state 4 to state 9
-yydebug: state 9, shifting to state 11
+yydebug: after reduction, shifting from state 4 to state 6
+yydebug: state 6, reading 265 (VOID)
+yydebug: state 6, reducing by rule 18 (cons :)
+yydebug: after reduction, shifting from state 6 to state 10
+yydebug: state 10, shifting to state 11
 yydebug: state 11, reducing by rule 22 (tipo : VOID)
-yydebug: after reduction, shifting from state 9 to state 15
+yydebug: after reduction, shifting from state 10 to state 15
 yydebug: state 15, reading 259 (IDENTIF)
 yydebug: state 15, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 15 to state 17
@@ -80,22 +80,22 @@ yydebug: state 43, reducing by rule 8 ($$2 :)
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reading 59 (';')
 yydebug: state 72, reducing by rule 14 (corpop :)
-yydebug: after reduction, shifting from state 72 to state 118
-yydebug: state 118, shifting to state 147
+yydebug: after reduction, shifting from state 72 to state 119
+yydebug: state 119, shifting to state 147
 yydebug: state 147, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
-yydebug: after reduction, shifting from state 6 to state 10
-yydebug: state 10, reducing by rule 4 (declaracoes : declaracoes declaracao)
-yydebug: after reduction, shifting from state 0 to state 6
-yydebug: state 6, reading 266 (PUBLIC)
-yydebug: state 6, shifting to state 2
+yydebug: after reduction, shifting from state 4 to state 8
+yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
+yydebug: after reduction, shifting from state 0 to state 4
+yydebug: state 4, reading 266 (PUBLIC)
+yydebug: state 4, shifting to state 2
 yydebug: state 2, reducing by rule 21 (pub : PUBLIC)
-yydebug: after reduction, shifting from state 6 to state 4
-yydebug: state 4, reading 265 (VOID)
-yydebug: state 4, reducing by rule 18 (cons :)
-yydebug: after reduction, shifting from state 4 to state 9
-yydebug: state 9, shifting to state 11
+yydebug: after reduction, shifting from state 4 to state 6
+yydebug: state 6, reading 265 (VOID)
+yydebug: state 6, reducing by rule 18 (cons :)
+yydebug: after reduction, shifting from state 6 to state 10
+yydebug: state 10, shifting to state 11
 yydebug: state 11, reducing by rule 22 (tipo : VOID)
-yydebug: after reduction, shifting from state 9 to state 15
+yydebug: after reduction, shifting from state 10 to state 15
 yydebug: state 15, reading 259 (IDENTIF)
 yydebug: state 15, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 15 to state 17
@@ -107,19 +107,19 @@ yydebug: state 20, shifting to state 28
 yydebug: state 28, reading 59 (';')
 yydebug: state 28, shifting to state 34
 yydebug: state 34, reducing by rule 12 (declaracao : pub cons tipo ptr IDENTIF '(' ')' ';')
-yydebug: after reduction, shifting from state 6 to state 10
-yydebug: state 10, reducing by rule 4 (declaracoes : declaracoes declaracao)
-yydebug: after reduction, shifting from state 0 to state 6
-yydebug: state 6, reading 266 (PUBLIC)
-yydebug: state 6, shifting to state 2
+yydebug: after reduction, shifting from state 4 to state 8
+yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
+yydebug: after reduction, shifting from state 0 to state 4
+yydebug: state 4, reading 266 (PUBLIC)
+yydebug: state 4, shifting to state 2
 yydebug: state 2, reducing by rule 21 (pub : PUBLIC)
-yydebug: after reduction, shifting from state 6 to state 4
-yydebug: state 4, reading 278 (INTEGER)
-yydebug: state 4, reducing by rule 18 (cons :)
-yydebug: after reduction, shifting from state 4 to state 9
-yydebug: state 9, shifting to state 12
+yydebug: after reduction, shifting from state 4 to state 6
+yydebug: state 6, reading 278 (INTEGER)
+yydebug: state 6, reducing by rule 18 (cons :)
+yydebug: after reduction, shifting from state 6 to state 10
+yydebug: state 10, shifting to state 12
 yydebug: state 12, reducing by rule 23 (tipo : INTEGER)
-yydebug: after reduction, shifting from state 9 to state 15
+yydebug: after reduction, shifting from state 10 to state 15
 yydebug: state 15, reading 259 (IDENTIF)
 yydebug: state 15, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 15 to state 17
@@ -148,22 +148,22 @@ yydebug: state 43, reducing by rule 8 ($$2 :)
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reading 59 (';')
 yydebug: state 72, reducing by rule 14 (corpop :)
-yydebug: after reduction, shifting from state 72 to state 118
-yydebug: state 118, shifting to state 147
+yydebug: after reduction, shifting from state 72 to state 119
+yydebug: state 119, shifting to state 147
 yydebug: state 147, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
-yydebug: after reduction, shifting from state 6 to state 10
-yydebug: state 10, reducing by rule 4 (declaracoes : declaracoes declaracao)
-yydebug: after reduction, shifting from state 0 to state 6
-yydebug: state 6, reading 266 (PUBLIC)
-yydebug: state 6, shifting to state 2
+yydebug: after reduction, shifting from state 4 to state 8
+yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
+yydebug: after reduction, shifting from state 0 to state 4
+yydebug: state 4, reading 266 (PUBLIC)
+yydebug: state 4, shifting to state 2
 yydebug: state 2, reducing by rule 21 (pub : PUBLIC)
-yydebug: after reduction, shifting from state 6 to state 4
-yydebug: state 4, reading 279 (STRING)
-yydebug: state 4, reducing by rule 18 (cons :)
-yydebug: after reduction, shifting from state 4 to state 9
-yydebug: state 9, shifting to state 13
+yydebug: after reduction, shifting from state 4 to state 6
+yydebug: state 6, reading 279 (STRING)
+yydebug: state 6, reducing by rule 18 (cons :)
+yydebug: after reduction, shifting from state 6 to state 10
+yydebug: state 10, shifting to state 13
 yydebug: state 13, reducing by rule 24 (tipo : STRING)
-yydebug: after reduction, shifting from state 9 to state 15
+yydebug: after reduction, shifting from state 10 to state 15
 yydebug: state 15, reading 259 (IDENTIF)
 yydebug: state 15, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 15 to state 17
@@ -206,22 +206,22 @@ yydebug: state 43, reducing by rule 8 ($$2 :)
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reading 59 (';')
 yydebug: state 72, reducing by rule 14 (corpop :)
-yydebug: after reduction, shifting from state 72 to state 118
-yydebug: state 118, shifting to state 147
+yydebug: after reduction, shifting from state 72 to state 119
+yydebug: state 119, shifting to state 147
 yydebug: state 147, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
-yydebug: after reduction, shifting from state 6 to state 10
-yydebug: state 10, reducing by rule 4 (declaracoes : declaracoes declaracao)
-yydebug: after reduction, shifting from state 0 to state 6
-yydebug: state 6, reading 266 (PUBLIC)
-yydebug: state 6, shifting to state 2
+yydebug: after reduction, shifting from state 4 to state 8
+yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
+yydebug: after reduction, shifting from state 0 to state 4
+yydebug: state 4, reading 266 (PUBLIC)
+yydebug: state 4, shifting to state 2
 yydebug: state 2, reducing by rule 21 (pub : PUBLIC)
-yydebug: after reduction, shifting from state 6 to state 4
-yydebug: state 4, reading 279 (STRING)
-yydebug: state 4, reducing by rule 18 (cons :)
-yydebug: after reduction, shifting from state 4 to state 9
-yydebug: state 9, shifting to state 13
+yydebug: after reduction, shifting from state 4 to state 6
+yydebug: state 6, reading 279 (STRING)
+yydebug: state 6, reducing by rule 18 (cons :)
+yydebug: after reduction, shifting from state 6 to state 10
+yydebug: state 10, shifting to state 13
 yydebug: state 13, reducing by rule 24 (tipo : STRING)
-yydebug: after reduction, shifting from state 9 to state 15
+yydebug: after reduction, shifting from state 10 to state 15
 yydebug: state 15, reading 259 (IDENTIF)
 yydebug: state 15, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 15 to state 17
@@ -264,22 +264,22 @@ yydebug: state 43, reducing by rule 8 ($$2 :)
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reading 59 (';')
 yydebug: state 72, reducing by rule 14 (corpop :)
-yydebug: after reduction, shifting from state 72 to state 118
-yydebug: state 118, shifting to state 147
+yydebug: after reduction, shifting from state 72 to state 119
+yydebug: state 119, shifting to state 147
 yydebug: state 147, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
-yydebug: after reduction, shifting from state 6 to state 10
-yydebug: state 10, reducing by rule 4 (declaracoes : declaracoes declaracao)
-yydebug: after reduction, shifting from state 0 to state 6
-yydebug: state 6, reading 266 (PUBLIC)
-yydebug: state 6, shifting to state 2
+yydebug: after reduction, shifting from state 4 to state 8
+yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
+yydebug: after reduction, shifting from state 0 to state 4
+yydebug: state 4, reading 266 (PUBLIC)
+yydebug: state 4, shifting to state 2
 yydebug: state 2, reducing by rule 21 (pub : PUBLIC)
-yydebug: after reduction, shifting from state 6 to state 4
-yydebug: state 4, reading 278 (INTEGER)
-yydebug: state 4, reducing by rule 18 (cons :)
-yydebug: after reduction, shifting from state 4 to state 9
-yydebug: state 9, shifting to state 12
+yydebug: after reduction, shifting from state 4 to state 6
+yydebug: state 6, reading 278 (INTEGER)
+yydebug: state 6, reducing by rule 18 (cons :)
+yydebug: after reduction, shifting from state 6 to state 10
+yydebug: state 10, shifting to state 12
 yydebug: state 12, reducing by rule 23 (tipo : INTEGER)
-yydebug: after reduction, shifting from state 9 to state 15
+yydebug: after reduction, shifting from state 10 to state 15
 yydebug: state 15, reading 259 (IDENTIF)
 yydebug: state 15, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 15 to state 17
@@ -349,13 +349,13 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 35 (parametro : tipo ptr IDENTIF)
-yydebug: after reduction, shifting from state 39 to state 63
-yydebug: state 63, reading 59 (';')
-yydebug: state 63, shifting to state 96
-yydebug: state 96, reducing by rule 36 (pars2 : parametro ';')
-yydebug: after reduction, shifting from state 39 to state 64
-yydebug: state 64, reading 262 (IF)
-yydebug: state 64, shifting to state 49
+yydebug: after reduction, shifting from state 39 to state 68
+yydebug: state 68, reading 59 (';')
+yydebug: state 68, shifting to state 116
+yydebug: state 116, reducing by rule 36 (pars2 : parametro ';')
+yydebug: after reduction, shifting from state 39 to state 67
+yydebug: state 67, reading 262 (IF)
+yydebug: state 67, shifting to state 49
 yydebug: state 49, reading 259 (IDENTIF)
 yydebug: state 49, shifting to state 47
 yydebug: state 47, reading 60 ('<')
@@ -363,13 +363,13 @@ yydebug: state 47, reducing by rule 95 (left_value : IDENTIF)
 yydebug: after reduction, shifting from state 49 to state 76
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
 yydebug: after reduction, shifting from state 49 to state 77
-yydebug: state 77, shifting to state 107
-yydebug: state 107, reading 257 (INT)
-yydebug: state 107, shifting to state 45
+yydebug: state 77, shifting to state 103
+yydebug: state 103, reading 257 (INT)
+yydebug: state 103, shifting to state 45
 yydebug: state 45, reducing by rule 65 (expressao : INT)
-yydebug: after reduction, shifting from state 107 to state 141
-yydebug: state 141, reading 268 (THEN)
-yydebug: state 141, reducing by rule 84 (expressao : expressao '<' expressao)
+yydebug: after reduction, shifting from state 103 to state 139
+yydebug: state 139, reading 268 (THEN)
+yydebug: state 139, reducing by rule 84 (expressao : expressao '<' expressao)
 yydebug: after reduction, shifting from state 49 to state 77
 yydebug: state 77, shifting to state 124
 yydebug: state 124, reading 123 ('{')
@@ -388,18 +388,18 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
+yydebug: after reduction, shifting from state 39 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
 yydebug: after reduction, shifting from state 39 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 39 to state 68
-yydebug: state 68, reducing by rule 42 (instrucoes : instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: state 65, reducing by rule 42 (instrucoes : instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 287 (ATRIB)
 yydebug: state 47, reducing by rule 95 (left_value : IDENTIF)
-yydebug: after reduction, shifting from state 67 to state 62
+yydebug: after reduction, shifting from state 66 to state 62
 yydebug: state 62, shifting to state 94
 yydebug: state 94, reading 257 (INT)
 yydebug: state 94, shifting to state 45
@@ -407,17 +407,17 @@ yydebug: state 45, reducing by rule 65 (expressao : INT)
 yydebug: after reduction, shifting from state 94 to state 130
 yydebug: state 130, reading 59 (';')
 yydebug: state 130, reducing by rule 72 (expressao : left_value ATRIB expressao)
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 125 ('}')
-yydebug: state 67, shifting to state 115
-yydebug: state 115, reducing by rule 40 (corpo : '{' instrucoes '}')
-yydebug: after reduction, shifting from state 124 to state 66
-yydebug: state 66, reducing by rule 52 (instrucao : corpo)
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 125 ('}')
+yydebug: state 66, shifting to state 111
+yydebug: state 111, reducing by rule 40 (corpo : '{' instrucoes '}')
+yydebug: after reduction, shifting from state 124 to state 64
+yydebug: state 64, reducing by rule 52 (instrucao : corpo)
 yydebug: after reduction, shifting from state 124 to state 151
 yydebug: state 151, reading 269 (ELSE)
 yydebug: state 151, shifting to state 156
@@ -437,15 +437,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
+yydebug: after reduction, shifting from state 39 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
 yydebug: after reduction, shifting from state 39 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 39 to state 68
-yydebug: state 68, reducing by rule 42 (instrucoes : instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: state 65, reducing by rule 42 (instrucoes : instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -468,15 +468,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 260 (STRN)
@@ -489,15 +489,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -520,15 +520,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 260 (STRN)
@@ -541,15 +541,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -567,9 +567,9 @@ yydebug: after reduction, shifting from state 74 to state 76
 yydebug: state 76, reading 62 ('>')
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
 yydebug: after reduction, shifting from state 74 to state 121
-yydebug: state 121, shifting to state 106
-yydebug: state 106, reading 259 (IDENTIF)
-yydebug: state 106, shifting to state 47
+yydebug: state 121, shifting to state 102
+yydebug: state 102, reading 259 (IDENTIF)
+yydebug: state 102, shifting to state 47
 yydebug: state 47, reading 91 ('[')
 yydebug: state 47, shifting to state 75
 yydebug: state 75, reading 257 (INT)
@@ -579,26 +579,26 @@ yydebug: after reduction, shifting from state 75 to state 123
 yydebug: state 123, reading 93 (']')
 yydebug: state 123, shifting to state 150
 yydebug: state 150, reducing by rule 96 (left_value : IDENTIF '[' expressao ']')
-yydebug: after reduction, shifting from state 106 to state 76
+yydebug: after reduction, shifting from state 102 to state 76
 yydebug: state 76, reading 41 (')')
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
-yydebug: after reduction, shifting from state 106 to state 140
-yydebug: state 140, reducing by rule 83 (expressao : expressao '>' expressao)
+yydebug: after reduction, shifting from state 102 to state 138
+yydebug: state 138, reducing by rule 83 (expressao : expressao '>' expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, reducing by rule 64 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 260 (STRN)
@@ -611,15 +611,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -637,9 +637,9 @@ yydebug: after reduction, shifting from state 74 to state 76
 yydebug: state 76, reading 60 ('<')
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
 yydebug: after reduction, shifting from state 74 to state 121
-yydebug: state 121, shifting to state 107
-yydebug: state 107, reading 259 (IDENTIF)
-yydebug: state 107, shifting to state 47
+yydebug: state 121, shifting to state 103
+yydebug: state 103, reading 259 (IDENTIF)
+yydebug: state 103, shifting to state 47
 yydebug: state 47, reading 91 ('[')
 yydebug: state 47, shifting to state 75
 yydebug: state 75, reading 257 (INT)
@@ -649,26 +649,26 @@ yydebug: after reduction, shifting from state 75 to state 123
 yydebug: state 123, reading 93 (']')
 yydebug: state 123, shifting to state 150
 yydebug: state 150, reducing by rule 96 (left_value : IDENTIF '[' expressao ']')
-yydebug: after reduction, shifting from state 107 to state 76
+yydebug: after reduction, shifting from state 103 to state 76
 yydebug: state 76, reading 41 (')')
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
-yydebug: after reduction, shifting from state 107 to state 141
-yydebug: state 141, reducing by rule 84 (expressao : expressao '<' expressao)
+yydebug: after reduction, shifting from state 103 to state 139
+yydebug: state 139, reducing by rule 84 (expressao : expressao '<' expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, reducing by rule 64 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 260 (STRN)
@@ -681,15 +681,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -707,9 +707,9 @@ yydebug: after reduction, shifting from state 74 to state 76
 yydebug: state 76, reading 283 (EQ)
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
 yydebug: after reduction, shifting from state 74 to state 121
-yydebug: state 121, shifting to state 102
-yydebug: state 102, reading 259 (IDENTIF)
-yydebug: state 102, shifting to state 47
+yydebug: state 121, shifting to state 98
+yydebug: state 98, reading 259 (IDENTIF)
+yydebug: state 98, shifting to state 47
 yydebug: state 47, reading 91 ('[')
 yydebug: state 47, shifting to state 75
 yydebug: state 75, reading 257 (INT)
@@ -719,29 +719,29 @@ yydebug: after reduction, shifting from state 75 to state 123
 yydebug: state 123, reading 93 (']')
 yydebug: state 123, shifting to state 150
 yydebug: state 150, reducing by rule 96 (left_value : IDENTIF '[' expressao ']')
-yydebug: after reduction, shifting from state 102 to state 76
+yydebug: after reduction, shifting from state 98 to state 76
 yydebug: state 76, reading 41 (')')
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
-yydebug: after reduction, shifting from state 102 to state 136
-yydebug: state 136, reducing by rule 85 (expressao : expressao EQ expressao)
+yydebug: after reduction, shifting from state 98 to state 134
+yydebug: state 134, reducing by rule 85 (expressao : expressao EQ expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, reducing by rule 64 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 287 (ATRIB)
 yydebug: state 47, reducing by rule 95 (left_value : IDENTIF)
-yydebug: after reduction, shifting from state 67 to state 62
+yydebug: after reduction, shifting from state 66 to state 62
 yydebug: state 62, shifting to state 94
 yydebug: state 94, reading 259 (IDENTIF)
 yydebug: state 94, shifting to state 47
@@ -759,14 +759,14 @@ yydebug: state 76, reading 59 (';')
 yydebug: state 76, reducing by rule 68 (expressao : left_value)
 yydebug: after reduction, shifting from state 94 to state 130
 yydebug: state 130, reducing by rule 72 (expressao : left_value ATRIB expressao)
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 260 (STRN)
@@ -779,15 +779,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -839,18 +839,18 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 35 ('#')
 yydebug: state 47, reducing by rule 95 (left_value : IDENTIF)
-yydebug: after reduction, shifting from state 67 to state 62
+yydebug: after reduction, shifting from state 66 to state 62
 yydebug: state 62, shifting to state 95
 yydebug: state 95, reading 259 (IDENTIF)
 yydebug: state 95, shifting to state 47
@@ -878,21 +878,21 @@ yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 1
 yydebug: after reduction, shifting from state 95 to state 131
 yydebug: state 131, reading 43 ('+')
-yydebug: state 131, shifting to state 108
-yydebug: state 108, reading 257 (INT)
-yydebug: state 108, shifting to state 45
+yydebug: state 131, shifting to state 104
+yydebug: state 104, reading 257 (INT)
+yydebug: state 104, shifting to state 45
 yydebug: state 45, reducing by rule 65 (expressao : INT)
-yydebug: after reduction, shifting from state 108 to state 142
-yydebug: state 142, reading 59 (';')
-yydebug: state 142, reducing by rule 81 (expressao : expressao '+' expressao)
+yydebug: after reduction, shifting from state 104 to state 140
+yydebug: state 140, reading 59 (';')
+yydebug: state 140, reducing by rule 81 (expressao : expressao '+' expressao)
 yydebug: after reduction, shifting from state 95 to state 131
 yydebug: state 131, shifting to state 154
 yydebug: state 154, reducing by rule 57 (instrucao : left_value '#' expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -925,15 +925,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 2
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 260 (STRN)
@@ -946,15 +946,15 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 259 (IDENTIF)
@@ -969,33 +969,33 @@ yydebug: after reduction, shifting from state 74 to state 122
 yydebug: state 122, shifting to state 148
 yydebug: state 148, reducing by rule 69 (expressao : IDENTIF '(' expressoes ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 40 ('(')
 yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 41 (')')
 yydebug: state 74, shifting to state 120
 yydebug: state 120, reducing by rule 70 (expressao : IDENTIF '(' ')')
 0
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, reading 59 (';')
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 259 (IDENTIF)
-yydebug: state 67, shifting to state 47
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, reading 59 (';')
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 259 (IDENTIF)
+yydebug: state 66, shifting to state 47
 yydebug: state 47, reading 287 (ATRIB)
 yydebug: state 47, reducing by rule 95 (left_value : IDENTIF)
-yydebug: after reduction, shifting from state 67 to state 62
+yydebug: after reduction, shifting from state 66 to state 62
 yydebug: state 62, shifting to state 94
 yydebug: state 94, reading 257 (INT)
 yydebug: state 94, shifting to state 45
@@ -1003,34 +1003,144 @@ yydebug: state 45, reducing by rule 65 (expressao : INT)
 yydebug: after reduction, shifting from state 94 to state 130
 yydebug: state 130, reading 59 (';')
 yydebug: state 130, reducing by rule 72 (expressao : left_value ATRIB expressao)
-yydebug: after reduction, shifting from state 67 to state 65
-yydebug: state 65, shifting to state 114
-yydebug: state 114, reducing by rule 51 (instrucao : expressao ';')
-yydebug: after reduction, shifting from state 67 to state 116
-yydebug: state 116, reducing by rule 43 (instrucoes : instrucoes instrucao)
-yydebug: after reduction, shifting from state 39 to state 67
-yydebug: state 67, reading 125 ('}')
-yydebug: state 67, shifting to state 115
-yydebug: state 115, reducing by rule 40 (corpo : '{' instrucoes '}')
-yydebug: after reduction, shifting from state 156 to state 66
-yydebug: state 66, reducing by rule 52 (instrucao : corpo)
+yydebug: after reduction, shifting from state 66 to state 63
+yydebug: state 63, shifting to state 110
+yydebug: state 110, reducing by rule 51 (instrucao : expressao ';')
+yydebug: after reduction, shifting from state 66 to state 112
+yydebug: state 112, reducing by rule 43 (instrucoes : instrucoes instrucao)
+yydebug: after reduction, shifting from state 39 to state 66
+yydebug: state 66, reading 125 ('}')
+yydebug: state 66, shifting to state 111
+yydebug: state 111, reducing by rule 40 (corpo : '{' instrucoes '}')
+yydebug: after reduction, shifting from state 156 to state 64
+yydebug: state 64, reducing by rule 52 (instrucao : corpo)
 yydebug: after reduction, shifting from state 156 to state 161
 yydebug: state 161, reducing by rule 45 (instrucao : IF expressao THEN instrucao ELSE instrucao)
-yydebug: after reduction, shifting from state 64 to state 68
-yydebug: state 68, reducing by rule 42 (instrucoes : instrucao)
-yydebug: after reduction, shifting from state 64 to state 99
-yydebug: state 99, reading 125 ('}')
-yydebug: state 99, shifting to state 133
-yydebug: state 133, reducing by rule 41 (corpo : '{' pars2 instrucoes '}')
-yydebug: after reduction, shifting from state 72 to state 119
-yydebug: state 119, reducing by rule 15 (corpop : corpo)
+yydebug: after reduction, shifting from state 67 to state 65
+yydebug: state 65, reducing by rule 42 (instrucoes : instrucao)
+yydebug: after reduction, shifting from state 67 to state 114
+yydebug: state 114, reading 125 ('}')
+yydebug: state 114, shifting to state 145
+yydebug: state 145, reducing by rule 41 (corpo : '{' pars2 instrucoes '}')
 yydebug: after reduction, shifting from state 72 to state 118
-yydebug: state 118, reading 59 (';')
-yydebug: state 118, shifting to state 147
+yydebug: state 118, reducing by rule 15 (corpop : corpo)
+yydebug: after reduction, shifting from state 72 to state 119
+yydebug: state 119, reading 59 (';')
+yydebug: state 119, shifting to state 147
 yydebug: state 147, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
-yydebug: after reduction, shifting from state 6 to state 10
-yydebug: state 10, reducing by rule 4 (declaracoes : declaracoes declaracao)
-yydebug: after reduction, shifting from state 0 to state 6
-yydebug: state 6, reading 0 (end-of-file)
-yydebug: state 6, reducing by rule 1 (ficheiro : declaracoes)
+yydebug: after reduction, shifting from state 4 to state 8
+yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
+yydebug: after reduction, shifting from state 0 to state 4
+yydebug: state 4, reading 0 (end-of-file)
+yydebug: state 4, reducing by rule 1 (ficheiro : declaracoes)
+
+ ( PROG:
+  ( DECLS:
+    ( DECLS:
+      ( DECLS:
+        ( DECLS:
+          ( DECLS:
+            ( DECLS:
+              ( DECL: IDENTIF:"prints"
+                ( BODY:
+                  ( PARAMS: IDENTIF:"s" NIL:) NIL:))
+              ( DECL: IDENTIF:"printi"
+                ( BODY:
+                  ( PARAMS: IDENTIF:"i" NIL:) NIL:)))
+            ( DECL: IDENTIF:"println" NIL:))
+          ( DECL: IDENTIF:"strlen"
+            ( BODY:
+              ( PARAMS: IDENTIF:"s" NIL:) NIL:)))
+        ( DECL: IDENTIF:"strchr"
+          ( BODY:
+            ( PARAMS: IDENTIF:"s"
+              ( PARS: NIL: IDENTIF:"ch")) NIL:)))
+      ( DECL: IDENTIF:"strcpy"
+        ( BODY:
+          ( PARAMS: IDENTIF:"s"
+            ( PARS: NIL: IDENTIF:"orig")) NIL:)))
+    ( DECL: IDENTIF:"entry"
+      ( BODY:
+        ( PARAMS: IDENTIF:"argc"
+          ( PARS:
+            ( PARS: NIL: IDENTIF:"argv") IDENTIF:"envp"))
+        ( PINTR: IDENTIF:"str"
+          ( IF:
+            ( JZ:
+              ( LT: IDENTIF:"argc" INT:3) ETIQ:"_i1")
+            ( IF:
+              ( INTRS:
+                ( INTRS:
+                  ( CALL: IDENTIF:"prints" STRN:"programa necessita de 2 argumentos (strings)
+")
+                  ( ATRIB: IDENTIF:"entry" INT:1)))
+              ( IF: JMP:"_i2"
+                ( IF: LABEL:"_i1"
+                  ( IF:
+                    ( INTRS:
+                      ( INTRS:
+                        ( INTRS:
+                          ( INTRS:
+                            ( INTRS:
+                              ( INTRS:
+                                ( INTRS:
+                                  ( INTRS:
+                                    ( INTRS:
+                                      ( INTRS:
+                                        ( INTRS:
+                                          ( INTRS:
+                                            ( INTRS:
+                                              ( INTRS:
+                                                ( INTRS:
+                                                  ( INTRS:
+                                                    ( INTRS:
+                                                      ( INTRS:
+                                                        ( INTRS:
+                                                          ( CALL: IDENTIF:"prints" STRN:"primeira: ")
+                                                          ( CALL: IDENTIF:"prints"
+                                                            ( POINTER: IDENTIF:"argv" INT:1)))
+                                                        ( CALL: IDENTIF:"prints" STRN:"
+segunda: "))
+                                                      ( CALL: IDENTIF:"prints"
+                                                        ( POINTER: IDENTIF:"argv" INT:2)))
+                                                    ( CALL: IDENTIF:"prints" STRN:"
+maior: "))
+                                                  ( CALL: IDENTIF:"printi"
+                                                    ( GT:
+                                                      ( POINTER: IDENTIF:"argv" INT:1)
+                                                      ( POINTER: IDENTIF:"argv" INT:2))))
+                                                ( CALL: IDENTIF:"prints" STRN:"
+menor: "))
+                                              ( CALL: IDENTIF:"printi"
+                                                ( LT:
+                                                  ( POINTER: IDENTIF:"argv" INT:1)
+                                                  ( POINTER: IDENTIF:"argv" INT:2))))
+                                            ( CALL: IDENTIF:"prints" STRN:"
+igual: "))
+                                          ( CALL: IDENTIF:"printi"
+                                            ( EQ:
+                                              ( POINTER: IDENTIF:"argv" INT:1)
+                                              ( POINTER: IDENTIF:"argv" INT:2))))
+                                        ( ATRIB: IDENTIF:"str"
+                                          ( POINTER: IDENTIF:"argv" INT:2)))
+                                      ( CALL: IDENTIF:"prints" STRN:"
+strchr: "))
+                                    ( CALL: IDENTIF:"prints"
+                                      ( CALL: IDENTIF:"strchr"
+                                        ( EXPS:
+                                          ( POINTER: IDENTIF:"argv" INT:1)
+                                          ( POINTER: IDENTIF:"str" INT:0)))))
+                                  ( MALL: IDENTIF:"str"
+                                    ( ADD:
+                                      ( CALL: IDENTIF:"strlen"
+                                        ( POINTER: IDENTIF:"argv" INT:1)) INT:1)))
+                                ( CALL: IDENTIF:"strcpy"
+                                  ( EXPS: IDENTIF:"str"
+                                    ( POINTER: IDENTIF:"argv" INT:1))))
+                              ( CALL: IDENTIF:"prints" STRN:"
+cópia: "))
+                            ( CALL: IDENTIF:"prints" IDENTIF:"str"))
+                          ( CALL: IDENTIF:"println"))
+                        ( ATRIB: IDENTIF:"entry" INT:0))) LABEL:"_i2"))))))))))
+[#199]
 yydebug: after reduction, shifting from state 0 to state 3

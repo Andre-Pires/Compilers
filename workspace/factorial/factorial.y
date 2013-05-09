@@ -6,6 +6,7 @@
 #include <stdarg.h>
 #include "node.h"
 #include "tabid.h"
+#include "y.tab.h"
 
 extern void yyerror(char *s);
 extern void program(int enter, Node *body), declare(char *name, int value);
@@ -46,10 +47,10 @@ int pos = 0;
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
 
-%type <n> left_value init expressao expressoes corpo corpop instrucao instrucoes pars2 declaracoes declaracao tipo ptr cons pub parametro parametros pars updown step
+%type <n> left_value init expressao expressoes corpo corpop instrucao instrucoes pars2 declaracoes declaracao tipo ptr cons pub parametro parametros  updown step
 %%
 
-ficheiro  : declaracoes                      {Node * n = uniNode(PROG, $1); printNode(n, 0, 0); /*yyselect(n);*/}
+ficheiro  : declaracoes                      {Node * n = uniNode(PROG, $1); program(-pos, $1); printNode(n, 0, yynames); /*yyselect(n);*/}
           | /*empty*/
           ;
 
@@ -57,24 +58,24 @@ declaracoes  : declaracao                     {$$ = $1;}
              | declaracoes declaracao         {$$ = binNode(DECLS, $1, $2);}
              ;
 
-declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1->info+$2->info+$3->info+$4->info, $5, 0); 
+declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1->info+$2->info+$3->info+$4->info, $5, 0); declare($5, $6->info);
                                                               $$=binNode(INIT, strNode(IDENTIF, $5), $6);
                                                               $$->info = $1->info+$2->info+$3->info+$4->info; 
                                                               if($3->info+$4->info != 4) {
                                                                 if($3->info+$4->info != $6->info) yyerror("Atribuição entre tipos diferentes.");}}
 
-            | pub cons tipo ptr IDENTIF ';'                 { $$=uniNode(DECL, strNode(IDENTIF, $5)); IDnew($1->info+$2->info+$3->info+$4->info, $5, 0);}
+            | pub cons tipo ptr IDENTIF ';'                 { $$=uniNode(DECL, strNode(IDENTIF, $5)); IDnew($1->info+$2->info+$3->info+$4->info, $5, 0); function($5, -pos, 0); pos = 0;}
 
             | pub cons tipo ptr IDENTIF '('   {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush(); } parametros ')'
                                               {IDreplace($1->info+$2->info+$3->info+$4->info+32,$5, $8->info); //ver isto, devia passar parametros
-                                               if(($3->info+$4->info) != 0) {IDnew($3->info+$4->info, $5, 0);}}  corpop ';'
-                                              {$$=binNode(DECL, strNode(IDENTIF, $5), binNode(BODY, $8, $11)); IDpop();} 
+                                               if(($3->info+$4->info) != 0) {IDnew($3->info+$4->info, $5, 0);} pos = 0;}  corpop ';'
+                                              {$$=binNode(DECL, strNode(IDENTIF, $5), binNode(BODY, $8, $11)); IDpop(); /* usar o YYselect à entrada do corpo*/ function($5, -pos, $11); pos = 0; } 
 
             | pub cons tipo ptr IDENTIF '(' ')' {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush();
-                                                  if(($3->info+$4->info) != 0) {IDnew(($3->info+$4->info), $5,0);} }  corpo ';' 
-                                                  {$$=binNode(DECL, strNode(IDENTIF, $5), $9); IDpop();}
+                                                  if(($3->info+$4->info) != 0) {IDnew(($3->info+$4->info), $5,0);} pos = 0;}  corpo ';' 
+                                                  { $$=binNode(DECL, strNode(IDENTIF, $5), $9); IDpop(); function($5, -pos, $9); pos = 0;}
 
-            | pub cons tipo ptr IDENTIF '(' ')' ';'    {$$=binNode(DECL, strNode(IDENTIF, $5), nilNode(NIL)); IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0);} 
+            | pub cons tipo ptr IDENTIF '(' ')' ';'    {$$=binNode(DECL, strNode(IDENTIF, $5), nilNode(NIL)); IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); function($5, -pos, 0); pos = 0;} 
             | error ';'                                {yyerrok; }
             ;
 
@@ -108,11 +109,9 @@ init  : ATRIB INT            { $$ = intNode(INT, $2); $$->info = 1;}
       | ATRIB IDENTIF        { $$ = strNode(IDENTIF, $2); $$->info = IDfind($2, 0)+4;}
       ;
 
-pars : pars ',' parametro             { $$ = binNode(PARS, $1, $3); $$->info = $1->info + $3->info; }
-     |                                { $$ = nilNode(NIL); $$->info = 0;}
-     ;
 
-parametros  : parametro pars          { $$ = binNode(PARAMS, $1, $2); $$->info = $1->info + $2->info; }
+parametros  : parametros ',' parametro          { $$ = binNode(PARAMS, $1, $3); $$->info = $1->info + $3->info; }
+            | parametro                         { $$ = uniNode(PARAMS, $1); $$->info = $1->info;}
             ;
 
 parametro : tipo ptr IDENTIF                    { $$ = strNode(IDENTIF, $3); IDnew($1->info+$2->info, $3, 0); $$->info = $1->info + $2->info;} // parametros da funcao sao positivos e as variaveis locais negativas
@@ -139,7 +138,7 @@ instrucao : IF expressao THEN instrucao %prec IFX                      { int lbl
                                                                         strNode(LABEL, mklbl(lbl1)));
                                                                        }
           | IF expressao THEN instrucao ELSE instrucao                { int lbl1 = ++lbl, lbl2 = ++lbl;
-                                                                        $$ = seqNode(IF, 6,
+                                                                        $$ = seqNode(ELSE, 6,
                                                                         binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
                                                                         $4, /* instr */
                                                                         strNode(JMP, mklbl(lbl2)),
@@ -205,12 +204,12 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
           | expressao NE expressao                    { $$ = binNode(NE, $1, $3); $$->info = comp($1, $3); }
           | expressao GE expressao                    { $$ = binNode(GE, $1, $3); $$->info = comp($1, $3); }
           | expressao LE expressao                    { $$ = binNode(LE, $1, $3); $$->info = comp($1, $3); }
-          | expressao '&' expressao                   { if($1->info != 1 || $3->info != 1) yyerror("Junção Lógica : Tipo inválido"); $$ = binNode(AND, $1, $3); }
-          | expressao '|' expressao                   { if($1->info != 1 || $3->info != 1) yyerror("Alternativa Lógica : Tipo inválido"); $$ = binNode(OR, $1, $3); }
-          | '~' expressao                             { if($2->info != 1) yyerror("Negação Lógica : Tipo inválido"); $$ = uniNode(NEG, $2); }
-          | expressao '!'                             { if($1->info != 1) yyerror("Factorial : Tipo inválido"); $$ = uniNode(FACT, $1); }
-          | '&' left_value %prec ADDR                 { $$ = uniNode(ADDR, $2); }
-          | '*' left_value %prec POINTER              { $$ = uniNode(POINTER, $2); }
+          | expressao '&' expressao                   { if($1->info != 1 || $3->info != 1) yyerror("Junção Lógica : Tipo inválido"); $$ = binNode(AND, $1, $3); $$->info = 1;}
+          | expressao '|' expressao                   { if($1->info != 1 || $3->info != 1) yyerror("Alternativa Lógica : Tipo inválido"); $$ = binNode(OR, $1, $3); $$->info = 1;}
+          | '~' expressao                             { if($2->info != 1) yyerror("Negação Lógica : Tipo inválido"); $$ = uniNode(NEG, $2); $$->info = 1;}
+          | expressao '!'                             { if($1->info != 1) yyerror("Factorial : Tipo inválido"); $$ = uniNode(FACT, $1); $$->info = 1;}
+          | '&' left_value %prec ADDR                 { $$ = uniNode(ADDR, $2); $$->info = $2->info;}
+          | '*' left_value %prec POINTER              { $$ = uniNode(POINTER, $2); $$->info = $2->info;}
           ;
 
 left_value: IDENTIF                                   { $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, 0); } // deslocamento as variaveis para o place, para sber se é global

@@ -708,6 +708,11 @@ static int comp(Node * name, Node * name2) {
   return 1;
 }
 
+static void assign(char *name) {
+  if (IDfind(name, (long*)IDtest) < 0)
+    IDnew(INTEGER, name, pos -= 4);
+}
+
 /*
 static Node *mkvar(char *name) {
   long loc;
@@ -730,7 +735,7 @@ char **yynames =
 #else
      0;
 #endif
-#line 733 "y.tab.c"
+#line 738 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -958,11 +963,11 @@ case 5:
 break;
 case 6:
 #line 67 "factorial.y"
-	{ yyval.n=uniNode(DECL, strNode(IDENTIF, yystack.l_mark[-1].s)); IDnew(yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info+yystack.l_mark[-2].n->info, yystack.l_mark[-1].s, 0); function(yystack.l_mark[-1].s, -pos, 0); pos = 0;}
+	{ yyval.n=uniNode(DECL, strNode(IDENTIF, yystack.l_mark[-1].s)); IDnew(yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info+yystack.l_mark[-2].n->info, yystack.l_mark[-1].s, 0); declare(yystack.l_mark[-1].s, yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info+yystack.l_mark[-2].n->info);}
 break;
 case 7:
 #line 69 "factorial.y"
-	{IDnew(yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info+yystack.l_mark[-2].n->info+32, yystack.l_mark[-1].s, 0); IDpush(); }
+	{IDnew(yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info+yystack.l_mark[-2].n->info+32, yystack.l_mark[-1].s, 0); IDpush(); pos = 8; }
 break;
 case 8:
 #line 70 "factorial.y"
@@ -976,7 +981,7 @@ break;
 case 10:
 #line 74 "factorial.y"
 	{IDnew(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info+32, yystack.l_mark[-2].s, 0); IDpush();
-                                                  if((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info) != 0) {IDnew((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info), yystack.l_mark[-2].s,0);} pos = 0;}
+                                                  if((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info) != 0) {IDnew((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info), yystack.l_mark[-2].s,0);}}
 break;
 case 11:
 #line 76 "factorial.y"
@@ -1064,19 +1069,19 @@ case 31:
 break;
 case 32:
 #line 113 "factorial.y"
-	{ yyval.n = binNode(PARAMS, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[0].n->info; }
+	{ yyval.n = binNode(PARAMS, yystack.l_mark[-2].n, yystack.l_mark[0].n);  yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[0].n->info;}
 break;
 case 33:
 #line 114 "factorial.y"
-	{ yyval.n = uniNode(PARAMS, yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[0].n->info;}
+	{ yyval.n = uniNode(PARAMS, yystack.l_mark[0].n);  yyval.n->info = yystack.l_mark[0].n->info; /* tentar alterar o IDnew para fazer as variaveis dos parametros das funcoes (positivos) compact*/}
 break;
 case 34:
 #line 117 "factorial.y"
-	{ yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info, yystack.l_mark[0].s, 0); yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info;}
+	{ yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info, yystack.l_mark[0].s, 0); if (pos >= 8) { yyval.n->user = pos; pos += 4; } else { pos -= 4; yyval.n->user = pos;} yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info;}
 break;
 case 35:
 #line 120 "factorial.y"
-	{ yyval.n = yystack.l_mark[-1].n; }
+	{ yyval.n = yystack.l_mark[-1].n; /* tentar alterar o IDnew para fazer as variaveis locais das funcoes (negativos) compact*/}
 break;
 case 36:
 #line 121 "factorial.y"
@@ -1344,7 +1349,7 @@ case 95:
                                                         else yyerror("Ponteiro: Tipo inválido.");
                                                         /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
 break;
-#line 1347 "y.tab.c"
+#line 1352 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

@@ -6,13 +6,17 @@ YYDEBUG=YYDEBUG=1
 
 LEX=flex -l
 YACC=byacc -dv
+PBURG=pburg -T
+GCC= gcc -g
 
 $(LANG): $(LANG).y $(LANG).l
 	$(YACC) $(LANG).y
 	$(LEX) $(LANG).l
+	$(PBURG) $(LANG).brg code.c
 	make -C lib
-	gcc -o $(LANG) -DYYDEBUG=1 -I lib lex.yy.c y.tab.c lib/libutil.a
-
+	$(GCC) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c code.c lib/libutil.a
+	make -C run
+ 
 iter: iter.fac fact.fac
 	./factorial $<
 	nasm -felf iter.asm

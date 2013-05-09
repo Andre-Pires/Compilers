@@ -64,15 +64,15 @@ declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1->info+$2-
                                                               if($3->info+$4->info != 4) {
                                                                 if($3->info+$4->info != $6->info) yyerror("Atribuição entre tipos diferentes.");}}
 
-            | pub cons tipo ptr IDENTIF ';'                 { $$=uniNode(DECL, strNode(IDENTIF, $5)); IDnew($1->info+$2->info+$3->info+$4->info, $5, 0); function($5, -pos, 0); pos = 0;}
+            | pub cons tipo ptr IDENTIF ';'                 { $$=uniNode(DECL, strNode(IDENTIF, $5)); IDnew($1->info+$2->info+$3->info+$4->info, $5, 0); declare($5, $1->info+$2->info+$3->info+$4->info);}
 
-            | pub cons tipo ptr IDENTIF '('   {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush(); } parametros ')'
+            | pub cons tipo ptr IDENTIF '('   {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush(); pos = 8; } parametros ')'
                                               {IDreplace($1->info+$2->info+$3->info+$4->info+32,$5, $8->info); //ver isto, devia passar parametros
                                                if(($3->info+$4->info) != 0) {IDnew($3->info+$4->info, $5, 0);} pos = 0;}  corpop ';'
                                               {$$=binNode(DECL, strNode(IDENTIF, $5), binNode(BODY, $8, $11)); IDpop(); /* usar o YYselect à entrada do corpo*/ function($5, -pos, $11); pos = 0; } 
 
             | pub cons tipo ptr IDENTIF '(' ')' {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush();
-                                                  if(($3->info+$4->info) != 0) {IDnew(($3->info+$4->info), $5,0);} pos = 0;}  corpo ';' 
+                                                  if(($3->info+$4->info) != 0) {IDnew(($3->info+$4->info), $5,0);}}  corpo ';' 
                                                   { $$=binNode(DECL, strNode(IDENTIF, $5), $9); IDpop(); function($5, -pos, $9); pos = 0;}
 
             | pub cons tipo ptr IDENTIF '(' ')' ';'    {$$=binNode(DECL, strNode(IDENTIF, $5), nilNode(NIL)); IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); function($5, -pos, 0); pos = 0;} 
@@ -110,14 +110,14 @@ init  : ATRIB INT            { $$ = intNode(INT, $2); $$->info = 1;}
       ;
 
 
-parametros  : parametros ',' parametro          { $$ = binNode(PARAMS, $1, $3); $$->info = $1->info + $3->info; }
-            | parametro                         { $$ = uniNode(PARAMS, $1); $$->info = $1->info;}
+parametros  : parametros ',' parametro          { $$ = binNode(PARAMS, $1, $3);  $$->info = $1->info + $3->info;}
+            | parametro                         { $$ = uniNode(PARAMS, $1);  $$->info = $1->info; /* tentar alterar o IDnew para fazer as variaveis dos parametros das funcoes (positivos) compact*/}
             ;
 
-parametro : tipo ptr IDENTIF                    { $$ = strNode(IDENTIF, $3); IDnew($1->info+$2->info, $3, 0); $$->info = $1->info + $2->info;} // parametros da funcao sao positivos e as variaveis locais negativas
+parametro : tipo ptr IDENTIF                    { $$ = strNode(IDENTIF, $3); IDnew($1->info+$2->info, $3, 0); if (pos >= 8) { $$->user = pos; pos += 4; } else { pos -= 4; $$->user = pos;} $$->info = $1->info + $2->info;} // parametros da funcao sao positivos e as variaveis locais negativas
           ;
 
-pars2 : parametro ';'                           { $$ = $1; }
+pars2 : parametro ';'                           { $$ = $1; /* tentar alterar o IDnew para fazer as variaveis locais das funcoes (negativos) compact*/}
       | pars2 parametro ';'                     { $$ = binNode(PARS2, $1, $2); $$->info = $1->info + $2->info; }
       ;
 
@@ -237,6 +237,11 @@ static int comp(Node * name, Node * name2) {
   if (name->info == 0 || name2->info == 0) yyerror("Comparação : Tipo inválido.");
   if (name->info == 2 && name->info != name2->info) yyerror("Comparação : Tipos incompatíveis.");
   return 1;
+}
+
+static void assign(char *name) {
+  if (IDfind(name, (long*)IDtest) < 0)
+    IDnew(INTEGER, name, pos -= 4);
 }
 
 /*

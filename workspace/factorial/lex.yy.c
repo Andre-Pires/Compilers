@@ -2214,68 +2214,76 @@ int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
 
 /*--------------overflow -- OCTAIS ---------------------------------------------*/
-char * octais(){
-	
+char *octais(){
 
-	int carry_new, carry_old;
-	int i,  size =1;
-	char * letras;
 
-	carry_new = carry_old = 0;
-	
-	letras = (char *) malloc (sizeof(yytext));
+    int carry_new, carry_old;
+    int i,  size = 1;
+    char *letras;
 
-	sscanf(yytext, "%s", letras);
+    carry_new = carry_old = 0;
 
-	printf("%s\n", letras);
+    letras = (char *) malloc (sizeof(yytext));
 
-	size = strlen(letras) -1;
+    sscanf(yytext, "%s", letras);
 
-  	int num[size+1];
+    printf("%s\n", letras);
 
-  	for (i = size; i >= 0; --i) num[i] = (letras[i])-48; /* converte para inteiro */
+    size = strlen(letras) - 1;
 
-  	for (i = size; i >= 0; --i)
-  	{
-  		printf("%d -- entra\n", num[i]);
+    int num[size + 1];
 
-  		if (num[i] > 7) {
-			
-			carry_new = 1;
+    for (i = size; i >= 0; --i) num[i] = (letras[i]) - 48; /* converte para inteiro */
 
-  		 	if(num[i] == 9) num[i] = 1 + carry_old;
-  		 	
-  		 	else num[i] = 0 + carry_old;
+    for (i = size; i >= 0; --i)
+    {
+        printf("%d -- entra\n", num[i]);
 
-  		 	carry_old = 0;
-  		}
-  		if (carry_old == 1)
-  		{
+        if (num[i] > 7)
+        {
 
-	  		if(num[i] == 7) {
+            carry_new = 1;
 
-				carry_new = 1;
-				num[i] = 0;
-	  		    
-	  		}else num[i]++;
+            if (num[i] == 9) num[i] = 1 + carry_old;
 
-	  		carry_old = 0;
-  		}	
+            else num[i] = 0 + carry_old;
 
-  		/* altera o valor de carry para a proxima iteracao */
-  		if (carry_new == 1){
-  			
-  			carry_old = carry_new;
-  		 	carry_new = 0;
+            carry_old = 0;
+        }
+        if (carry_old == 1)
+        {
 
-  		}else carry_new = 0;
+            if (num[i] == 7)
+            {
 
-  		printf("%d -- sai\n", num[i]);
-  	}
+                carry_new = 1;
+                num[i] = 0;
 
-  	for (i = size; i >= 0; --i) {letras[i] = num[i]+48; /* converte para string */}
+            }
+            else num[i]++;
 
-  	printf("%s\n", letras);
+            carry_old = 0;
+        }
 
-	return letras;
+        /* altera o valor de carry para a proxima iteracao */
+        if (carry_new == 1)
+        {
+
+            carry_old = carry_new;
+            carry_new = 0;
+
+        }
+        else carry_new = 0;
+
+        printf("%d -- sai\n", num[i]);
+    }
+
+    for (i = size; i >= 0; --i)
+    {
+        letras[i] = num[i] + 48; /* converte para string */
+    }
+
+    printf("%s\n", letras);
+
+    return letras;
 }

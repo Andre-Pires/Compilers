@@ -349,7 +349,6 @@ yydebug: state 154, reducing by rule 62 (expressoes : expressoes ',' expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-1
 yydebug: after reduction, shifting from state 94 to state 129
 yydebug: state 129, reading 59 (';')
 yydebug: state 129, reducing by rule 71 (expressao : left_value ATRIB expressao)
@@ -420,14 +419,12 @@ yydebug: state 154, reducing by rule 62 (expressoes : expressoes ',' expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-1
 yydebug: after reduction, shifting from state 148 to state 154
 yydebug: state 154, reading 41 (')')
 yydebug: state 154, reducing by rule 62 (expressoes : expressoes ',' expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-1
 yydebug: after reduction, shifting from state 94 to state 129
 yydebug: state 129, reading 59 (';')
 yydebug: state 129, reducing by rule 71 (expressao : left_value ATRIB expressao)
@@ -572,7 +569,6 @@ yydebug: state 120, reducing by rule 63 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-1
 yydebug: after reduction, shifting from state 74 to state 120
 yydebug: state 120, reading 44 (',')
 yydebug: state 120, reducing by rule 63 (expressoes : expressao)
@@ -601,21 +597,18 @@ yydebug: state 120, reducing by rule 63 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-1
 yydebug: after reduction, shifting from state 148 to state 154
 yydebug: state 154, reading 41 (')')
 yydebug: state 154, reducing by rule 62 (expressoes : expressoes ',' expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-1
 yydebug: after reduction, shifting from state 74 to state 120
 yydebug: state 120, reading 41 (')')
 yydebug: state 120, reducing by rule 63 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-0
 yydebug: after reduction, shifting from state 39 to state 63
 yydebug: state 63, reading 59 (';')
 yydebug: state 63, shifting to state 110
@@ -636,7 +629,6 @@ yydebug: state 120, reducing by rule 63 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-0
 yydebug: after reduction, shifting from state 66 to state 63
 yydebug: state 63, reading 59 (';')
 yydebug: state 63, shifting to state 110
@@ -659,7 +651,6 @@ yydebug: state 120, reducing by rule 63 (expressoes : expressao)
 yydebug: after reduction, shifting from state 74 to state 121
 yydebug: state 121, shifting to state 147
 yydebug: state 147, reducing by rule 68 (expressao : IDENTIF '(' expressoes ')')
-0
 yydebug: after reduction, shifting from state 66 to state 63
 yydebug: state 63, reading 59 (';')
 yydebug: state 63, shifting to state 110
@@ -674,7 +665,6 @@ yydebug: state 47, shifting to state 74
 yydebug: state 74, reading 41 (')')
 yydebug: state 74, shifting to state 119
 yydebug: state 119, reducing by rule 69 (expressao : IDENTIF '(' ')')
-0
 yydebug: after reduction, shifting from state 66 to state 63
 yydebug: state 63, reading 59 (';')
 yydebug: state 63, shifting to state 110

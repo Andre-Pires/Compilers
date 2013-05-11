@@ -9,13 +9,14 @@ YACC=byacc -dv
 PBURG=pburg -T
 GCC= gcc -g
 
-$(LANG): $(LANG).y $(LANG).l
+$(LANG): $(LANG).y $(LANG).l $(LANG).brg
 	$(YACC) $(LANG).y
 	$(LEX) $(LANG).l
-	$(PBURG) $(LANG).brg code.c
+	$(PBURG) $(LANG).brg
 	make -C lib
-	$(GCC) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c code.c lib/libutil.a
+	$(GCC) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c yyselect.c lib/libutil.a
 	make -C run
+	
  
 iter: iter.fac fact.fac
 	./factorial $<

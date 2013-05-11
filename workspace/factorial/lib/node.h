@@ -19,7 +19,7 @@ typedef enum{ nodeNil, nodeInt, nodeStr, nodeReal, nodeData, nodeOpr }NodeType;
 typedef struct typeNode Node;
 struct typeNode { 
     NodeType type;		/* type of node */ 
-    void *user;			/* pointer to any user data */ 
+    int   user;			/* pointer to any user data */ 
     int   attrib;		/* user defined attributes */
     int   line;			/* input file parse line */
     void *state;		/* for the instruction selector (burg) */ 
@@ -52,7 +52,7 @@ Node *dataNode(int attrib, int size, void *user);
 Node *strNode(int attrib, char *s);
 Node *addNode(Node *base, Node *node, unsigned pos);
 Node *removeNode(Node *base, unsigned pos);
-void *userNode(Node *p, void *user);
+int  userNode(Node *p, int user); // o parametro user era void*
 void freeNode(Node *p);
 void printNode(Node *p, FILE *fp, char *tab[]);
 Node *newNode(NodeType t, int attrib, int nops);

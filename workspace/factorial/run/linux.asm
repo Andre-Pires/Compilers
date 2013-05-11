@@ -2,9 +2,10 @@ section .bss
 	$buf2	resb	2
 
 section .text
-	global _prints, _readb, _exit, _start
-	extern _env, _strlen, _main
+	global _prints, _readb, _exit, _start, prints
+	extern _env, _strlen, _entry
 
+prints:
 _prints:
 	push	dword [esp+4]		; pushd 'prints' first argument
 	call	_strlen
@@ -49,7 +50,7 @@ _start:
 	or	word [buf2], 0x0C00
 	fldcw	word [buf2]
 ; start program
-	call	_main
+	call	_entry
 	push	eax
 	call	_exit
 

@@ -60,6 +60,7 @@ Node *realNode(int attrib, double d) {
     return p;
 }
 
+/*
 Node *dataNode(int attrib, int size, void *user) {
     Node *p = newNode(nodeData, attrib, 0);
     if (p != NULL) {
@@ -68,6 +69,7 @@ Node *dataNode(int attrib, int size, void *user) {
     }
     return p;
 }
+*/
 
 Node *strNode(int attrib, char *s) {
     Node *p = newNode(nodeStr, attrib, 0);
@@ -148,7 +150,7 @@ Node *removeNode(Node *base, unsigned pos) {
     return p;
 }
 
-void *userNode(Node *p, void *user) {
+int userNode(Node *p, int user) { //o parametro user era void*
     if (p == 0) return 0;
     if (user == 0) return p->user;
     return p->user = user;
@@ -167,7 +169,10 @@ void freeNode(Node *p) {
 
 static int print(Node *p, FILE *fp, char *tab[], int lev) {
     int i, cnt = 0;
-
+    
+    if(p != NULL)
+    fprintf(fp," %d:", p->user);
+    
     if (p == 0) return cnt;
     cnt++;
     if (p->type == nodeOpr) fprintf(fp,"\n%*s(", 2*lev, " ");

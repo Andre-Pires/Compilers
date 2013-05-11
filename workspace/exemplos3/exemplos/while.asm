@@ -3,9 +3,9 @@ segment	.text
 ; ALIGN
 align	4
 ; GLOBL
-global	$prints:function
+global	$printi:function
 ; LABEL
-$prints:
+$printi:
 ; ENTER
 	push	ebp
 	mov	ebp, esp
@@ -14,6 +14,18 @@ $prints:
 	leave
 ; RET
 	ret
+; EXTRN
+extern	$println
+; BSS
+segment	.bss
+; ALIGN
+align	4
+; LABEL
+$x:
+; BYTE
+	resb	4
+; TEXT
+segment	.text
 ; TEXT
 segment	.text
 ; ALIGN
@@ -26,22 +38,6 @@ $entry:
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 0
-; CALL
-	call	$prints
-; TRASH
-	add	esp, 0
-; ADDRV
-	push	dword [$entry]
-; IMM
-	push	dword 0
-; COPY
-	push	dword [esp]
-; ADDR
-	push	dword $entry
-; STORE
-	pop	ecx
-	pop	eax
-	mov	[ecx], eax
 ; LEAVE
 	leave
 ; RET

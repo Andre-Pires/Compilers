@@ -7,7 +7,12 @@ YYDEBUG=YYDEBUG=1
 LEX=flex -l
 YACC=byacc -dv
 PBURG=pburg -T
+NASM=nasm -felf
 GCC= gcc -g
+
+.SUFFIXES: .$(EXT) .asm .obj .exe
+
+################################DEFINICOES############################################	
 
 $(LANG): $(LANG).y $(LANG).l $(LANG).brg
 	$(YACC) $(LANG).y
@@ -17,6 +22,15 @@ $(LANG): $(LANG).y $(LANG).l $(LANG).brg
 	$(GCC) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c yyselect.c lib/libutil.a
 	make -C run
 	
+
+%:%.$(EXT) 
+	#rm $*.asm $*.o
+	./$(LANG) -trace $<
+	$(NASM) $*.asm
+	ld -o $@ $*.o libfactorial.a
+
+
+########################### EXEMPLOS ###############################
  
 iter: iter.fac fact.fac
 	./factorial $<

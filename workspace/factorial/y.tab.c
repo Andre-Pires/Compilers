@@ -1233,7 +1233,7 @@ case 67:
 break;
 case 68:
 #line 186 "factorial.y"
-	{ int n; n = IDfind(yystack.l_mark[-3].s, 0) & (0x7); if(n != -1 && n == 4) {yyval.n = binNode(CALL2, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->info = n;} else {yyval.n = binNode(CALL, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->info = IDsearch(yystack.l_mark[-3].s, 0, IDlevel(), 0) & (0x7);}}
+	{ int n; n = IDfind(yystack.l_mark[-3].s, 0) & (0x7); if(n != -1 && n == 4) {yyval.n = binNode(CALL2, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->info = n;} else {yyval.n = binNode(CALL2, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->info = IDsearch(yystack.l_mark[-3].s, 0, IDlevel(), 0) & (0x7);}}
 break;
 case 69:
 #line 187 "factorial.y"

@@ -43,9 +43,9 @@ segment	.text
 ; ALIGN
 align	4
 ; GLOBL
-global	$entry:function
+global	$_entry:function
 ; LABEL
-$entry:
+$_entry:
 ; ENTER
 	push	ebp
 	mov	ebp, esp

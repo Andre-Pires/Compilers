@@ -13,6 +13,7 @@ section .bss
 section .text
 	global _println, _printsp, _printi, _readln, _readi, _debug
 	global _strlen, _atoi, _itoa, _argc, _argv, _envp
+	global printi, println, readi, atoi
 	extern _prints, _readb
 
 _argc:	mov	eax, [_env]
@@ -45,6 +46,7 @@ _strlen:
 .Lend:	sub	eax, edx
 	ret
 
+println:
 _println:
 	push	dword $nl
 	call	_prints
@@ -93,6 +95,7 @@ _itoa:
 	inc	eax
 	ret
 
+printi:
 _printi:
 	push	dword [esp+4]
 	call	_itoa
@@ -102,6 +105,7 @@ _printi:
 	add	esp, 4
 	ret
 
+atoi:
 _atoi:
 	mov	esi, [esp+4]
 	mov	ecx, 1
@@ -150,6 +154,7 @@ _Lend:	xor	eax, eax
 _Lerr:	xor	eax, eax
 	ret
 
+readi:
 _readi:
 	push	dword $bufsiz
 	push	dword $buffer

@@ -103,7 +103,6 @@ stat:	ASSIGN(LOCAL,ADD(LOCAL,INTEGER))	sameLoc {
 		fprintf(outfp, pfLOCAL pfINCR, p->SUB(0)->value.i,
 			p->SUB(1)->SUB(1)->value.i); }
 %%
-
 void function(char *name, int enter, Node *body) {
   int i;
   extern int trace;

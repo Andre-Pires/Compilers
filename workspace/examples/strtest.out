@@ -25,6 +25,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -67,6 +68,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -133,6 +135,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -175,6 +178,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -189,6 +193,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+12 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -231,6 +236,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -245,6 +251,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+12 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -287,6 +294,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -303,6 +311,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+12 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -319,6 +328,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+16 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -337,6 +347,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+-4 -- yacc
 yydebug: after reduction, shifting from state 39 to state 68
 yydebug: state 68, reading 59 (';')
 yydebug: state 68, shifting to state 116
@@ -1002,114 +1013,112 @@ yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
 yydebug: after reduction, shifting from state 0 to state 4
 yydebug: state 4, reading 0 (end-of-file)
 yydebug: state 4, reducing by rule 1 (ficheiro : declaracoes)
-
- ( PROG:
-  ( DECLS:
-    ( DECLS:
-      ( DECLS:
-        ( DECLS:
-          ( DECLS:
-            ( DECLS:
-              ( DECL: IDENTIF:"prints"
-                ( BODY:
-                  ( PARAMS: IDENTIF:"s") NIL:))
-              ( DECL: IDENTIF:"printi"
-                ( BODY:
-                  ( PARAMS: IDENTIF:"i") NIL:)))
-            ( DECL: IDENTIF:"println" NIL:))
-          ( DECL: IDENTIF:"strlen"
-            ( BODY:
-              ( PARAMS: IDENTIF:"s") NIL:)))
-        ( DECL: IDENTIF:"strchr"
-          ( BODY:
-            ( PARAMS:
-              ( PARAMS: IDENTIF:"s") IDENTIF:"ch") NIL:)))
-      ( DECL: IDENTIF:"strcpy"
-        ( BODY:
-          ( PARAMS:
-            ( PARAMS: IDENTIF:"s") IDENTIF:"orig") NIL:)))
-    ( DECL: IDENTIF:"entry"
-      ( BODY:
-        ( PARAMS:
-          ( PARAMS:
-            ( PARAMS: IDENTIF:"argc") IDENTIF:"argv") IDENTIF:"envp")
-        ( PINTR: IDENTIF:"str"
-          ( ELSE:
-            ( JZ:
-              ( LT: IDENTIF:"argc" INT:3) ETIQ:"_i1")
-            ( ELSE:
-              ( INTRS:
-                ( INTRS:
-                  ( CALL: IDENTIF:"prints" STRN:"programa necessita de 2 argumentos (strings)
-")
-                  ( ATRIB: IDENTIF:"entry" INT:1)))
-              ( ELSE: JMP:"_i2"
-                ( ELSE: LABEL:"_i1"
-                  ( ELSE:
-                    ( INTRS:
-                      ( INTRS:
-                        ( INTRS:
-                          ( INTRS:
-                            ( INTRS:
-                              ( INTRS:
-                                ( INTRS:
-                                  ( INTRS:
-                                    ( INTRS:
-                                      ( INTRS:
-                                        ( INTRS:
-                                          ( INTRS:
-                                            ( INTRS:
-                                              ( INTRS:
-                                                ( INTRS:
-                                                  ( INTRS:
-                                                    ( INTRS:
-                                                      ( INTRS:
-                                                        ( INTRS:
-                                                          ( CALL: IDENTIF:"prints" STRN:"primeira: ")
-                                                          ( CALL: IDENTIF:"prints"
-                                                            ( POINTER: IDENTIF:"argv" INT:1)))
-                                                        ( CALL: IDENTIF:"prints" STRN:"
-segunda: "))
-                                                      ( CALL: IDENTIF:"prints"
-                                                        ( POINTER: IDENTIF:"argv" INT:2)))
-                                                    ( CALL: IDENTIF:"prints" STRN:"
-maior: "))
-                                                  ( CALL: IDENTIF:"printi"
-                                                    ( GT:
-                                                      ( POINTER: IDENTIF:"argv" INT:1)
-                                                      ( POINTER: IDENTIF:"argv" INT:2))))
-                                                ( CALL: IDENTIF:"prints" STRN:"
-menor: "))
-                                              ( CALL: IDENTIF:"printi"
-                                                ( LT:
-                                                  ( POINTER: IDENTIF:"argv" INT:1)
-                                                  ( POINTER: IDENTIF:"argv" INT:2))))
-                                            ( CALL: IDENTIF:"prints" STRN:"
-igual: "))
-                                          ( CALL: IDENTIF:"printi"
-                                            ( EQ:
-                                              ( POINTER: IDENTIF:"argv" INT:1)
-                                              ( POINTER: IDENTIF:"argv" INT:2))))
-                                        ( ATRIB: IDENTIF:"str"
-                                          ( POINTER: IDENTIF:"argv" INT:2)))
-                                      ( CALL: IDENTIF:"prints" STRN:"
-strchr: "))
-                                    ( CALL: IDENTIF:"prints"
-                                      ( CALL: IDENTIF:"strchr"
-                                        ( EXPS:
-                                          ( POINTER: IDENTIF:"argv" INT:1)
-                                          ( POINTER: IDENTIF:"str" INT:0)))))
-                                  ( MALL: IDENTIF:"str"
-                                    ( ADD:
-                                      ( CALL: IDENTIF:"strlen"
-                                        ( POINTER: IDENTIF:"argv" INT:1)) INT:1)))
-                                ( CALL: IDENTIF:"strcpy"
-                                  ( EXPS: IDENTIF:"str"
-                                    ( POINTER: IDENTIF:"argv" INT:1))))
-                              ( CALL: IDENTIF:"prints" STRN:"
-cópia: "))
-                            ( CALL: IDENTIF:"prints" IDENTIF:"str"))
-                          ( CALL: IDENTIF:"println"))
-                        ( ATRIB: IDENTIF:"entry" INT:0))) LABEL:"_i2"))))))))))
-[#193]
+ 0:
+ ( PROG: 0:
+  ( DECLS: 0:
+    ( DECLS: 0:
+      ( DECLS: 0:
+        ( DECLS: 0:
+          ( DECLS: 0:
+            ( DECLS: 0:
+              ( DECL: 0: IDENTIF:"prints" 0:
+                ( BODY: 0:
+                  ( PARAMS: 8: IDENTIF:"s") 0: NIL:)) 0:
+              ( DECL: 0: IDENTIF:"printi" 0:
+                ( BODY: 0:
+                  ( PARAMS: 8: IDENTIF:"i") 0: NIL:))) 0:
+            ( DECL: 0: IDENTIF:"println" 0: NIL:)) 0:
+          ( DECL: 0: IDENTIF:"strlen" 0:
+            ( BODY: 0:
+              ( PARAMS: 8: IDENTIF:"s") 0: NIL:))) 0:
+        ( DECL: 0: IDENTIF:"strchr" 0:
+          ( BODY: 0:
+            ( PARAMS: 0:
+              ( PARAMS: 8: IDENTIF:"s") 12: IDENTIF:"ch") 0: NIL:))) 0:
+      ( DECL: 0: IDENTIF:"strcpy" 0:
+        ( BODY: 0:
+          ( PARAMS: 0:
+            ( PARAMS: 8: IDENTIF:"s") 12: IDENTIF:"orig") 0: NIL:))) 0:
+    ( DECL: 0: IDENTIF:"entry" 0:
+      ( BODY: 0:
+        ( PARAMS: 0:
+          ( PARAMS: 0:
+            ( PARAMS: 8: IDENTIF:"argc") 12: IDENTIF:"argv") 16: IDENTIF:"envp") 0:
+        ( PINTR: -4: IDENTIF:"str" 0:
+          ( LIST: 0:
+            ( JZ: 0:
+              ( LT: 0: IDENTIF:"argc" 0: INT:3) 0: ETIQ:"_i1") 0:
+            ( LIST: 0:
+              ( INSTRS: 0:
+                ( CALL2: 0: IDENTIF:"prints" 0: STRN:"programa necessita de 2 argumentos (strings)
+") 0:
+                ( ATRIB: 0: IDENTIF:"entry" 0: INT:1)) 0:
+              ( LIST: 0: JMP:"_i2" 0:
+                ( LIST: 0: LABEL:"_i1" 0:
+                  ( LIST: 0:
+                    ( INSTRS: 0:
+                      ( INSTRS: 0:
+                        ( INSTRS: 0:
+                          ( INSTRS: 0:
+                            ( INSTRS: 0:
+                              ( INSTRS: 0:
+                                ( INSTRS: 0:
+                                  ( INSTRS: 0:
+                                    ( INSTRS: 0:
+                                      ( INSTRS: 0:
+                                        ( INSTRS: 0:
+                                          ( INSTRS: 0:
+                                            ( INSTRS: 0:
+                                              ( INSTRS: 0:
+                                                ( INSTRS: 0:
+                                                  ( INSTRS: 0:
+                                                    ( INSTRS: 0:
+                                                      ( INSTRS: 0:
+                                                        ( CALL2: 0: IDENTIF:"prints" 0: STRN:"primeira: ") 0:
+                                                        ( CALL2: 0: IDENTIF:"prints" 0:
+                                                          ( POINTER: 0: IDENTIF:"argv" 0: INT:1))) 0:
+                                                      ( CALL2: 0: IDENTIF:"prints" 0: STRN:"
+segunda: ")) 0:
+                                                    ( CALL2: 0: IDENTIF:"prints" 0:
+                                                      ( POINTER: 0: IDENTIF:"argv" 0: INT:2))) 0:
+                                                  ( CALL2: 0: IDENTIF:"prints" 0: STRN:"
+maior: ")) 0:
+                                                ( CALL2: 0: IDENTIF:"printi" 0:
+                                                  ( GT: 0:
+                                                    ( POINTER: 0: IDENTIF:"argv" 0: INT:1) 0:
+                                                    ( POINTER: 0: IDENTIF:"argv" 0: INT:2)))) 0:
+                                              ( CALL2: 0: IDENTIF:"prints" 0: STRN:"
+menor: ")) 0:
+                                            ( CALL2: 0: IDENTIF:"printi" 0:
+                                              ( LT: 0:
+                                                ( POINTER: 0: IDENTIF:"argv" 0: INT:1) 0:
+                                                ( POINTER: 0: IDENTIF:"argv" 0: INT:2)))) 0:
+                                          ( CALL2: 0: IDENTIF:"prints" 0: STRN:"
+igual: ")) 0:
+                                        ( CALL2: 0: IDENTIF:"printi" 0:
+                                          ( EQ: 0:
+                                            ( POINTER: 0: IDENTIF:"argv" 0: INT:1) 0:
+                                            ( POINTER: 0: IDENTIF:"argv" 0: INT:2)))) 0:
+                                      ( ATRIB: 0: IDENTIF:"str" 0:
+                                        ( POINTER: 0: IDENTIF:"argv" 0: INT:2))) 0:
+                                    ( CALL2: 0: IDENTIF:"prints" 0: STRN:"
+strchr: ")) 0:
+                                  ( CALL2: 0: IDENTIF:"prints" 0:
+                                    ( CALL2: 0: IDENTIF:"strchr" 0:
+                                      ( EXPS: 0:
+                                        ( POINTER: 0: IDENTIF:"argv" 0: INT:1) 0:
+                                        ( POINTER: 0: IDENTIF:"str" 0: INT:0))))) 0:
+                                ( MALL: 0: IDENTIF:"str" 0:
+                                  ( ADD: 0:
+                                    ( CALL2: 0: IDENTIF:"strlen" 0:
+                                      ( POINTER: 0: IDENTIF:"argv" 0: INT:1)) 0: INT:1))) 0:
+                              ( CALL2: 0: IDENTIF:"strcpy" 0:
+                                ( EXPS: 0: IDENTIF:"str" 0:
+                                  ( POINTER: 0: IDENTIF:"argv" 0: INT:1)))) 0:
+                            ( CALL2: 0: IDENTIF:"prints" 0: STRN:"
+cópia: ")) 0:
+                          ( CALL2: 0: IDENTIF:"prints" 0: IDENTIF:"str")) 0:
+                        ( CALL: 0: IDENTIF:"println")) 0:
+                      ( ATRIB: 0: IDENTIF:"entry" 0: INT:0)) 0: LABEL:"_i2"))))))))))
+[#191]
 yydebug: after reduction, shifting from state 0 to state 3

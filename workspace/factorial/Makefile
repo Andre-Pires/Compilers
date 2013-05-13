@@ -24,10 +24,10 @@ $(LANG): $(LANG).y $(LANG).l $(LANG).brg
 	
 
 %:%.$(EXT) 
-	#rm $*.asm $*.o
+#	rm $*.asm $*.o
 	./$(LANG) -trace $<
-	$(NASM) $*.asm
-	ld -o $@ $*.o libfactorial.a
+	$(NASM) $*.asm -o $*.o
+	ld -o $@ $*.o run/libfactorial.a
 
 
 ########################### EXEMPLOS ###############################

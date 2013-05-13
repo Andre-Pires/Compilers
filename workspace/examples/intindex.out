@@ -25,6 +25,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -67,6 +68,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -327,6 +329,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -343,6 +346,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+12 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -359,6 +363,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+16 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -377,6 +382,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+-4 -- yacc
 yydebug: after reduction, shifting from state 39 to state 68
 yydebug: state 68, reading 59 (';')
 yydebug: state 68, shifting to state 116
@@ -544,54 +550,54 @@ yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
 yydebug: after reduction, shifting from state 0 to state 4
 yydebug: state 4, reading 0 (end-of-file)
 yydebug: state 4, reducing by rule 1 (ficheiro : declaracoes)
-
- ( PROG:
-  ( DECLS:
-    ( DECLS:
-      ( DECLS:
-        ( DECLS:
-          ( DECLS:
-            ( DECLS:
-              ( DECLS:
-                ( DECLS:
-                  ( DECLS:
-                    ( DECLS:
-                      ( DECLS:
-                        ( DECL: IDENTIF:"prints"
-                          ( BODY:
-                            ( PARAMS: IDENTIF:"s") NIL:))
-                        ( DECL: IDENTIF:"printi"
-                          ( BODY:
-                            ( PARAMS: IDENTIF:"i") NIL:)))
-                      ( DECL: IDENTIF:"println" NIL:))
-                    ( DECL: IDENTIF:"readi" NIL:))
-                  ( INIT: IDENTIF:"x0" INT:1))
-                ( INIT: IDENTIF:"x1" INT:2))
-              ( INIT: IDENTIF:"x2" INT:3))
-            ( INIT: IDENTIF:"x3" INT:5))
-          ( INIT: IDENTIF:"x4" INT:7))
-        ( INIT: IDENTIF:"x5" INT:9))
-      ( INIT: IDENTIF:"x" IDENTIF:"x0"))
-    ( DECL: IDENTIF:"entry"
-      ( BODY:
-        ( PARAMS:
-          ( PARAMS:
-            ( PARAMS: IDENTIF:"argc") IDENTIF:"argv") IDENTIF:"envp")
-        ( PINTR: IDENTIF:"i"
-          ( INTRS:
-            ( INTRS:
-              ( INTRS:
-                ( INTRS:
-                  ( INTRS:
-                    ( INTRS:
-                      ( ATRIB: IDENTIF:"i"
-                        ( CALL: IDENTIF:"readi"))
-                      ( CALL: IDENTIF:"prints" STRN:"x["))
-                    ( CALL: IDENTIF:"printi" IDENTIF:"i"))
-                  ( CALL: IDENTIF:"prints" STRN:"] = "))
-                ( CALL: IDENTIF:"printi"
-                  ( POINTER: IDENTIF:"x" IDENTIF:"i")))
-              ( CALL: IDENTIF:"println"))
-            ( ATRIB: IDENTIF:"entry" INT:0)))))))
+ 0:
+ ( PROG: 0:
+  ( DECLS: 0:
+    ( DECLS: 0:
+      ( DECLS: 0:
+        ( DECLS: 0:
+          ( DECLS: 0:
+            ( DECLS: 0:
+              ( DECLS: 0:
+                ( DECLS: 0:
+                  ( DECLS: 0:
+                    ( DECLS: 0:
+                      ( DECLS: 0:
+                        ( DECL: 0: IDENTIF:"prints" 0:
+                          ( BODY: 0:
+                            ( PARAMS: 8: IDENTIF:"s") 0: NIL:)) 0:
+                        ( DECL: 0: IDENTIF:"printi" 0:
+                          ( BODY: 0:
+                            ( PARAMS: 8: IDENTIF:"i") 0: NIL:))) 0:
+                      ( DECL: 0: IDENTIF:"println" 0: NIL:)) 0:
+                    ( DECL: 0: IDENTIF:"readi" 0: NIL:)) 0:
+                  ( INIT: 0: IDENTIF:"x0" 0: INT:1)) 0:
+                ( INIT: 0: IDENTIF:"x1" 0: INT:2)) 0:
+              ( INIT: 0: IDENTIF:"x2" 0: INT:3)) 0:
+            ( INIT: 0: IDENTIF:"x3" 0: INT:5)) 0:
+          ( INIT: 0: IDENTIF:"x4" 0: INT:7)) 0:
+        ( INIT: 0: IDENTIF:"x5" 0: INT:9)) 0:
+      ( INIT: 0: IDENTIF:"x" 0: IDENTIF:"x0")) 0:
+    ( DECL: 0: IDENTIF:"entry" 0:
+      ( BODY: 0:
+        ( PARAMS: 0:
+          ( PARAMS: 0:
+            ( PARAMS: 8: IDENTIF:"argc") 12: IDENTIF:"argv") 16: IDENTIF:"envp") 0:
+        ( PINTR: -4: IDENTIF:"i" 0:
+          ( INSTRS: 0:
+            ( INSTRS: 0:
+              ( INSTRS: 0:
+                ( INSTRS: 0:
+                  ( INSTRS: 0:
+                    ( INSTRS: 0:
+                      ( ATRIB: 0: IDENTIF:"i" 0:
+                        ( CALL: 0: IDENTIF:"readi")) 0:
+                      ( CALL2: 0: IDENTIF:"prints" 0: STRN:"x[")) 0:
+                    ( CALL2: 0: IDENTIF:"printi" 0: IDENTIF:"i")) 0:
+                  ( CALL2: 0: IDENTIF:"prints" 0: STRN:"] = ")) 0:
+                ( CALL2: 0: IDENTIF:"printi" 0:
+                  ( POINTER: 0: IDENTIF:"x" 0: IDENTIF:"i"))) 0:
+              ( CALL: 0: IDENTIF:"println")) 0:
+            ( ATRIB: 0: IDENTIF:"entry" 0: INT:0)))))))
 [#91]
 yydebug: after reduction, shifting from state 0 to state 3

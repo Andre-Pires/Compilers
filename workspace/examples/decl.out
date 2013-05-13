@@ -25,6 +25,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -67,6 +68,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -109,6 +111,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -247,6 +250,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -289,6 +293,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -331,6 +336,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -373,6 +379,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -415,6 +422,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -422,56 +430,15 @@ yydebug: state 38, reading 41 (')')
 yydebug: state 38, shifting to state 42
 yydebug: state 42, reducing by rule 8 ($$2 :)
 yydebug: after reduction, shifting from state 42 to state 71
-yydebug: state 71, reading 59 (';')
-yydebug: state 71, reducing by rule 14 (corpop :)
-yydebug: after reduction, shifting from state 71 to state 118
-yydebug: state 118, shifting to state 146
-yydebug: state 146, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
-yydebug: after reduction, shifting from state 4 to state 8
-yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
-yydebug: after reduction, shifting from state 0 to state 4
-yydebug: state 4, reading 0 (end-of-file)
-yydebug: state 4, reducing by rule 1 (ficheiro : declaracoes)
-
- ( PROG:
-  ( DECLS:
-    ( DECLS:
-      ( DECLS:
-        ( DECLS:
-          ( DECLS:
-            ( DECLS:
-              ( DECLS:
-                ( DECLS:
-                  ( DECLS:
-                    ( DECLS:
-                      ( DECLS:
-                        ( DECL: IDENTIF:"prints"
-                          ( BODY:
-                            ( PARAMS: IDENTIF:"s") NIL:))
-                        ( DECL: IDENTIF:"printi"
-                          ( BODY:
-                            ( PARAMS: IDENTIF:"i") NIL:)))
-                      ( DECL: IDENTIF:"printd"
-                        ( BODY:
-                          ( PARAMS: IDENTIF:"d") NIL:)))
-                    ( DECL: IDENTIF:"println" NIL:))
-                  ( DECL: IDENTIF:"readi" NIL:))
-                ( DECL: IDENTIF:"readd" NIL:))
-              ( DECL: IDENTIF:"readln" NIL:))
-            ( DECL: IDENTIF:"strlen"
-              ( BODY:
-                ( PARAMS: IDENTIF:"s") NIL:)))
-          ( DECL: IDENTIF:"atoi"
-            ( BODY:
-              ( PARAMS: IDENTIF:"s") NIL:)))
-        ( DECL: IDENTIF:"itoa"
-          ( BODY:
-            ( PARAMS: IDENTIF:"i") NIL:)))
-      ( DECL: IDENTIF:"atod"
-        ( BODY:
-          ( PARAMS: IDENTIF:"s") NIL:)))
-    ( DECL: IDENTIF:"dtoa"
-      ( BODY:
-        ( PARAMS: IDENTIF:"i") NIL:))))
-[#72]
-yydebug: after reduction, shifting from state 0 to state 3
+yydebug: state 71, reading 0 (end-of-file)
+yydebug: error recovery discarding state 71
+yydebug: error recovery discarding state 42
+yydebug: error recovery discarding state 38
+yydebug: error recovery discarding state 29
+yydebug: error recovery discarding state 20
+yydebug: error recovery discarding state 18
+yydebug: error recovery discarding state 17
+yydebug: error recovery discarding state 15
+yydebug: error recovery discarding state 10
+yydebug: error recovery discarding state 6
+yydebug: state 4, error recovery shifting to state 1

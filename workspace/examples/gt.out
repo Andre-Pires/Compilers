@@ -25,6 +25,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -67,6 +68,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -193,6 +195,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -209,6 +212,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+12 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -225,6 +229,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+16 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -391,51 +396,56 @@ yydebug: after reduction, shifting from state 71 to state 118
 yydebug: state 118, reading 59 (';')
 yydebug: state 118, shifting to state 146
 yydebug: state 146, reducing by rule 9 (declaracao : pub cons tipo ptr IDENTIF '(' $$1 parametros ')' $$2 corpop ';')
+0 - call- 2 args
+0 - call- 2 args
+0 - call
+0 - call
+0 - call- 2 args
+0 - call
 yydebug: after reduction, shifting from state 4 to state 8
 yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
 yydebug: after reduction, shifting from state 0 to state 4
 yydebug: state 4, reading 0 (end-of-file)
 yydebug: state 4, reducing by rule 1 (ficheiro : declaracoes)
-
- ( PROG:
-  ( DECLS:
-    ( DECLS:
-      ( DECLS:
-        ( DECLS:
-          ( DECLS:
-            ( DECLS:
-              ( DECL: IDENTIF:"prints"
-                ( BODY:
-                  ( PARAMS: IDENTIF:"s") NIL:))
-              ( DECL: IDENTIF:"printi"
-                ( BODY:
-                  ( PARAMS: IDENTIF:"i") NIL:)))
-            ( DECL: IDENTIF:"println" NIL:))
-          ( DECL: IDENTIF:"readi" NIL:))
-        ( DECL: IDENTIF:"a"))
-      ( DECL: IDENTIF:"b"))
-    ( DECL: IDENTIF:"entry"
-      ( BODY:
-        ( PARAMS:
-          ( PARAMS:
-            ( PARAMS: IDENTIF:"argc") IDENTIF:"argv") IDENTIF:"envp")
-        ( INTRS:
-          ( INTRS:
-            ( INTRS:
-              ( INTRS:
-                ( INTRS:
-                  ( INTRS:
-                    ( INTRS:
-                      ( CALL: IDENTIF:"prints" STRN:"Comparador: maior que
-")
-                      ( CALL: IDENTIF:"prints" STRN:"Introduza dois numeros: "))
-                    ( ATRIB: IDENTIF:"a"
-                      ( CALL: IDENTIF:"readi")))
-                  ( ATRIB: IDENTIF:"b"
-                    ( CALL: IDENTIF:"readi")))
-                ( CALL: IDENTIF:"printi"
-                  ( GT: IDENTIF:"a" IDENTIF:"b")))
-              ( CALL: IDENTIF:"println"))
-            ( ATRIB: IDENTIF:"entry" INT:0)))))))
-[#69]
+ 0:
+ ( PROG: 0:
+  ( DECLS: 0:
+    ( DECLS: 0:
+      ( DECLS: 0:
+        ( DECLS: 0:
+          ( DECLS: 0:
+            ( DECLS: 0:
+              ( DECL: 0: IDENTIF:"prints" 0:
+                ( BODY: 0:
+                  ( PARAMS: 8: IDENTIF:"s") 0: NIL:)) 0:
+              ( DECL: 0: IDENTIF:"printi" 0:
+                ( BODY: 0:
+                  ( PARAMS: 8: IDENTIF:"i") 0: NIL:))) 0:
+            ( DECL: 0: IDENTIF:"println" 0: NIL:)) 0:
+          ( DECL: 0: IDENTIF:"readi" 0: NIL:)) 0:
+        ( DECL: 0: IDENTIF:"a")) 0:
+      ( DECL: 0: IDENTIF:"b")) 0:
+    ( DECL: 0: IDENTIF:"entry" 0:
+      ( BODY: 0:
+        ( PARAMS: 0:
+          ( PARAMS: 0:
+            ( PARAMS: 8: IDENTIF:"argc") 12: IDENTIF:"argv") 16: IDENTIF:"envp") 0:
+        ( INSTRS: 0:
+          ( INSTRS: 0:
+            ( INSTRS: 0:
+              ( INSTRS: 0:
+                ( INSTRS: 0:
+                  ( INSTRS: 0:
+                    ( CALL2: 0: IDENTIF:"prints" 0: STRN:"Comparador: maior que
+") 0:
+                    ( CALL2: 0: IDENTIF:"prints" 0: STRN:"Introduza dois numeros: ")) 0:
+                  ( ATRIB: 0: IDENTIF:"a" 0:
+                    ( CALL: 0: IDENTIF:"readi"))) 0:
+                ( ATRIB: 0: IDENTIF:"b" 0:
+                  ( CALL: 0: IDENTIF:"readi"))) 0:
+              ( CALL2: 0: IDENTIF:"printi" 0:
+                ( GT: 0: IDENTIF:"a" 0: IDENTIF:"b"))) 0:
+            ( CALL: 0: IDENTIF:"println")) 0:
+          ( ATRIB: 0: IDENTIF:"entry" 0: INT:0))))))
+[#68]
 yydebug: after reduction, shifting from state 0 to state 3

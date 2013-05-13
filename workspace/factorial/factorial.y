@@ -29,7 +29,7 @@ int pos = 0;
 %token <d> NUM
 %token <s> IDENTIF STRN
 %token WHILE IF END RETURN VOID PUBLIC CONST THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
-%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX
+%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX LIST
 
 %token CALL CALL2 NEG FACT AND OR PROG ADD SUBT MUL DIV LT GT MOD PARAMS PARS2 PARS PINTR INTR DECL DECLS INIT NIL PNTR EXPS EXP MALL BODY JZ ETIQ LABEL JNZ JMP INSTRS
 
@@ -67,7 +67,7 @@ declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1->info+$2-
 
             | pub cons tipo ptr IDENTIF '('   {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush(); pos = 8; } parametros ')'
                                               {IDreplace($1->info+$2->info+$3->info+$4->info+32,$5, $8->info); //ver isto, devia passar parametros
-                                               if(($3->info+$4->info) != 0) {IDnew($3->info+$4->info, $5, 0);} pos = 0;}  corpop ';'
+                                               if(($3->info+$4->info) != 0) {IDnew($3->info+$4->info, $5, pos = -4);} else pos = 0;}  corpop ';'
                                               {$$=binNode(DECL, strNode(IDENTIF, $5), binNode(BODY, $8, $11)); IDpop(); /* usar o YYselect à entrada do corpo(já faz) ->*/ function($5, -pos, $11); pos = 0; }
 
             | pub cons tipo ptr IDENTIF '(' ')' {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush();
@@ -131,13 +131,13 @@ instrucoes : instrucao                          {$$ = $1;}
            ;
 
 instrucao : IF expressao THEN instrucao %prec IFX                      { int lbl1 = ++lbl;
-                                                                        $$ = seqNode(IFX, 3,
+                                                                        $$ = seqNode(LIST, 3,
                                                                         binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
                                                                         $4, /* instr */
                                                                         strNode(LABEL, mklbl(lbl1)));
                                                                        }
           | IF expressao THEN instrucao ELSE instrucao                { int lbl1 = ++lbl, lbl2 = ++lbl;
-                                                                        $$ = seqNode(ELSE, 6,
+                                                                        $$ = seqNode(LIST, 6,
                                                                         binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
                                                                         $4, /* instr */
                                                                         strNode(JMP, mklbl(lbl2)),
@@ -186,7 +186,7 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
           | IDENTIF '(' expressoes ')'                { int n; n = IDfind($1, 0) & (0x7); if(n != -1 && n == 4) {$$ = binNode(CALL2, strNode(IDENTIF, $1), $3); $$->info = n;} else {$$ = binNode(CALL2, strNode(IDENTIF, $1), $3); $$->info = IDsearch($1, 0, IDlevel(), 0) & (0x7);}}    /* fazer o search no nivel 0 para nao confundir a funcao com a variavel */
           | IDENTIF '(' ')'                           { int n; n = IDfind($1, 0) & (0x7); if(n != -1 && n == 4) {$$ = uniNode(CALL, strNode(IDENTIF, $1)); $$->info = n;} else {$$ = uniNode(CALL, strNode(IDENTIF, $1)); $$->info = IDsearch($1, 0, IDlevel(), 0) & (0x7);}}                                                                                      
           | '(' expressao ')'                         { $$ = $2; }
-          | left_value ATRIB expressao                { if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} $$ = binNode(ATRIB, $1, $3);  $$->info = $3->info;}
+          | left_value ATRIB expressao                { if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} $$ = binNode(ATRIB, $3, $1);  $$->info = $3->info;}
           | '-' expressao %prec UMINUS                { if($2->info == 0 || $2->info == 2) yyerror("Simétrico : Tipo inválido"); $$ = uniNode(UMINUS, $2); $$->info = $2->info;}
           | DEC left_value                            { if($2->info != 1) yyerror("Decremento : Tipo inválido"); $$ = binNode(DEC, nilNode(NIL), $2); $$->info = 1;}
           | INC left_value                            { if($2->info != 1) yyerror("Incremento : Tipo inválido"); $$ = binNode(INC, nilNode(NIL), $2); $$->info = 1;}
@@ -211,7 +211,7 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
           | '*' left_value %prec POINTER              { $$ = uniNode(POINTER, $2); $$->info = $2->info;}
           ;
 
-left_value: IDENTIF                                   { $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, 0); } // deslocamento as variaveis para o place, para sber se é global
+left_value: IDENTIF                                   { long pos; $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, &pos); $$->user = pos; } // deslocamento as variaveis para o place, para sber se é global
 
           | IDENTIF '[' expressao ']'                 {int x = IDfind($1, 0); $$ = binNode(POINTER, strNode(IDENTIF, $1), $3);
                                                         if (((x & 0x4) == 4)) 

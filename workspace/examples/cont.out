@@ -25,6 +25,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -151,6 +152,7 @@ yydebug: state 36, reducing by rule 16 (ptr :)
 yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+8 -- yacc
 yydebug: after reduction, shifting from state 29 to state 37
 yydebug: state 37, reducing by rule 33 (parametros : parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -167,6 +169,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+12 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -183,6 +186,7 @@ yydebug: after reduction, shifting from state 36 to state 41
 yydebug: state 41, reading 259 (IDENTIF)
 yydebug: state 41, shifting to state 70
 yydebug: state 70, reducing by rule 34 (parametro : tipo ptr IDENTIF)
+16 -- yacc
 yydebug: after reduction, shifting from state 43 to state 72
 yydebug: state 72, reducing by rule 32 (parametros : parametros ',' parametro)
 yydebug: after reduction, shifting from state 29 to state 38
@@ -426,56 +430,54 @@ yydebug: state 8, reducing by rule 4 (declaracoes : declaracoes declaracao)
 yydebug: after reduction, shifting from state 0 to state 4
 yydebug: state 4, reading 0 (end-of-file)
 yydebug: state 4, reducing by rule 1 (ficheiro : declaracoes)
-
- ( PROG:
-  ( DECLS:
-    ( DECLS:
-      ( DECLS:
-        ( DECLS:
-          ( DECLS:
-            ( DECL: IDENTIF:"printi"
-              ( BODY:
-                ( PARAMS: IDENTIF:"i") NIL:))
-            ( DECL: IDENTIF:"println" NIL:))
-          ( DECL: IDENTIF:"readi" NIL:))
-        ( DECL: IDENTIF:"m"))
-      ( DECL: IDENTIF:"x"))
-    ( DECL: IDENTIF:"entry"
-      ( BODY:
-        ( PARAMS:
-          ( PARAMS:
-            ( PARAMS: IDENTIF:"argc") IDENTIF:"argv") IDENTIF:"envp")
-        ( INTRS:
-          ( INTRS:
-            ( INTRS:
-              ( ATRIB: IDENTIF:"m"
-                ( CALL: IDENTIF:"readi"))
-              ( IFX:
-                ( JZ:
-                  ( GT: IDENTIF:"m" INT:0) ETIQ:"_i4")
-                ( IFX:
-                  ( WHILE: JMP:"_i2"
-                    ( WHILE: LABEL:"_i3"
-                      ( WHILE:
-                        ( INTRS:
-                          ( INTRS:
-                            ( INTRS:
-                              ( INTRS:
-                                ( INTRS:
-                                  ( CALL: IDENTIF:"printi" IDENTIF:"x")
-                                  ( CALL: IDENTIF:"println"))
-                                ( ATRIB: IDENTIF:"x"
-                                  ( ADD: IDENTIF:"x" INT:1)))
-                              ( IFX:
-                                ( JZ:
-                                  ( EQ: IDENTIF:"x" IDENTIF:"m") ETIQ:"_i1")
-                                ( IFX:
-                                  ( CONTINUE: INT:1) LABEL:"_i1")))
-                            ( ATRIB: IDENTIF:"x"
-                              ( ADD: IDENTIF:"x" INT:3))))
-                        ( WHILE: LABEL:"_i2"
-                          ( JNZ:
-                            ( LT: IDENTIF:"x" INT:20) ETIQ:"_i3"))))) LABEL:"_i4")))
-            ( ATRIB: IDENTIF:"entry" INT:0)))))))
-[#91]
+ 0:
+ ( PROG: 0:
+  ( DECLS: 0:
+    ( DECLS: 0:
+      ( DECLS: 0:
+        ( DECLS: 0:
+          ( DECLS: 0:
+            ( DECL: 0: IDENTIF:"printi" 0:
+              ( BODY: 0:
+                ( PARAMS: 8: IDENTIF:"i") 0: NIL:)) 0:
+            ( DECL: 0: IDENTIF:"println" 0: NIL:)) 0:
+          ( DECL: 0: IDENTIF:"readi" 0: NIL:)) 0:
+        ( DECL: 0: IDENTIF:"m")) 0:
+      ( DECL: 0: IDENTIF:"x")) 0:
+    ( DECL: 0: IDENTIF:"entry" 0:
+      ( BODY: 0:
+        ( PARAMS: 0:
+          ( PARAMS: 0:
+            ( PARAMS: 8: IDENTIF:"argc") 12: IDENTIF:"argv") 16: IDENTIF:"envp") 0:
+        ( INSTRS: 0:
+          ( INSTRS: 0:
+            ( ATRIB: 0: IDENTIF:"m" 0:
+              ( CALL: 0: IDENTIF:"readi")) 0:
+            ( LIST: 0:
+              ( JZ: 0:
+                ( GT: 0: IDENTIF:"m" 0: INT:0) 0: ETIQ:"_i4") 0:
+              ( LIST: 0:
+                ( WHILE: 0: JMP:"_i2" 0:
+                  ( WHILE: 0: LABEL:"_i3" 0:
+                    ( WHILE: 0:
+                      ( INSTRS: 0:
+                        ( INSTRS: 0:
+                          ( INSTRS: 0:
+                            ( INSTRS: 0:
+                              ( CALL2: 0: IDENTIF:"printi" 0: IDENTIF:"x") 0:
+                              ( CALL: 0: IDENTIF:"println")) 0:
+                            ( ATRIB: 0: IDENTIF:"x" 0:
+                              ( ADD: 0: IDENTIF:"x" 0: INT:1))) 0:
+                          ( LIST: 0:
+                            ( JZ: 0:
+                              ( EQ: 0: IDENTIF:"x" 0: IDENTIF:"m") 0: ETIQ:"_i1") 0:
+                            ( LIST: 0:
+                              ( CONTINUE: 0: INT:1) 0: LABEL:"_i1"))) 0:
+                        ( ATRIB: 0: IDENTIF:"x" 0:
+                          ( ADD: 0: IDENTIF:"x" 0: INT:3))) 0:
+                      ( WHILE: 0: LABEL:"_i2" 0:
+                        ( JNZ: 0:
+                          ( LT: 0: IDENTIF:"x" 0: INT:20) 0: ETIQ:"_i3"))))) 0: LABEL:"_i4"))) 0:
+          ( ATRIB: 0: IDENTIF:"entry" 0: INT:0))))))
+[#89]
 yydebug: after reduction, shifting from state 0 to state 3

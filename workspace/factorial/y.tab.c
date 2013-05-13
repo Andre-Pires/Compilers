@@ -111,41 +111,42 @@ extern int YYPARSE_DECL();
 #define ADDR 288
 #define POINTER 289
 #define IFX 290
-#define CALL 291
-#define CALL2 292
-#define NEG 293
-#define FACT 294
-#define AND 295
-#define OR 296
-#define PROG 297
-#define ADD 298
-#define SUBT 299
-#define MUL 300
-#define DIV 301
-#define LT 302
-#define GT 303
-#define MOD 304
-#define PARAMS 305
-#define PARS2 306
-#define PARS 307
-#define PINTR 308
-#define INTR 309
-#define DECL 310
-#define DECLS 311
-#define INIT 312
-#define NIL 313
-#define PNTR 314
-#define EXPS 315
-#define EXP 316
-#define MALL 317
-#define BODY 318
-#define JZ 319
-#define ETIQ 320
-#define LABEL 321
-#define JNZ 322
-#define JMP 323
-#define INSTRS 324
-#define UMINUS 325
+#define LIST 291
+#define CALL 292
+#define CALL2 293
+#define NEG 294
+#define FACT 295
+#define AND 296
+#define OR 297
+#define PROG 298
+#define ADD 299
+#define SUBT 300
+#define MUL 301
+#define DIV 302
+#define LT 303
+#define GT 304
+#define MOD 305
+#define PARAMS 306
+#define PARS2 307
+#define PARS 308
+#define PINTR 309
+#define INTR 310
+#define DECL 311
+#define DECLS 312
+#define INIT 313
+#define NIL 314
+#define PNTR 315
+#define EXPS 316
+#define EXP 317
+#define MALL 318
+#define BODY 319
+#define JZ 320
+#define ETIQ 321
+#define LABEL 322
+#define JNZ 323
+#define JMP 324
+#define INSTRS 325
+#define UMINUS 326
 #define YYERRCODE 256
 static const short yylhs[] = {                           -1,
     0,    0,   10,   10,   11,   11,   20,   21,   11,   22,
@@ -539,7 +540,7 @@ static const short yycheck[] = {                         40,
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 325
+#define YYMAXTOKEN 326
 #if YYDEBUG
 static const char *yyname[] = {
 
@@ -553,10 +554,10 @@ static const char *yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INT","NUM","IDENTIF","STRN",
 "WHILE","IF","END","RETURN","VOID","PUBLIC","CONST","THEN","ELSE","DO","FOR",
 "IN","STEP","UPTO","DOWNTO","BREAK","CONTINUE","INTEGER","STRING","NUMBER","GE",
-"LE","EQ","NE","INC","DEC","ATRIB","ADDR","POINTER","IFX","CALL","CALL2","NEG",
-"FACT","AND","OR","PROG","ADD","SUBT","MUL","DIV","LT","GT","MOD","PARAMS",
-"PARS2","PARS","PINTR","INTR","DECL","DECLS","INIT","NIL","PNTR","EXPS","EXP",
-"MALL","BODY","JZ","ETIQ","LABEL","JNZ","JMP","INSTRS","UMINUS",
+"LE","EQ","NE","INC","DEC","ATRIB","ADDR","POINTER","IFX","LIST","CALL","CALL2",
+"NEG","FACT","AND","OR","PROG","ADD","SUBT","MUL","DIV","LT","GT","MOD",
+"PARAMS","PARS2","PARS","PINTR","INTR","DECL","DECLS","INIT","NIL","PNTR",
+"EXPS","EXP","MALL","BODY","JZ","ETIQ","LABEL","JNZ","JMP","INSTRS","UMINUS",
 };
 static const char *yyrule[] = {
 "$accept : ficheiro",
@@ -735,7 +736,7 @@ char **yynames =
 #else
      0;
 #endif
-#line 738 "y.tab.c"
+#line 739 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -972,7 +973,7 @@ break;
 case 8:
 #line 69 "factorial.y"
 	{IDreplace(yystack.l_mark[-8].n->info+yystack.l_mark[-7].n->info+yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info+32,yystack.l_mark[-4].s, yystack.l_mark[-1].n->info); /*ver isto, devia passar parametros*/
-                                               if((yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info) != 0) {IDnew(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info, yystack.l_mark[-4].s, 0);} pos = 0;}
+                                               if((yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info) != 0) {IDnew(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info, yystack.l_mark[-4].s, pos = -4);} else pos = 0;}
 break;
 case 9:
 #line 71 "factorial.y"
@@ -1114,7 +1115,7 @@ break;
 case 43:
 #line 133 "factorial.y"
 	{ int lbl1 = ++lbl;
-                                                                        yyval.n = seqNode(IFX, 3,
+                                                                        yyval.n = seqNode(LIST, 3,
                                                                         binNode(JZ,yystack.l_mark[-2].n, strNode(ETIQ, mklbl(lbl1))),
                                                                         yystack.l_mark[0].n, /* instr */
                                                                         strNode(LABEL, mklbl(lbl1)));
@@ -1123,7 +1124,7 @@ break;
 case 44:
 #line 139 "factorial.y"
 	{ int lbl1 = ++lbl, lbl2 = ++lbl;
-                                                                        yyval.n = seqNode(ELSE, 6,
+                                                                        yyval.n = seqNode(LIST, 6,
                                                                         binNode(JZ,yystack.l_mark[-4].n, strNode(ETIQ, mklbl(lbl1))),
                                                                         yystack.l_mark[-2].n, /* instr */
                                                                         strNode(JMP, mklbl(lbl2)),
@@ -1245,7 +1246,7 @@ case 70:
 break;
 case 71:
 #line 189 "factorial.y"
-	{ if(yystack.l_mark[-2].n->info != 4){if (yystack.l_mark[-2].n->info != yystack.l_mark[0].n->info) yyerror("Atribuição entre tipos diferentes.");} yyval.n = binNode(ATRIB, yystack.l_mark[-2].n, yystack.l_mark[0].n);  yyval.n->info = yystack.l_mark[0].n->info;}
+	{ if(yystack.l_mark[-2].n->info != 4){if (yystack.l_mark[-2].n->info != yystack.l_mark[0].n->info) yyerror("Atribuição entre tipos diferentes.");} yyval.n = binNode(ATRIB, yystack.l_mark[0].n, yystack.l_mark[-2].n);  yyval.n->info = yystack.l_mark[0].n->info;}
 break;
 case 72:
 #line 190 "factorial.y"
@@ -1337,7 +1338,7 @@ case 93:
 break;
 case 94:
 #line 214 "factorial.y"
-	{ yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); yyval.n->info = IDfind(yystack.l_mark[0].s, 0); }
+	{ long pos; yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); yyval.n->info = IDfind(yystack.l_mark[0].s, &pos); yyval.n->user = pos; }
 break;
 case 95:
 #line 216 "factorial.y"
@@ -1349,7 +1350,7 @@ case 95:
                                                         else yyerror("Ponteiro: Tipo inválido.");
                                                         /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
 break;
-#line 1352 "y.tab.c"
+#line 1353 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

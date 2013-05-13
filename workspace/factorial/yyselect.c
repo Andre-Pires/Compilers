@@ -1,5 +1,5 @@
 /*
-generated at Sat May 11 23:56:21 2013
+generated at Mon May 13 11:48:04 2013
 by $Id: pburg.c,v 2.3a 2012/10/07 00:51:11 prs Exp $
 */
 #include <stdlib.h>
@@ -36,6 +36,7 @@ extern int lbl;
 extern char *mklbl(int n);
 extern char **yynames;
 
+int trash;
 static int stk;
 
 static int sameVar(NODEPTR_TYPE p) {
@@ -61,8 +62,9 @@ static int yyrule(void*, int);
 #define yyinstrucoes_NT 2
 #define yyinstrucao_NT 3
 #define yyexpressao_NT 4
-#define yyexpressoes_NT 5
-#define yylvalue_NT 6
+#define yylvalue_NT 5
+#define yystack_NT 6
+#define yyduplval_NT 7
 
 static YYCONST char *yyntname[] = {
 	0,
@@ -70,8 +72,9 @@ static YYCONST char *yyntname[] = {
 	"instrucoes",
 	"instrucao",
 	"expressao",
-	"expressoes",
 	"lvalue",
+	"stack",
+	"duplval",
 	0
 };
 
@@ -123,53 +126,55 @@ static YYCONST char *yytermname[] = {
 	/* 289 */ "ADDR",
 	/* 290 */ "POINTER",
 	/* 291 */ "IFX",
-	/* 292 */ "CALL",
-	/* 293 */ "CALL2",
-	/* 294 */ "NEG",
-	/* 295 */ "FACT",
-	/* 296 */ "AND",
-	/* 297 */ "OR",
-	/* 298 */ "PROG",
-	/* 299 */ "ADD",
-	/* 300 */ "SUBT",
-	/* 301 */ "MUL",
-	/* 302 */ "DIV",
-	/* 303 */ "LT",
-	/* 304 */ "GT",
-	/* 305 */ "MOD",
-	/* 306 */ "PARAMS",
-	/* 307 */ "PARS2",
-	/* 308 */ "PARS",
-	/* 309 */ "PINTR",
-	/* 310 */ "INTR",
-	/* 311 */ "DECL",
-	/* 312 */ "DECLS",
-	/* 313 */ "INIT",
-	/* 314 */ "NIL",
-	/* 315 */ "PNTR",
-	/* 316 */ "EXPS",
-	/* 317 */ "EXP",
-	/* 318 */ "MALL",
-	/* 319 */ "BODY",
-	/* 320 */ "JZ",
-	/* 321 */ "ETIQ",
-	/* 322 */ "LABEL",
-	/* 323 */ "JNZ",
-	/* 324 */ "JMP",
-	/* 325 */ "INSTRS",
-	/* 326 */ "UMINUS",
+	/* 292 */ "LIST",
+	/* 293 */ "CALL",
+	/* 294 */ "CALL2",
+	/* 295 */ "NEG",
+	/* 296 */ "FACT",
+	/* 297 */ "AND",
+	/* 298 */ "OR",
+	/* 299 */ "PROG",
+	/* 300 */ "ADD",
+	/* 301 */ "SUBT",
+	/* 302 */ "MUL",
+	/* 303 */ "DIV",
+	/* 304 */ "LT",
+	/* 305 */ "GT",
+	/* 306 */ "MOD",
+	/* 307 */ "PARAMS",
+	/* 308 */ "PARS2",
+	/* 309 */ "PARS",
+	/* 310 */ "PINTR",
+	/* 311 */ "INTR",
+	/* 312 */ "DECL",
+	/* 313 */ "DECLS",
+	/* 314 */ "INIT",
+	/* 315 */ "NIL",
+	/* 316 */ "PNTR",
+	/* 317 */ "EXPS",
+	/* 318 */ "EXP",
+	/* 319 */ "MALL",
+	/* 320 */ "BODY",
+	/* 321 */ "JZ",
+	/* 322 */ "ETIQ",
+	/* 323 */ "LABEL",
+	/* 324 */ "JNZ",
+	/* 325 */ "JMP",
+	/* 326 */ "INSTRS",
+	/* 327 */ "UMINUS",
 	""
 };
 
 struct yystate {
-	short cost[7];
+	short cost[8];
 	struct {
 		unsigned int yycorpo:2;
 		unsigned int yyinstrucoes:2;
-		unsigned int yyinstrucao:2;
+		unsigned int yyinstrucao:5;
 		unsigned int yyexpressao:5;
-		unsigned int yyexpressoes:2;
 		unsigned int yylvalue:1;
+		unsigned int yystack:2;
+		unsigned int yyduplval:1;
 	} rule;
 };
 
@@ -177,13 +182,14 @@ static short yynts_0[] = { 0 };
 static short yynts_1[] = { yyinstrucoes_NT, 0 };
 static short yynts_2[] = { yyinstrucoes_NT, yyinstrucao_NT, 0 };
 static short yynts_3[] = { yyinstrucao_NT, 0 };
-static short yynts_4[] = { yyexpressao_NT, 0 };
-static short yynts_5[] = { yycorpo_NT, 0 };
-static short yynts_6[] = { yyexpressoes_NT, yyexpressao_NT, 0 };
-static short yynts_7[] = { yylvalue_NT, 0 };
-static short yynts_8[] = { yyexpressoes_NT, 0 };
-static short yynts_9[] = { yylvalue_NT, yyexpressao_NT, 0 };
-static short yynts_10[] = { yyexpressao_NT, yyexpressao_NT, 0 };
+static short yynts_4[] = { yyinstrucao_NT, yyinstrucao_NT, 0 };
+static short yynts_5[] = { yyexpressao_NT, 0 };
+static short yynts_6[] = { yycorpo_NT, 0 };
+static short yynts_7[] = { yyexpressao_NT, yyexpressao_NT, 0 };
+static short yynts_8[] = { yylvalue_NT, 0 };
+static short yynts_9[] = { yystack_NT, 0 };
+static short yynts_10[] = { yyexpressao_NT, yyduplval_NT, 0 };
+static short yynts_11[] = { yystack_NT, yystack_NT, 0 };
 
 static short *yynts[] = {
 	0,	/* 0 */
@@ -193,39 +199,58 @@ static short *yynts[] = {
 	yynts_2,	/* 4 */
 	yynts_3,	/* 5 */
 	yynts_4,	/* 6 */
-	yynts_5,	/* 7 */
-	yynts_6,	/* 8 */
-	yynts_4,	/* 9 */
+	yynts_0,	/* 7 */
+	yynts_5,	/* 8 */
+	yynts_6,	/* 9 */
 	yynts_0,	/* 10 */
-	yynts_0,	/* 11 */
-	yynts_0,	/* 12 */
+	yynts_5,	/* 11 */
+	yynts_5,	/* 12 */
 	yynts_7,	/* 13 */
-	yynts_8,	/* 14 */
-	yynts_0,	/* 15 */
-	yynts_9,	/* 16 */
-	yynts_4,	/* 17 */
-	yynts_0,	/* 18 */
-	yynts_0,	/* 19 */
-	yynts_0,	/* 20 */
-	yynts_0,	/* 21 */
-	yynts_10,	/* 22 */
-	yynts_10,	/* 23 */
-	yynts_10,	/* 24 */
-	yynts_10,	/* 25 */
-	yynts_10,	/* 26 */
-	yynts_10,	/* 27 */
-	yynts_10,	/* 28 */
-	yynts_10,	/* 29 */
-	yynts_10,	/* 30 */
+	yynts_7,	/* 14 */
+	yynts_7,	/* 15 */
+	yynts_7,	/* 16 */
+	yynts_7,	/* 17 */
+	yynts_7,	/* 18 */
+	yynts_7,	/* 19 */
+	yynts_7,	/* 20 */
+	yynts_7,	/* 21 */
+	yynts_7,	/* 22 */
+	yynts_7,	/* 23 */
+	yynts_7,	/* 24 */
+	yynts_0,	/* 25 */
+	yynts_0,	/* 26 */
+	yynts_0,	/* 27 */
+	yynts_8,	/* 28 */
+	yynts_9,	/* 29 */
+	yynts_0,	/* 30 */
 	yynts_10,	/* 31 */
-	yynts_10,	/* 32 */
-	yynts_10,	/* 33 */
-	yynts_10,	/* 34 */
-	yynts_4,	/* 35 */
-	yynts_4,	/* 36 */
+	yynts_5,	/* 32 */
+	yynts_8,	/* 33 */
+	yynts_8,	/* 34 */
+	yynts_8,	/* 35 */
+	yynts_8,	/* 36 */
 	yynts_7,	/* 37 */
 	yynts_7,	/* 38 */
-	yynts_0,	/* 39 */
+	yynts_7,	/* 39 */
+	yynts_7,	/* 40 */
+	yynts_7,	/* 41 */
+	yynts_7,	/* 42 */
+	yynts_7,	/* 43 */
+	yynts_7,	/* 44 */
+	yynts_7,	/* 45 */
+	yynts_7,	/* 46 */
+	yynts_7,	/* 47 */
+	yynts_7,	/* 48 */
+	yynts_7,	/* 49 */
+	yynts_5,	/* 50 */
+	yynts_5,	/* 51 */
+	yynts_8,	/* 52 */
+	yynts_8,	/* 53 */
+	yynts_8,	/* 54 */
+	yynts_0,	/* 55 */
+	yynts_11,	/* 56 */
+	yynts_5,	/* 57 */
+	yynts_0,	/* 58 */
 };
 
 
@@ -236,40 +261,59 @@ static YYCONST char *yystring[] = {
 /* 3 */	"corpo: PINTR",
 /* 4 */	"instrucoes: INSTRS(instrucoes,instrucao)",
 /* 5 */	"instrucoes: instrucao",
-/* 6 */	"instrucao: expressao",
-/* 7 */	"instrucao: corpo",
-/* 8 */	"expressoes: EXPS(expressoes,expressao)",
-/* 9 */	"expressoes: expressao",
-/* 10 */	"expressao: INT",
-/* 11 */	"expressao: NUM",
-/* 12 */	"expressao: STRN",
-/* 13 */	"expressao: lvalue",
-/* 14 */	"expressao: CALL2(IDENTIF,expressoes)",
-/* 15 */	"expressao: CALL(IDENTIF)",
-/* 16 */	"expressao: ATRIB(lvalue,expressao)",
-/* 17 */	"expressao: UMINUS(expressao)",
-/* 18 */	"expressao: INC(IDENTIF,NIL)",
-/* 19 */	"expressao: DEC(IDENTIF,NIL)",
-/* 20 */	"expressao: INC(NIL,IDENTIF)",
-/* 21 */	"expressao: DEC(NIL,IDENTIF)",
-/* 22 */	"expressao: MUL(expressao,expressao)",
-/* 23 */	"expressao: DIV(expressao,expressao)",
-/* 24 */	"expressao: MOD(expressao,expressao)",
-/* 25 */	"expressao: ADD(expressao,expressao)",
-/* 26 */	"expressao: SUBT(expressao,expressao)",
-/* 27 */	"expressao: GT(expressao,expressao)",
-/* 28 */	"expressao: LT(expressao,expressao)",
-/* 29 */	"expressao: EQ(expressao,expressao)",
-/* 30 */	"expressao: NE(expressao,expressao)",
-/* 31 */	"expressao: GE(expressao,expressao)",
-/* 32 */	"expressao: LE(expressao,expressao)",
-/* 33 */	"expressao: AND(expressao,expressao)",
-/* 34 */	"expressao: OR(expressao,expressao)",
-/* 35 */	"expressao: NEG(expressao)",
-/* 36 */	"expressao: FACT(expressao)",
-/* 37 */	"expressao: ADDR(lvalue)",
-/* 38 */	"expressao: POINTER(lvalue)",
-/* 39 */	"lvalue: IDENTIF",
+/* 6 */	"instrucao: LIST(instrucao,instrucao)",
+/* 7 */	"instrucao: LABEL",
+/* 8 */	"instrucao: expressao",
+/* 9 */	"instrucao: corpo",
+/* 10 */	"instrucao: JMP",
+/* 11 */	"instrucao: JZ(expressao,ETIQ)",
+/* 12 */	"instrucao: JNZ(expressao,ETIQ)",
+/* 13 */	"instrucao: JZ(LT(expressao,expressao),ETIQ)",
+/* 14 */	"instrucao: JZ(LE(expressao,expressao),ETIQ)",
+/* 15 */	"instrucao: JZ(GT(expressao,expressao),ETIQ)",
+/* 16 */	"instrucao: JZ(GE(expressao,expressao),ETIQ)",
+/* 17 */	"instrucao: JZ(EQ(expressao,expressao),ETIQ)",
+/* 18 */	"instrucao: JZ(NE(expressao,expressao),ETIQ)",
+/* 19 */	"instrucao: JNZ(LT(expressao,expressao),ETIQ)",
+/* 20 */	"instrucao: JNZ(LE(expressao,expressao),ETIQ)",
+/* 21 */	"instrucao: JNZ(GT(expressao,expressao),ETIQ)",
+/* 22 */	"instrucao: JNZ(GE(expressao,expressao),ETIQ)",
+/* 23 */	"instrucao: JNZ(EQ(expressao,expressao),ETIQ)",
+/* 24 */	"instrucao: JNZ(NE(expressao,expressao),ETIQ)",
+/* 25 */	"expressao: INT",
+/* 26 */	"expressao: NUM",
+/* 27 */	"expressao: STRN",
+/* 28 */	"expressao: lvalue",
+/* 29 */	"expressao: CALL2(IDENTIF,stack)",
+/* 30 */	"expressao: CALL(IDENTIF)",
+/* 31 */	"expressao: ATRIB(expressao,duplval)",
+/* 32 */	"expressao: UMINUS(expressao)",
+/* 33 */	"expressao: INC(lvalue,NIL)",
+/* 34 */	"expressao: DEC(lvalue,NIL)",
+/* 35 */	"expressao: INC(NIL,lvalue)",
+/* 36 */	"expressao: DEC(NIL,lvalue)",
+/* 37 */	"expressao: MUL(expressao,expressao)",
+/* 38 */	"expressao: DIV(expressao,expressao)",
+/* 39 */	"expressao: MOD(expressao,expressao)",
+/* 40 */	"expressao: ADD(expressao,expressao)",
+/* 41 */	"expressao: SUBT(expressao,expressao)",
+/* 42 */	"expressao: GT(expressao,expressao)",
+/* 43 */	"expressao: LT(expressao,expressao)",
+/* 44 */	"expressao: EQ(expressao,expressao)",
+/* 45 */	"expressao: NE(expressao,expressao)",
+/* 46 */	"expressao: GE(expressao,expressao)",
+/* 47 */	"expressao: LE(expressao,expressao)",
+/* 48 */	"expressao: AND(expressao,expressao)",
+/* 49 */	"expressao: OR(expressao,expressao)",
+/* 50 */	"expressao: NEG(expressao)",
+/* 51 */	"expressao: FACT(expressao)",
+/* 52 */	"expressao: ADDR(lvalue)",
+/* 53 */	"expressao: POINTER(lvalue)",
+/* 54 */	"duplval: lvalue",
+/* 55 */	"lvalue: IDENTIF",
+/* 56 */	"stack: EXPS(stack,stack)",
+/* 57 */	"stack: expressao",
+/* 58 */	"stack: NIL",
 };
 
 #ifndef TRACE
@@ -298,10 +342,8 @@ static short yydecode_instrucao[] = {
 	0,
 	6,
 	7,
-};
-
-static short yydecode_expressao[] = {
-	0,
+	8,
+	9,
 	10,
 	11,
 	12,
@@ -317,6 +359,10 @@ static short yydecode_expressao[] = {
 	22,
 	23,
 	24,
+};
+
+static short yydecode_expressao[] = {
+	0,
 	25,
 	26,
 	27,
@@ -331,21 +377,42 @@ static short yydecode_expressao[] = {
 	36,
 	37,
 	38,
-};
-
-static short yydecode_expressoes[] = {
-	0,
-	8,
-	9,
+	39,
+	40,
+	41,
+	42,
+	43,
+	44,
+	45,
+	46,
+	47,
+	48,
+	49,
+	50,
+	51,
+	52,
+	53,
 };
 
 static short yydecode_lvalue[] = {
 	0,
-	39,
+	55,
+};
+
+static short yydecode_stack[] = {
+	0,
+	56,
+	57,
+	58,
+};
+
+static short yydecode_duplval[] = {
+	0,
+	54,
 };
 
 static int yyrule(void *state, int goalnt) {
-	if (goalnt < 1 || goalnt > 6)
+	if (goalnt < 1 || goalnt > 7)
 		PANIC("yyrule", "Bad goal nonterminal", goalnt);
 	if (!state)
 		return 0;
@@ -354,8 +421,9 @@ static int yyrule(void *state, int goalnt) {
 	case yyinstrucoes_NT:	return yydecode_instrucoes[((struct yystate *)state)->rule.yyinstrucoes];
 	case yyinstrucao_NT:	return yydecode_instrucao[((struct yystate *)state)->rule.yyinstrucao];
 	case yyexpressao_NT:	return yydecode_expressao[((struct yystate *)state)->rule.yyexpressao];
-	case yyexpressoes_NT:	return yydecode_expressoes[((struct yystate *)state)->rule.yyexpressoes];
 	case yylvalue_NT:	return yydecode_lvalue[((struct yystate *)state)->rule.yylvalue];
+	case yystack_NT:	return yydecode_stack[((struct yystate *)state)->rule.yystack];
+	case yyduplval_NT:	return yydecode_duplval[((struct yystate *)state)->rule.yyduplval];
 	default:
 		PANIC("yyrule", "Bad goal nonterminal", goalnt);
 		return 0;
@@ -370,10 +438,10 @@ static void yyclosure_lvalue(NODEPTR_TYPE, int);
 
 static void yyclosure_corpo(NODEPTR_TYPE a, int c) {
 	struct yystate *p = (struct yystate *)STATE_LABEL(a);
-	yytrace(a, 7, c + 0, p->cost[yyinstrucao_NT]);
+	yytrace(a, 9, c + 0, p->cost[yyinstrucao_NT]);
 	if (c + 0 < p->cost[yyinstrucao_NT]) {
 		p->cost[yyinstrucao_NT] = c + 0;
-		p->rule.yyinstrucao = 2;
+		p->rule.yyinstrucao = 4;
 		yyclosure_instrucao(a, c + 0);
 	}
 }
@@ -400,26 +468,31 @@ static void yyclosure_instrucao(NODEPTR_TYPE a, int c) {
 
 static void yyclosure_expressao(NODEPTR_TYPE a, int c) {
 	struct yystate *p = (struct yystate *)STATE_LABEL(a);
-	yytrace(a, 9, c + 0, p->cost[yyexpressoes_NT]);
-	if (c + 0 < p->cost[yyexpressoes_NT]) {
-		p->cost[yyexpressoes_NT] = c + 0;
-		p->rule.yyexpressoes = 2;
+	yytrace(a, 57, c + 0, p->cost[yystack_NT]);
+	if (c + 0 < p->cost[yystack_NT]) {
+		p->cost[yystack_NT] = c + 0;
+		p->rule.yystack = 2;
 	}
-	yytrace(a, 6, c + 0, p->cost[yyinstrucao_NT]);
-	if (c + 0 < p->cost[yyinstrucao_NT]) {
-		p->cost[yyinstrucao_NT] = c + 0;
-		p->rule.yyinstrucao = 1;
-		yyclosure_instrucao(a, c + 0);
+	yytrace(a, 8, c + 1, p->cost[yyinstrucao_NT]);
+	if (c + 1 < p->cost[yyinstrucao_NT]) {
+		p->cost[yyinstrucao_NT] = c + 1;
+		p->rule.yyinstrucao = 3;
+		yyclosure_instrucao(a, c + 1);
 	}
 }
 
 static void yyclosure_lvalue(NODEPTR_TYPE a, int c) {
 	struct yystate *p = (struct yystate *)STATE_LABEL(a);
-	yytrace(a, 13, c + 0, p->cost[yyexpressao_NT]);
-	if (c + 0 < p->cost[yyexpressao_NT]) {
-		p->cost[yyexpressao_NT] = c + 0;
+	yytrace(a, 54, c + 1, p->cost[yyduplval_NT]);
+	if (c + 1 < p->cost[yyduplval_NT]) {
+		p->cost[yyduplval_NT] = c + 1;
+		p->rule.yyduplval = 1;
+	}
+	yytrace(a, 28, c + 1, p->cost[yyexpressao_NT]);
+	if (c + 1 < p->cost[yyexpressao_NT]) {
+		p->cost[yyexpressao_NT] = c + 1;
 		p->rule.yyexpressao = 4;
-		yyclosure_expressao(a, c + 0);
+		yyclosure_expressao(a, c + 1);
 	}
 }
 
@@ -437,13 +510,14 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 	p->cost[4] =
 	p->cost[5] =
 	p->cost[6] =
+	p->cost[7] =
 		0x7fff;
 	switch (OP_LABEL(a)) {
 	case 59: /* ARG */
 		break;
 	case 257: /* INT */
 		/* expressao: INT */
-		yytrace(a, 10, 1 + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 25, 1 + 0, p->cost[yyexpressao_NT]);
 		if (1 + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = 1 + 0;
 			p->rule.yyexpressao = 1;
@@ -452,7 +526,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		break;
 	case 258: /* NUM */
 		/* expressao: NUM */
-		yytrace(a, 11, 0 + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 26, 0 + 0, p->cost[yyexpressao_NT]);
 		if (0 + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = 0 + 0;
 			p->rule.yyexpressao = 2;
@@ -461,7 +535,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		break;
 	case 259: /* IDENTIF */
 		/* lvalue: IDENTIF */
-		yytrace(a, 39, 1 + 0, p->cost[yylvalue_NT]);
+		yytrace(a, 55, 1 + 0, p->cost[yylvalue_NT]);
 		if (1 + 0 < p->cost[yylvalue_NT]) {
 			p->cost[yylvalue_NT] = 1 + 0;
 			p->rule.yylvalue = 1;
@@ -470,7 +544,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		break;
 	case 260: /* STRN */
 		/* expressao: STRN */
-		yytrace(a, 12, 0 + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 27, 0 + 0, p->cost[yyexpressao_NT]);
 		if (0 + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = 0 + 0;
 			p->rule.yyexpressao = 3;
@@ -522,7 +596,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: GE(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 31, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 46, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 22;
@@ -534,7 +608,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: LE(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 32, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 47, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 23;
@@ -546,7 +620,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: EQ(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 29, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 44, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 20;
@@ -558,7 +632,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: NE(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 30, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 45, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 21;
@@ -568,24 +642,22 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 	case 285: /* INC */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
-		if (	/* expressao: INC(IDENTIF,NIL) */
-			OP_LABEL(LEFT_CHILD(a)) == 259 && /* IDENTIF */
-			OP_LABEL(RIGHT_CHILD(a)) == 313 /* NIL */
+		if (	/* expressao: INC(lvalue,NIL) */
+			OP_LABEL(RIGHT_CHILD(a)) == 314 /* NIL */
 		) {
-			c = 1;
-			yytrace(a, 18, c + 0, p->cost[yyexpressao_NT]);
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yylvalue_NT] + 1;
+			yytrace(a, 33, c + 0, p->cost[yyexpressao_NT]);
 			if (c + 0 < p->cost[yyexpressao_NT]) {
 				p->cost[yyexpressao_NT] = c + 0;
 				p->rule.yyexpressao = 9;
 				yyclosure_expressao(a, c + 0);
 			}
 		}
-		if (	/* expressao: INC(NIL,IDENTIF) */
-			OP_LABEL(LEFT_CHILD(a)) == 313 && /* NIL */
-			OP_LABEL(RIGHT_CHILD(a)) == 259 /* IDENTIF */
+		if (	/* expressao: INC(NIL,lvalue) */
+			OP_LABEL(LEFT_CHILD(a)) == 314 /* NIL */
 		) {
-			c = 1;
-			yytrace(a, 20, c + 0, p->cost[yyexpressao_NT]);
+			c = ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yylvalue_NT] + 1;
+			yytrace(a, 35, c + 0, p->cost[yyexpressao_NT]);
 			if (c + 0 < p->cost[yyexpressao_NT]) {
 				p->cost[yyexpressao_NT] = c + 0;
 				p->rule.yyexpressao = 11;
@@ -596,24 +668,22 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 	case 286: /* DEC */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
-		if (	/* expressao: DEC(IDENTIF,NIL) */
-			OP_LABEL(LEFT_CHILD(a)) == 259 && /* IDENTIF */
-			OP_LABEL(RIGHT_CHILD(a)) == 313 /* NIL */
+		if (	/* expressao: DEC(lvalue,NIL) */
+			OP_LABEL(RIGHT_CHILD(a)) == 314 /* NIL */
 		) {
-			c = 1;
-			yytrace(a, 19, c + 0, p->cost[yyexpressao_NT]);
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yylvalue_NT] + 1;
+			yytrace(a, 34, c + 0, p->cost[yyexpressao_NT]);
 			if (c + 0 < p->cost[yyexpressao_NT]) {
 				p->cost[yyexpressao_NT] = c + 0;
 				p->rule.yyexpressao = 10;
 				yyclosure_expressao(a, c + 0);
 			}
 		}
-		if (	/* expressao: DEC(NIL,IDENTIF) */
-			OP_LABEL(LEFT_CHILD(a)) == 313 && /* NIL */
-			OP_LABEL(RIGHT_CHILD(a)) == 259 /* IDENTIF */
+		if (	/* expressao: DEC(NIL,lvalue) */
+			OP_LABEL(LEFT_CHILD(a)) == 314 /* NIL */
 		) {
-			c = 1;
-			yytrace(a, 21, c + 0, p->cost[yyexpressao_NT]);
+			c = ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yylvalue_NT] + 1;
+			yytrace(a, 36, c + 0, p->cost[yyexpressao_NT]);
 			if (c + 0 < p->cost[yyexpressao_NT]) {
 				p->cost[yyexpressao_NT] = c + 0;
 				p->rule.yyexpressao = 12;
@@ -624,9 +694,9 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 	case 287: /* ATRIB */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
-		/* expressao: ATRIB(lvalue,expressao) */
-		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yylvalue_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 3;
-		yytrace(a, 16, c + 0, p->cost[yyexpressao_NT]);
+		/* expressao: ATRIB(expressao,duplval) */
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyduplval_NT] + 3;
+		yytrace(a, 31, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 7;
@@ -637,7 +707,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		yylabel(LEFT_CHILD(a),a);
 		/* expressao: ADDR(lvalue) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yylvalue_NT] + 0;
-		yytrace(a, 37, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 52, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 28;
@@ -647,8 +717,8 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 	case 289: /* POINTER */
 		yylabel(LEFT_CHILD(a),a);
 		/* expressao: POINTER(lvalue) */
-		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yylvalue_NT] + 0;
-		yytrace(a, 38, c + 0, p->cost[yyexpressao_NT]);
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yylvalue_NT] + 1;
+		yytrace(a, 53, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 29;
@@ -657,13 +727,25 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		break;
 	case 290: /* IFX */
 		break;
-	case 291: /* CALL */
+	case 291: /* LIST */
+		yylabel(LEFT_CHILD(a),a);
+		yylabel(RIGHT_CHILD(a),a);
+		/* instrucao: LIST(instrucao,instrucao) */
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyinstrucao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyinstrucao_NT] + 0;
+		yytrace(a, 6, c + 0, p->cost[yyinstrucao_NT]);
+		if (c + 0 < p->cost[yyinstrucao_NT]) {
+			p->cost[yyinstrucao_NT] = c + 0;
+			p->rule.yyinstrucao = 1;
+			yyclosure_instrucao(a, c + 0);
+		}
+		break;
+	case 292: /* CALL */
 		yylabel(LEFT_CHILD(a),a);
 		if (	/* expressao: CALL(IDENTIF) */
 			OP_LABEL(LEFT_CHILD(a)) == 259 /* IDENTIF */
 		) {
 			c = 2;
-			yytrace(a, 15, c + 0, p->cost[yyexpressao_NT]);
+			yytrace(a, 30, c + 0, p->cost[yyexpressao_NT]);
 			if (c + 0 < p->cost[yyexpressao_NT]) {
 				p->cost[yyexpressao_NT] = c + 0;
 				p->rule.yyexpressao = 6;
@@ -671,14 +753,14 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 			}
 		}
 		break;
-	case 292: /* CALL2 */
+	case 293: /* CALL2 */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
-		if (	/* expressao: CALL2(IDENTIF,expressoes) */
+		if (	/* expressao: CALL2(IDENTIF,stack) */
 			OP_LABEL(LEFT_CHILD(a)) == 259 /* IDENTIF */
 		) {
-			c = ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressoes_NT] + 2;
-			yytrace(a, 14, c + 0, p->cost[yyexpressao_NT]);
+			c = ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yystack_NT] + 2;
+			yytrace(a, 29, c + 0, p->cost[yyexpressao_NT]);
 			if (c + 0 < p->cost[yyexpressao_NT]) {
 				p->cost[yyexpressao_NT] = c + 0;
 				p->rule.yyexpressao = 5;
@@ -686,145 +768,145 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 			}
 		}
 		break;
-	case 293: /* NEG */
+	case 294: /* NEG */
 		yylabel(LEFT_CHILD(a),a);
 		/* expressao: NEG(expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 35, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 50, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 26;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 294: /* FACT */
+	case 295: /* FACT */
 		yylabel(LEFT_CHILD(a),a);
 		/* expressao: FACT(expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + 0;
-		yytrace(a, 36, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 51, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 27;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 295: /* AND */
+	case 296: /* AND */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: AND(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 33, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 48, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 24;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 296: /* OR */
+	case 297: /* OR */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: OR(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 34, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 49, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 25;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 297: /* PROG */
+	case 298: /* PROG */
 		break;
-	case 298: /* ADD */
+	case 299: /* ADD */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: ADD(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 25, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 40, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 16;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 299: /* SUBT */
+	case 300: /* SUBT */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: SUBT(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 26, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 41, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 17;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 300: /* MUL */
+	case 301: /* MUL */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: MUL(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 22, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 37, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 13;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 301: /* DIV */
+	case 302: /* DIV */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: DIV(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 23, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 38, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 14;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 302: /* LT */
+	case 303: /* LT */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: LT(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 28, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 43, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 19;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 303: /* GT */
+	case 304: /* GT */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: GT(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 27, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 42, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 18;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 304: /* MOD */
+	case 305: /* MOD */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: MOD(expressao,expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 24, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 39, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 15;
 			yyclosure_expressao(a, c + 0);
 		}
 		break;
-	case 305: /* PARAMS */
+	case 306: /* PARAMS */
 		break;
-	case 306: /* PARS2 */
+	case 307: /* PARS2 */
 		break;
-	case 307: /* PARS */
+	case 308: /* PARS */
 		break;
-	case 308: /* PINTR */
+	case 309: /* PINTR */
 		/* corpo: PINTR */
 		yytrace(a, 3, 0 + 0, p->cost[yycorpo_NT]);
 		if (0 + 0 < p->cost[yycorpo_NT]) {
@@ -833,15 +915,15 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 			yyclosure_corpo(a, 0 + 0);
 		}
 		break;
-	case 309: /* INTR */
+	case 310: /* INTR */
 		break;
-	case 310: /* DECL */
+	case 311: /* DECL */
 		break;
-	case 311: /* DECLS */
+	case 312: /* DECLS */
 		break;
-	case 312: /* INIT */
+	case 313: /* INIT */
 		break;
-	case 313: /* NIL */
+	case 314: /* NIL */
 		/* corpo: NIL */
 		yytrace(a, 1, 0 + 0, p->cost[yycorpo_NT]);
 		if (0 + 0 < p->cost[yycorpo_NT]) {
@@ -849,37 +931,227 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 			p->rule.yycorpo = 1;
 			yyclosure_corpo(a, 0 + 0);
 		}
-		break;
-	case 314: /* PNTR */
-		break;
-	case 315: /* EXPS */
-		yylabel(LEFT_CHILD(a),a);
-		yylabel(RIGHT_CHILD(a),a);
-		/* expressoes: EXPS(expressoes,expressao) */
-		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressoes_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 0;
-		yytrace(a, 8, c + 0, p->cost[yyexpressoes_NT]);
-		if (c + 0 < p->cost[yyexpressoes_NT]) {
-			p->cost[yyexpressoes_NT] = c + 0;
-			p->rule.yyexpressoes = 1;
+		/* stack: NIL */
+		yytrace(a, 58, 0 + 0, p->cost[yystack_NT]);
+		if (0 + 0 < p->cost[yystack_NT]) {
+			p->cost[yystack_NT] = 0 + 0;
+			p->rule.yystack = 3;
 		}
 		break;
-	case 316: /* EXP */
+	case 315: /* PNTR */
 		break;
-	case 317: /* MALL */
+	case 316: /* EXPS */
+		yylabel(LEFT_CHILD(a),a);
+		yylabel(RIGHT_CHILD(a),a);
+		/* stack: EXPS(stack,stack) */
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yystack_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yystack_NT] + 0;
+		yytrace(a, 56, c + 0, p->cost[yystack_NT]);
+		if (c + 0 < p->cost[yystack_NT]) {
+			p->cost[yystack_NT] = c + 0;
+			p->rule.yystack = 1;
+		}
 		break;
-	case 318: /* BODY */
+	case 317: /* EXP */
 		break;
-	case 319: /* JZ */
+	case 318: /* MALL */
 		break;
-	case 320: /* ETIQ */
+	case 319: /* BODY */
 		break;
-	case 321: /* LABEL */
+	case 320: /* JZ */
+		yylabel(LEFT_CHILD(a),a);
+		yylabel(RIGHT_CHILD(a),a);
+		if (	/* instrucao: JZ(expressao,ETIQ) */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 11, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 6;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JZ(LT(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 303 && /* LT */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 13, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 8;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JZ(LE(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 282 && /* LE */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 14, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 9;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JZ(GT(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 304 && /* GT */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 15, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 10;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JZ(GE(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 281 && /* GE */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 16, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 11;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JZ(EQ(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 283 && /* EQ */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 17, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 12;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JZ(NE(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 284 && /* NE */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 18, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 13;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
 		break;
-	case 322: /* JNZ */
+	case 321: /* ETIQ */
 		break;
-	case 323: /* JMP */
+	case 322: /* LABEL */
+		/* instrucao: LABEL */
+		yytrace(a, 7, 1 + 0, p->cost[yyinstrucao_NT]);
+		if (1 + 0 < p->cost[yyinstrucao_NT]) {
+			p->cost[yyinstrucao_NT] = 1 + 0;
+			p->rule.yyinstrucao = 2;
+			yyclosure_instrucao(a, 1 + 0);
+		}
 		break;
-	case 324: /* INSTRS */
+	case 323: /* JNZ */
+		yylabel(LEFT_CHILD(a),a);
+		yylabel(RIGHT_CHILD(a),a);
+		if (	/* instrucao: JNZ(expressao,ETIQ) */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 12, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 7;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JNZ(LT(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 303 && /* LT */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 19, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 14;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JNZ(LE(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 282 && /* LE */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 20, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 15;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JNZ(GT(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 304 && /* GT */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 21, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 16;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JNZ(GE(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 281 && /* GE */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 22, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 17;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JNZ(EQ(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 283 && /* EQ */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 23, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 18;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		if (	/* instrucao: JNZ(NE(expressao,expressao),ETIQ) */
+			OP_LABEL(LEFT_CHILD(a)) == 284 && /* NE */
+			OP_LABEL(RIGHT_CHILD(a)) == 321 /* ETIQ */
+		) {
+			c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(LEFT_CHILD(a))))->cost[yyexpressao_NT] + 1;
+			yytrace(a, 24, c + 0, p->cost[yyinstrucao_NT]);
+			if (c + 0 < p->cost[yyinstrucao_NT]) {
+				p->cost[yyinstrucao_NT] = c + 0;
+				p->rule.yyinstrucao = 19;
+				yyclosure_instrucao(a, c + 0);
+			}
+		}
+		break;
+	case 324: /* JMP */
+		/* instrucao: JMP */
+		yytrace(a, 10, 1 + 0, p->cost[yyinstrucao_NT]);
+		if (1 + 0 < p->cost[yyinstrucao_NT]) {
+			p->cost[yyinstrucao_NT] = 1 + 0;
+			p->rule.yyinstrucao = 5;
+			yyclosure_instrucao(a, 1 + 0);
+		}
+		break;
+	case 325: /* INSTRS */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* instrucoes: INSTRS(instrucoes,instrucao) */
@@ -891,11 +1163,11 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 			yyclosure_instrucoes(a, c + 0);
 		}
 		break;
-	case 325: /* UMINUS */
+	case 326: /* UMINUS */
 		yylabel(LEFT_CHILD(a),a);
 		/* expressao: UMINUS(expressao) */
 		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + 1;
-		yytrace(a, 17, c + 0, p->cost[yyexpressao_NT]);
+		yytrace(a, 32, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
 			p->rule.yyexpressao = 8;
@@ -913,54 +1185,76 @@ static void yykids(NODEPTR_TYPE p, int eruleno, NODEPTR_TYPE kids[]) {
 	if (!kids)
 		PANIC("yykids", "Null kids in", OP_LABEL(p));
 	switch (eruleno) {
-	case 39: /* lvalue: IDENTIF */
-	case 21: /* expressao: DEC(NIL,IDENTIF) */
-	case 20: /* expressao: INC(NIL,IDENTIF) */
-	case 19: /* expressao: DEC(IDENTIF,NIL) */
-	case 18: /* expressao: INC(IDENTIF,NIL) */
-	case 15: /* expressao: CALL(IDENTIF) */
-	case 12: /* expressao: STRN */
-	case 11: /* expressao: NUM */
-	case 10: /* expressao: INT */
+	case 58: /* stack: NIL */
+	case 55: /* lvalue: IDENTIF */
+	case 30: /* expressao: CALL(IDENTIF) */
+	case 27: /* expressao: STRN */
+	case 26: /* expressao: NUM */
+	case 25: /* expressao: INT */
+	case 10: /* instrucao: JMP */
+	case 7: /* instrucao: LABEL */
 	case 3: /* corpo: PINTR */
 	case 1: /* corpo: NIL */
 		break;
-	case 13: /* expressao: lvalue */
-	case 9: /* expressoes: expressao */
-	case 7: /* instrucao: corpo */
-	case 6: /* instrucao: expressao */
+	case 57: /* stack: expressao */
+	case 54: /* duplval: lvalue */
+	case 28: /* expressao: lvalue */
+	case 9: /* instrucao: corpo */
+	case 8: /* instrucao: expressao */
 	case 5: /* instrucoes: instrucao */
 	case 2: /* corpo: instrucoes */
 		kids[0] = p;
 		break;
-	case 34: /* expressao: OR(expressao,expressao) */
-	case 33: /* expressao: AND(expressao,expressao) */
-	case 32: /* expressao: LE(expressao,expressao) */
-	case 31: /* expressao: GE(expressao,expressao) */
-	case 30: /* expressao: NE(expressao,expressao) */
-	case 29: /* expressao: EQ(expressao,expressao) */
-	case 28: /* expressao: LT(expressao,expressao) */
-	case 27: /* expressao: GT(expressao,expressao) */
-	case 26: /* expressao: SUBT(expressao,expressao) */
-	case 25: /* expressao: ADD(expressao,expressao) */
-	case 24: /* expressao: MOD(expressao,expressao) */
-	case 23: /* expressao: DIV(expressao,expressao) */
-	case 22: /* expressao: MUL(expressao,expressao) */
-	case 16: /* expressao: ATRIB(lvalue,expressao) */
-	case 8: /* expressoes: EXPS(expressoes,expressao) */
+	case 56: /* stack: EXPS(stack,stack) */
+	case 49: /* expressao: OR(expressao,expressao) */
+	case 48: /* expressao: AND(expressao,expressao) */
+	case 47: /* expressao: LE(expressao,expressao) */
+	case 46: /* expressao: GE(expressao,expressao) */
+	case 45: /* expressao: NE(expressao,expressao) */
+	case 44: /* expressao: EQ(expressao,expressao) */
+	case 43: /* expressao: LT(expressao,expressao) */
+	case 42: /* expressao: GT(expressao,expressao) */
+	case 41: /* expressao: SUBT(expressao,expressao) */
+	case 40: /* expressao: ADD(expressao,expressao) */
+	case 39: /* expressao: MOD(expressao,expressao) */
+	case 38: /* expressao: DIV(expressao,expressao) */
+	case 37: /* expressao: MUL(expressao,expressao) */
+	case 31: /* expressao: ATRIB(expressao,duplval) */
+	case 6: /* instrucao: LIST(instrucao,instrucao) */
 	case 4: /* instrucoes: INSTRS(instrucoes,instrucao) */
 		kids[0] = LEFT_CHILD(p);
 		kids[1] = RIGHT_CHILD(p);
 		break;
-	case 14: /* expressao: CALL2(IDENTIF,expressoes) */
-		kids[0] = RIGHT_CHILD(p);
-		break;
-	case 38: /* expressao: POINTER(lvalue) */
-	case 37: /* expressao: ADDR(lvalue) */
-	case 36: /* expressao: FACT(expressao) */
-	case 35: /* expressao: NEG(expressao) */
-	case 17: /* expressao: UMINUS(expressao) */
+	case 53: /* expressao: POINTER(lvalue) */
+	case 52: /* expressao: ADDR(lvalue) */
+	case 51: /* expressao: FACT(expressao) */
+	case 50: /* expressao: NEG(expressao) */
+	case 34: /* expressao: DEC(lvalue,NIL) */
+	case 33: /* expressao: INC(lvalue,NIL) */
+	case 32: /* expressao: UMINUS(expressao) */
+	case 12: /* instrucao: JNZ(expressao,ETIQ) */
+	case 11: /* instrucao: JZ(expressao,ETIQ) */
 		kids[0] = LEFT_CHILD(p);
+		break;
+	case 24: /* instrucao: JNZ(NE(expressao,expressao),ETIQ) */
+	case 23: /* instrucao: JNZ(EQ(expressao,expressao),ETIQ) */
+	case 22: /* instrucao: JNZ(GE(expressao,expressao),ETIQ) */
+	case 21: /* instrucao: JNZ(GT(expressao,expressao),ETIQ) */
+	case 20: /* instrucao: JNZ(LE(expressao,expressao),ETIQ) */
+	case 19: /* instrucao: JNZ(LT(expressao,expressao),ETIQ) */
+	case 18: /* instrucao: JZ(NE(expressao,expressao),ETIQ) */
+	case 17: /* instrucao: JZ(EQ(expressao,expressao),ETIQ) */
+	case 16: /* instrucao: JZ(GE(expressao,expressao),ETIQ) */
+	case 15: /* instrucao: JZ(GT(expressao,expressao),ETIQ) */
+	case 14: /* instrucao: JZ(LE(expressao,expressao),ETIQ) */
+	case 13: /* instrucao: JZ(LT(expressao,expressao),ETIQ) */
+		kids[0] = LEFT_CHILD(LEFT_CHILD(p));
+		kids[1] = RIGHT_CHILD(LEFT_CHILD(p));
+		break;
+	case 36: /* expressao: DEC(NIL,lvalue) */
+	case 35: /* expressao: INC(NIL,lvalue) */
+	case 29: /* expressao: CALL2(IDENTIF,stack) */
+		kids[0] = RIGHT_CHILD(p);
 		break;
 	default:
 		PANIC("yykids", "Bad rule number", eruleno);
@@ -979,164 +1273,243 @@ static void yyreduce(NODEPTR_TYPE p, int goalnt)
 
   switch(eruleno) {
 	case 1: /* corpo: NIL */
-#line 82 "factorial.brg"
-
-		break;
-	case 2: /* corpo: instrucoes */
 #line 83 "factorial.brg"
 
 		break;
-	case 3: /* corpo: PINTR */
+	case 2: /* corpo: instrucoes */
 #line 84 "factorial.brg"
 
 		break;
-	case 4: /* instrucoes: INSTRS(instrucoes,instrucao) */
-#line 86 "factorial.brg"
+	case 3: /* corpo: PINTR */
+#line 85 "factorial.brg"
 
 		break;
-	case 5: /* instrucoes: instrucao */
+	case 4: /* instrucoes: INSTRS(instrucoes,instrucao) */
 #line 87 "factorial.brg"
 
 		break;
-	case 6: /* instrucao: expressao */
+	case 5: /* instrucoes: instrucao */
+#line 88 "factorial.brg"
+
+		break;
+	case 6: /* instrucao: LIST(instrucao,instrucao) */
 #line 90 "factorial.brg"
 
 		break;
-	case 7: /* instrucao: corpo */
+	case 7: /* instrucao: LABEL */
 #line 91 "factorial.brg"
+{ fprintf(outfp, pfLABEL, p->value.s); }
+		break;
+	case 8: /* instrucao: expressao */
+#line 92 "factorial.brg"
+{ fprintf(outfp, pfTRASH, 4); }
+		break;
+	case 9: /* instrucao: corpo */
+#line 93 "factorial.brg"
 
 		break;
-	case 8: /* expressoes: EXPS(expressoes,expressao) */
+	case 10: /* instrucao: JMP */
+#line 94 "factorial.brg"
+{ fprintf(outfp, pfJMP, p->value.s); }
+		break;
+	case 11: /* instrucao: JZ(expressao,ETIQ) */
+#line 95 "factorial.brg"
+{ fprintf(outfp, pfJZ, p->SUB(1)->value.s); }
+		break;
+	case 12: /* instrucao: JNZ(expressao,ETIQ) */
+#line 96 "factorial.brg"
+{ fprintf(outfp, pfJNZ, p->SUB(1)->value.s); }
+		break;
+	case 13: /* instrucao: JZ(LT(expressao,expressao),ETIQ) */
+#line 97 "factorial.brg"
+{ fprintf(outfp, pfJGE, p->SUB(1)->value.s); }
+		break;
+	case 14: /* instrucao: JZ(LE(expressao,expressao),ETIQ) */
+#line 98 "factorial.brg"
+{ fprintf(outfp, pfJGT, p->SUB(1)->value.s); }
+		break;
+	case 15: /* instrucao: JZ(GT(expressao,expressao),ETIQ) */
+#line 99 "factorial.brg"
+{ fprintf(outfp, pfJLE, p->SUB(1)->value.s); }
+		break;
+	case 16: /* instrucao: JZ(GE(expressao,expressao),ETIQ) */
+#line 100 "factorial.brg"
+{ fprintf(outfp, pfJLT, p->SUB(1)->value.s); }
+		break;
+	case 17: /* instrucao: JZ(EQ(expressao,expressao),ETIQ) */
+#line 101 "factorial.brg"
+{ fprintf(outfp, pfJNE, p->SUB(1)->value.s); }
+		break;
+	case 18: /* instrucao: JZ(NE(expressao,expressao),ETIQ) */
+#line 102 "factorial.brg"
+{ fprintf(outfp, pfJEQ, p->SUB(1)->value.s); }
+		break;
+	case 19: /* instrucao: JNZ(LT(expressao,expressao),ETIQ) */
+#line 103 "factorial.brg"
+{ fprintf(outfp, pfJLT, p->SUB(1)->value.s); }
+		break;
+	case 20: /* instrucao: JNZ(LE(expressao,expressao),ETIQ) */
+#line 104 "factorial.brg"
+{ fprintf(outfp, pfJLE, p->SUB(1)->value.s); }
+		break;
+	case 21: /* instrucao: JNZ(GT(expressao,expressao),ETIQ) */
 #line 105 "factorial.brg"
-
+{ fprintf(outfp, pfJGT, p->SUB(1)->value.s); }
 		break;
-	case 9: /* expressoes: expressao */
+	case 22: /* instrucao: JNZ(GE(expressao,expressao),ETIQ) */
 #line 106 "factorial.brg"
-
+{ fprintf(outfp, pfJGE, p->SUB(1)->value.s); }
 		break;
-	case 10: /* expressao: INT */
+	case 23: /* instrucao: JNZ(EQ(expressao,expressao),ETIQ) */
+#line 107 "factorial.brg"
+{ fprintf(outfp, pfJEQ, p->SUB(1)->value.s); }
+		break;
+	case 24: /* instrucao: JNZ(NE(expressao,expressao),ETIQ) */
 #line 108 "factorial.brg"
+{ fprintf(outfp, pfJNE, p->SUB(1)->value.s); }
+		break;
+	case 25: /* expressao: INT */
+#line 117 "factorial.brg"
 { fprintf(outfp, pfIMM, p->value.i); }
 		break;
-	case 11: /* expressao: NUM */
-#line 109 "factorial.brg"
+	case 26: /* expressao: NUM */
+#line 118 "factorial.brg"
 { fprintf(outfp, pfIMM, p->value.i); }
 		break;
-	case 12: /* expressao: STRN */
-#line 110 "factorial.brg"
-
+	case 27: /* expressao: STRN */
+#line 119 "factorial.brg"
+{ int l = ++lbl; char *s = p->value.s;
+                        fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
+                        do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
+                        fprintf(outfp, pfTEXT pfADDR, mklbl(l)); }
 		break;
-	case 13: /* expressao: lvalue */
-#line 111 "factorial.brg"
-
+	case 28: /* expressao: lvalue */
+#line 123 "factorial.brg"
+{ fprintf(outfp, pfLOAD); }
 		break;
-	case 14: /* expressao: CALL2(IDENTIF,expressoes) */
-#line 112 "factorial.brg"
-{ fprintf(outfp, pfCALL pfTRASH, p->SUB(0)->value.s, p->SUB(0)->user); printf("%d - call- 2 args\n", p->SUB(0)->user);}
+	case 29: /* expressao: CALL2(IDENTIF,stack) */
+#line 124 "factorial.brg"
+{ fprintf(outfp, pfCALL pfTRASH pfPUSH, p->SUB(0)->value.s, stk); printf("%d - call- 2 args\n", p->SUB(0)->user);}
 		break;
-	case 15: /* expressao: CALL(IDENTIF) */
-#line 113 "factorial.brg"
-{ fprintf(outfp, pfCALL pfTRASH, p->SUB(0)->value.s, p->SUB(0)->user); printf("%d - call\n", p->SUB(0)->user);}
+	case 30: /* expressao: CALL(IDENTIF) */
+#line 125 "factorial.brg"
+{ fprintf(outfp, pfCALL pfPUSH, p->SUB(0)->value.s); printf("%d - call\n", p->SUB(0)->user);}
 		break;
-	case 16: /* expressao: ATRIB(lvalue,expressao) */
-#line 114 "factorial.brg"
-{ fprintf(outfp, pfDUP pfADDR pfSTORE, p->SUB(0)->value.s); }
+	case 31: /* expressao: ATRIB(expressao,duplval) */
+#line 126 "factorial.brg"
+{ fprintf(outfp, pfSTORE); }
 		break;
-	case 17: /* expressao: UMINUS(expressao) */
-#line 115 "factorial.brg"
+	case 32: /* expressao: UMINUS(expressao) */
+#line 127 "factorial.brg"
 { fprintf(outfp, pfNEG); }
 		break;
-	case 18: /* expressao: INC(IDENTIF,NIL) */
-#line 116 "factorial.brg"
+	case 33: /* expressao: INC(lvalue,NIL) */
+#line 128 "factorial.brg"
 { fprintf(outfp, pfINCR, 1);}
 		break;
-	case 19: /* expressao: DEC(IDENTIF,NIL) */
-#line 117 "factorial.brg"
+	case 34: /* expressao: DEC(lvalue,NIL) */
+#line 129 "factorial.brg"
 { fprintf(outfp, pfDECR, 1);}
 		break;
-	case 20: /* expressao: INC(NIL,IDENTIF) */
-#line 118 "factorial.brg"
+	case 35: /* expressao: INC(NIL,lvalue) */
+#line 130 "factorial.brg"
 { fprintf(outfp, pfINCR, 1);}
 		break;
-	case 21: /* expressao: DEC(NIL,IDENTIF) */
-#line 119 "factorial.brg"
+	case 36: /* expressao: DEC(NIL,lvalue) */
+#line 131 "factorial.brg"
 { fprintf(outfp, pfDECR, 1);}
 		break;
-	case 22: /* expressao: MUL(expressao,expressao) */
-#line 120 "factorial.brg"
+	case 37: /* expressao: MUL(expressao,expressao) */
+#line 132 "factorial.brg"
 { fprintf(outfp, pfMUL); }
 		break;
-	case 23: /* expressao: DIV(expressao,expressao) */
-#line 121 "factorial.brg"
+	case 38: /* expressao: DIV(expressao,expressao) */
+#line 133 "factorial.brg"
 { fprintf(outfp, pfDIV); }
 		break;
-	case 24: /* expressao: MOD(expressao,expressao) */
-#line 122 "factorial.brg"
+	case 39: /* expressao: MOD(expressao,expressao) */
+#line 134 "factorial.brg"
 { fprintf(outfp, pfMOD); }
 		break;
-	case 25: /* expressao: ADD(expressao,expressao) */
-#line 123 "factorial.brg"
+	case 40: /* expressao: ADD(expressao,expressao) */
+#line 135 "factorial.brg"
 { fprintf(outfp, pfADD); }
 		break;
-	case 26: /* expressao: SUBT(expressao,expressao) */
-#line 124 "factorial.brg"
+	case 41: /* expressao: SUBT(expressao,expressao) */
+#line 136 "factorial.brg"
 { fprintf(outfp, pfSUB); }
 		break;
-	case 27: /* expressao: GT(expressao,expressao) */
-#line 125 "factorial.brg"
+	case 42: /* expressao: GT(expressao,expressao) */
+#line 137 "factorial.brg"
 { fprintf(outfp, pfGT); }
 		break;
-	case 28: /* expressao: LT(expressao,expressao) */
-#line 126 "factorial.brg"
+	case 43: /* expressao: LT(expressao,expressao) */
+#line 138 "factorial.brg"
 { fprintf(outfp, pfLT); }
 		break;
-	case 29: /* expressao: EQ(expressao,expressao) */
-#line 127 "factorial.brg"
+	case 44: /* expressao: EQ(expressao,expressao) */
+#line 139 "factorial.brg"
 { fprintf(outfp, pfEQ); }
 		break;
-	case 30: /* expressao: NE(expressao,expressao) */
-#line 128 "factorial.brg"
+	case 45: /* expressao: NE(expressao,expressao) */
+#line 140 "factorial.brg"
 { fprintf(outfp, pfNE); }
 		break;
-	case 31: /* expressao: GE(expressao,expressao) */
-#line 129 "factorial.brg"
+	case 46: /* expressao: GE(expressao,expressao) */
+#line 141 "factorial.brg"
 { fprintf(outfp, pfGE); }
 		break;
-	case 32: /* expressao: LE(expressao,expressao) */
-#line 130 "factorial.brg"
+	case 47: /* expressao: LE(expressao,expressao) */
+#line 142 "factorial.brg"
 { fprintf(outfp, pfLE); }
 		break;
-	case 33: /* expressao: AND(expressao,expressao) */
-#line 131 "factorial.brg"
+	case 48: /* expressao: AND(expressao,expressao) */
+#line 143 "factorial.brg"
 { fprintf(outfp, pfAND); }
 		break;
-	case 34: /* expressao: OR(expressao,expressao) */
-#line 132 "factorial.brg"
+	case 49: /* expressao: OR(expressao,expressao) */
+#line 144 "factorial.brg"
 { fprintf(outfp, pfOR); }
 		break;
-	case 35: /* expressao: NEG(expressao) */
-#line 133 "factorial.brg"
+	case 50: /* expressao: NEG(expressao) */
+#line 145 "factorial.brg"
 { fprintf(outfp, pfNOT); }
 		break;
-	case 36: /* expressao: FACT(expressao) */
-#line 134 "factorial.brg"
+	case 51: /* expressao: FACT(expressao) */
+#line 146 "factorial.brg"
 
 		break;
-	case 37: /* expressao: ADDR(lvalue) */
-#line 135 "factorial.brg"
-
+	case 52: /* expressao: ADDR(lvalue) */
+#line 147 "factorial.brg"
+{ }
 		break;
-	case 38: /* expressao: POINTER(lvalue) */
-#line 136 "factorial.brg"
-
+	case 53: /* expressao: POINTER(lvalue) */
+#line 148 "factorial.brg"
+{ fprintf(outfp, pfLOAD); }
 		break;
-	case 39: /* lvalue: IDENTIF */
-#line 138 "factorial.brg"
+	case 54: /* duplval: lvalue */
+#line 150 "factorial.brg"
+{ fprintf(outfp, pfDUP); }
+		break;
+	case 55: /* lvalue: IDENTIF */
+#line 152 "factorial.brg"
 {   if (p->user == GLOBAL)
-                          fprintf(outfp, pfADDRV, p->value.s); 
+                          fprintf(outfp, pfADDR, p->value.s); 
                         else
-                          fprintf(outfp, pfLOCV, p->user); 
+                          fprintf(outfp, pfLOCAL, p->user); 
                     }
+		break;
+	case 56: /* stack: EXPS(stack,stack) */
+#line 159 "factorial.brg"
+
+		break;
+	case 57: /* stack: expressao */
+#line 160 "factorial.brg"
+{ stk += 4; }
+		break;
+	case 58: /* stack: NIL */
+#line 161 "factorial.brg"
+{ stk = 0; }
 		break;
 	default: break;
   }
@@ -1154,19 +1527,21 @@ int yyselect(NODEPTR_TYPE p)
 }
 
 
-#line 149 "factorial.brg"
+#line 163 "factorial.brg"
 
 
 void function(char *name, int enter, Node *body) {
   int i;
   extern int trace;
 
+//alterado para conter o _entry, no entanto o codigo assembly do ficheiro gerado
+// tem uma referencia a $entry e diz que está undefined
 
   if(trace) printNode(body, stdout, yynames);
-  if (body == 0) /* forward declaration */
+  if (body == 0 || body->attrib == NIL) /* forward declaration */
     fprintf(outfp, pfEXTRN, name);
   else { /* function body */
-    if (strcmp(name, "entry") == 0) 
+    if (strcmp(name, "entry") == 0) // para a funcao entry
       fprintf(outfp, pfTEXT pfALIGN pfGLOBL pfLABEL pfENTER, "_entry", pfFUNC, "_entry", enter);
     else
     fprintf(outfp, pfTEXT pfALIGN pfGLOBL pfLABEL pfENTER, name, pfFUNC, name, enter);
@@ -1193,16 +1568,22 @@ void declare(char *name, int value) {
   if (value == 0)
     fprintf(outfp, pfBSS pfALIGN pfLABEL pfBYTE pfTEXT, name, 4);
   else if ((value & 0x3) == 1){ //Se for inteiro
-      if ((value & 0x15) == 9){ //Se for cons
-        if ((value & 0x31) == 17){ //Se for public
-          fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfINTEGER pfTEXT, name, pfINTEGER, name, value);
-        } else
-          fprintf(outfp, pfRODATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+    if ((value & 0x15) == 9){ //Se for cons
+      if ((value & 0x31) == 17){ //Se for public
+        fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfINTEGER pfTEXT, name, pfINTEGER, name, value);
       } else
-        fprintf(outfp, pfDATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
-    }
+        fprintf(outfp, pfRODATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+    } else
+      fprintf(outfp, pfDATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+  }
   else if((value & 0x3) == 2){
-
+    if ((value & 0x15) == 10){ //Se for cons
+      if ((value & 0x31) == 18){ //Se for public
+        fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfSTR pfTEXT, name, pfSTR, name, name, value);
+      } else
+        fprintf(outfp, pfRODATA pfALIGN pfLABEL pfSTR pfTEXT, name, name, value);
+    } else
+      fprintf(outfp, pfDATA pfALIGN pfLABEL pfSTR pfTEXT, name, name, value);
   }
   else if((value & 0x3) == 3){
 

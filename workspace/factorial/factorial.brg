@@ -22,6 +22,7 @@ extern int lbl;
 extern char *mklbl(int n);
 extern char **yynames;
 
+int trash;
 static int stk;
 
 static int sameVar(NODEPTR_TYPE p) {
@@ -86,37 +87,48 @@ corpo: PINTR
 instrucoes: INSTRS(instrucoes, instrucao)
 instrucoes: instrucao
 
-%!instrucao:IFX(JZ(expressao, ETIQ))
-instrucao: expressao
+instrucao: LIST(instrucao,instrucao)
+instrucao: LABEL                               1 { fprintf(outfp, pfLABEL, p->value.s); }
+instrucao: expressao                           1 { fprintf(outfp, pfTRASH, 4); }
 instrucao: corpo
-%!instrucao:
-%!instrucao:
-%!instrucao:
-%!instrucao:
-%!instrucao:
-%!instrucao:
-%!instrucao:
-%!instrucao:
-%!instrucao:
+instrucao: JMP                                 1 { fprintf(outfp, pfJMP, p->value.s); }
+instrucao: JZ(expressao,ETIQ)                  1 { fprintf(outfp, pfJZ, p->SUB(1)->value.s); }
+instrucao: JNZ(expressao,ETIQ)                 1 { fprintf(outfp, pfJNZ, p->SUB(1)->value.s); }
+instrucao: JZ(LT(expressao,expressao), ETIQ)   1 { fprintf(outfp, pfJGE, p->SUB(1)->value.s); }
+instrucao: JZ(LE(expressao,expressao), ETIQ)   1 { fprintf(outfp, pfJGT, p->SUB(1)->value.s); }
+instrucao: JZ(GT(expressao,expressao), ETIQ)   1 { fprintf(outfp, pfJLE, p->SUB(1)->value.s); }
+instrucao: JZ(GE(expressao,expressao), ETIQ)   1 { fprintf(outfp, pfJLT, p->SUB(1)->value.s); }
+instrucao: JZ(EQ(expressao,expressao), ETIQ)   1 { fprintf(outfp, pfJNE, p->SUB(1)->value.s); }
+instrucao: JZ(NE(expressao,expressao), ETIQ)   1 { fprintf(outfp, pfJEQ, p->SUB(1)->value.s); }
+instrucao: JNZ(LT(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJLT, p->SUB(1)->value.s); }
+instrucao: JNZ(LE(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJLE, p->SUB(1)->value.s); }
+instrucao: JNZ(GT(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJGT, p->SUB(1)->value.s); }
+instrucao: JNZ(GE(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJGE, p->SUB(1)->value.s); }
+instrucao: JNZ(EQ(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJEQ, p->SUB(1)->value.s); }
+instrucao: JNZ(NE(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJNE, p->SUB(1)->value.s); }
+
 
 %!updown: UPTO
 %!updown: DOWNTO
 
-expressoes: EXPS(expressoes, expressao)
-expressoes: expressao
+%! expressoes: EXPS(expressoes, expressao)
+%! expressoes: expressao
 
 expressao: INT      1 { fprintf(outfp, pfIMM, p->value.i); }
 expressao: NUM      0 { fprintf(outfp, pfIMM, p->value.i); }
-expressao: STRN     
-expressao: lvalue
-expressao: CALL2(IDENTIF, expressoes)     2 { fprintf(outfp, pfCALL pfTRASH, p->SUB(0)->value.s, p->SUB(0)->user); printf("%d - call- 2 args\n", p->SUB(0)->user);}
-expressao: CALL(IDENTIF)                  2 { fprintf(outfp, pfCALL pfTRASH, p->SUB(0)->value.s, p->SUB(0)->user); printf("%d - call\n", p->SUB(0)->user);}
-expressao: ATRIB(lvalue, expressao)       3 { fprintf(outfp, pfDUP pfADDR pfSTORE, p->SUB(0)->value.s); }
+expressao: STRN     0 { int l = ++lbl; char *s = p->value.s;
+                        fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
+                        do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
+                        fprintf(outfp, pfTEXT pfADDR, mklbl(l)); }
+expressao: lvalue                         1 { fprintf(outfp, pfLOAD); }
+expressao: CALL2(IDENTIF, stack)     2 { fprintf(outfp, pfCALL pfTRASH pfPUSH, p->SUB(0)->value.s, stk); printf("%d - call- 2 args\n", p->SUB(0)->user);}
+expressao: CALL(IDENTIF)                  2 { fprintf(outfp, pfCALL pfPUSH, p->SUB(0)->value.s); printf("%d - call\n", p->SUB(0)->user);}
+expressao: ATRIB(expressao, duplval)      3 { fprintf(outfp, pfSTORE); }
 expressao: UMINUS(expressao)              1 { fprintf(outfp, pfNEG); }
-expressao: INC(IDENTIF, NIL)              1 { fprintf(outfp, pfINCR, 1);}
-expressao: DEC(IDENTIF, NIL)              1 { fprintf(outfp, pfDECR, 1);}
-expressao: INC(NIL, IDENTIF)              1 { fprintf(outfp, pfINCR, 1);}
-expressao: DEC(NIL, IDENTIF)              1 { fprintf(outfp, pfDECR, 1);}
+expressao: INC(lvalue, NIL)              1 { fprintf(outfp, pfINCR, 1);}
+expressao: DEC(lvalue, NIL)              1 { fprintf(outfp, pfDECR, 1);}
+expressao: INC(NIL, lvalue)              1 { fprintf(outfp, pfINCR, 1);}
+expressao: DEC(NIL, lvalue)              1 { fprintf(outfp, pfDECR, 1);}
 expressao: MUL(expressao, expressao)      1 { fprintf(outfp, pfMUL); } 
 expressao: DIV(expressao, expressao)      1 { fprintf(outfp, pfDIV); } 
 expressao: MOD(expressao, expressao)      1 { fprintf(outfp, pfMOD); } 
@@ -132,19 +144,21 @@ expressao: AND(expressao, expressao)      1 { fprintf(outfp, pfAND); }
 expressao: OR(expressao, expressao)       1 { fprintf(outfp, pfOR); }
 expressao: NEG(expressao)                 1 { fprintf(outfp, pfNOT); }
 expressao: FACT(expressao)
-expressao: ADDR(lvalue)
-expressao: POINTER(lvalue)
+expressao: ADDR(lvalue)                   0 { }
+expressao: POINTER(lvalue)                1 { fprintf(outfp, pfLOAD); }
+
+duplval: lvalue                 1 { fprintf(outfp, pfDUP); }
 
 lvalue: IDENTIF   1 {   if (p->user == GLOBAL)
-                          fprintf(outfp, pfADDRV, p->value.s); 
+                          fprintf(outfp, pfADDR, p->value.s); 
                         else
-                          fprintf(outfp, pfLOCV, p->user); 
+                          fprintf(outfp, pfLOCAL, p->user); 
                     }
 
 
-%!stack:  ARG(stack,stack)
-%!stack:  expressao { stk++; }
-%!stack:  NIL
+stack:  EXPS(stack,stack)
+stack:  expressao { stk += 4; }
+stack:  NIL { stk = 0; }
 
 %%
 
@@ -156,10 +170,10 @@ void function(char *name, int enter, Node *body) {
 // tem uma referencia a $entry e diz que está undefined
 
   if(trace) printNode(body, stdout, yynames);
-  if (body == 0) /* forward declaration */
+  if (body == 0 || body->attrib == NIL) /* forward declaration */
     fprintf(outfp, pfEXTRN, name);
   else { /* function body */
-    if (strcmp(name, "entry") == 0) 
+    if (strcmp(name, "entry") == 0) // para a funcao entry
       fprintf(outfp, pfTEXT pfALIGN pfGLOBL pfLABEL pfENTER, "_entry", pfFUNC, "_entry", enter);
     else
     fprintf(outfp, pfTEXT pfALIGN pfGLOBL pfLABEL pfENTER, name, pfFUNC, name, enter);
@@ -186,16 +200,22 @@ void declare(char *name, int value) {
   if (value == 0)
     fprintf(outfp, pfBSS pfALIGN pfLABEL pfBYTE pfTEXT, name, 4);
   else if ((value & 0x3) == 1){ //Se for inteiro
-      if ((value & 0x15) == 9){ //Se for cons
-        if ((value & 0x31) == 17){ //Se for public
-          fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfINTEGER pfTEXT, name, pfINTEGER, name, value);
-        } else
-          fprintf(outfp, pfRODATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+    if ((value & 0x15) == 9){ //Se for cons
+      if ((value & 0x31) == 17){ //Se for public
+        fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfINTEGER pfTEXT, name, pfINTEGER, name, value);
       } else
-        fprintf(outfp, pfDATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
-    }
+        fprintf(outfp, pfRODATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+    } else
+      fprintf(outfp, pfDATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+  }
   else if((value & 0x3) == 2){
-
+    if ((value & 0x15) == 10){ //Se for cons
+      if ((value & 0x31) == 18){ //Se for public
+        fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfSTR pfTEXT, name, pfSTR, name, name, value);
+      } else
+        fprintf(outfp, pfRODATA pfALIGN pfLABEL pfSTR pfTEXT, name, name, value);
+    } else
+      fprintf(outfp, pfDATA pfALIGN pfLABEL pfSTR pfTEXT, name, name, value);
   }
   else if((value & 0x3) == 3){
 

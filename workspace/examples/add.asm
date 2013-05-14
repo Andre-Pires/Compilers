@@ -28,7 +28,7 @@ $_entry:
 ; CALL
 	call	$printi
 ; TRASH
-	add	esp, 4
+	add	esp, 8
 ; PUSH
 	push	eax
 ; TRASH
@@ -39,13 +39,19 @@ $_entry:
 	push	eax
 ; TRASH
 	add	esp, 4
-; IMM
-	push	dword 0
 ; LOCAL
 	lea	eax, [ebp+-4]
 	push	eax
 ; COPY
 	push	dword [esp]
+; IMM
+	push	dword 0
+; SWAP
+	pop	eax
+	pop	ecx
+	push	eax
+	mov	eax, ecx
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax

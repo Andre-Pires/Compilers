@@ -13,13 +13,15 @@ section .bss
 section .text
 	global _println, _printsp, _printi, _readln, _readi, _debug
 	global _strlen, _atoi, _itoa, _argc, _argv, _envp
-	global printi, println, readi, atoi
+	global printi, println, readi, atoi, argc, argv, envp, strlen
 	extern _prints, _readb
 
+argc:
 _argc:	mov	eax, [_env]
 	mov	eax, [eax]
 	ret
 
+argv:
 _argv:	mov	eax, [_env]
 	add	eax, 4
 	mov	ebx, [esp+4]
@@ -27,6 +29,7 @@ _argv:	mov	eax, [_env]
 	mov	eax, [eax]
 	ret
 
+envp:
 _envp:	mov	ebx, [_env]
 	mov	edx, [ebx]
 	lea	eax, [ebx+edx*4+8]
@@ -35,6 +38,7 @@ _envp:	mov	ebx, [_env]
 	mov	eax, [eax]
 	ret
 
+strlen:
 _strlen:
 	mov	edx, [esp+4]
 	cmp	byte [edx], 0

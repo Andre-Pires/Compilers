@@ -1,5 +1,5 @@
 /*
-generated at Mon May 13 11:48:04 2013
+generated at Tue May 14 11:28:46 2013
 by $Id: pburg.c,v 2.3a 2012/10/07 00:51:11 prs Exp $
 */
 #include <stdlib.h>
@@ -64,7 +64,7 @@ static int yyrule(void*, int);
 #define yyexpressao_NT 4
 #define yylvalue_NT 5
 #define yystack_NT 6
-#define yyduplval_NT 7
+#define yydupexp_NT 7
 
 static YYCONST char *yyntname[] = {
 	0,
@@ -74,7 +74,7 @@ static YYCONST char *yyntname[] = {
 	"expressao",
 	"lvalue",
 	"stack",
-	"duplval",
+	"dupexp",
 	0
 };
 
@@ -174,7 +174,7 @@ struct yystate {
 		unsigned int yyexpressao:5;
 		unsigned int yylvalue:1;
 		unsigned int yystack:2;
-		unsigned int yyduplval:1;
+		unsigned int yydupexp:1;
 	} rule;
 };
 
@@ -188,7 +188,7 @@ static short yynts_6[] = { yycorpo_NT, 0 };
 static short yynts_7[] = { yyexpressao_NT, yyexpressao_NT, 0 };
 static short yynts_8[] = { yylvalue_NT, 0 };
 static short yynts_9[] = { yystack_NT, 0 };
-static short yynts_10[] = { yyexpressao_NT, yyduplval_NT, 0 };
+static short yynts_10[] = { yydupexp_NT, yylvalue_NT, 0 };
 static short yynts_11[] = { yystack_NT, yystack_NT, 0 };
 
 static short *yynts[] = {
@@ -246,7 +246,7 @@ static short *yynts[] = {
 	yynts_5,	/* 51 */
 	yynts_8,	/* 52 */
 	yynts_8,	/* 53 */
-	yynts_8,	/* 54 */
+	yynts_5,	/* 54 */
 	yynts_0,	/* 55 */
 	yynts_11,	/* 56 */
 	yynts_5,	/* 57 */
@@ -286,7 +286,7 @@ static YYCONST char *yystring[] = {
 /* 28 */	"expressao: lvalue",
 /* 29 */	"expressao: CALL2(IDENTIF,stack)",
 /* 30 */	"expressao: CALL(IDENTIF)",
-/* 31 */	"expressao: ATRIB(expressao,duplval)",
+/* 31 */	"expressao: ATRIB(dupexp,lvalue)",
 /* 32 */	"expressao: UMINUS(expressao)",
 /* 33 */	"expressao: INC(lvalue,NIL)",
 /* 34 */	"expressao: DEC(lvalue,NIL)",
@@ -309,7 +309,7 @@ static YYCONST char *yystring[] = {
 /* 51 */	"expressao: FACT(expressao)",
 /* 52 */	"expressao: ADDR(lvalue)",
 /* 53 */	"expressao: POINTER(lvalue)",
-/* 54 */	"duplval: lvalue",
+/* 54 */	"dupexp: expressao",
 /* 55 */	"lvalue: IDENTIF",
 /* 56 */	"stack: EXPS(stack,stack)",
 /* 57 */	"stack: expressao",
@@ -406,7 +406,7 @@ static short yydecode_stack[] = {
 	58,
 };
 
-static short yydecode_duplval[] = {
+static short yydecode_dupexp[] = {
 	0,
 	54,
 };
@@ -423,7 +423,7 @@ static int yyrule(void *state, int goalnt) {
 	case yyexpressao_NT:	return yydecode_expressao[((struct yystate *)state)->rule.yyexpressao];
 	case yylvalue_NT:	return yydecode_lvalue[((struct yystate *)state)->rule.yylvalue];
 	case yystack_NT:	return yydecode_stack[((struct yystate *)state)->rule.yystack];
-	case yyduplval_NT:	return yydecode_duplval[((struct yystate *)state)->rule.yyduplval];
+	case yydupexp_NT:	return yydecode_dupexp[((struct yystate *)state)->rule.yydupexp];
 	default:
 		PANIC("yyrule", "Bad goal nonterminal", goalnt);
 		return 0;
@@ -473,6 +473,11 @@ static void yyclosure_expressao(NODEPTR_TYPE a, int c) {
 		p->cost[yystack_NT] = c + 0;
 		p->rule.yystack = 2;
 	}
+	yytrace(a, 54, c + 1, p->cost[yydupexp_NT]);
+	if (c + 1 < p->cost[yydupexp_NT]) {
+		p->cost[yydupexp_NT] = c + 1;
+		p->rule.yydupexp = 1;
+	}
 	yytrace(a, 8, c + 1, p->cost[yyinstrucao_NT]);
 	if (c + 1 < p->cost[yyinstrucao_NT]) {
 		p->cost[yyinstrucao_NT] = c + 1;
@@ -483,11 +488,6 @@ static void yyclosure_expressao(NODEPTR_TYPE a, int c) {
 
 static void yyclosure_lvalue(NODEPTR_TYPE a, int c) {
 	struct yystate *p = (struct yystate *)STATE_LABEL(a);
-	yytrace(a, 54, c + 1, p->cost[yyduplval_NT]);
-	if (c + 1 < p->cost[yyduplval_NT]) {
-		p->cost[yyduplval_NT] = c + 1;
-		p->rule.yyduplval = 1;
-	}
 	yytrace(a, 28, c + 1, p->cost[yyexpressao_NT]);
 	if (c + 1 < p->cost[yyexpressao_NT]) {
 		p->cost[yyexpressao_NT] = c + 1;
@@ -526,11 +526,11 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		break;
 	case 258: /* NUM */
 		/* expressao: NUM */
-		yytrace(a, 26, 0 + 0, p->cost[yyexpressao_NT]);
-		if (0 + 0 < p->cost[yyexpressao_NT]) {
-			p->cost[yyexpressao_NT] = 0 + 0;
+		yytrace(a, 26, 1 + 0, p->cost[yyexpressao_NT]);
+		if (1 + 0 < p->cost[yyexpressao_NT]) {
+			p->cost[yyexpressao_NT] = 1 + 0;
 			p->rule.yyexpressao = 2;
-			yyclosure_expressao(a, 0 + 0);
+			yyclosure_expressao(a, 1 + 0);
 		}
 		break;
 	case 259: /* IDENTIF */
@@ -544,11 +544,11 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		break;
 	case 260: /* STRN */
 		/* expressao: STRN */
-		yytrace(a, 27, 0 + 0, p->cost[yyexpressao_NT]);
-		if (0 + 0 < p->cost[yyexpressao_NT]) {
-			p->cost[yyexpressao_NT] = 0 + 0;
+		yytrace(a, 27, 3 + 0, p->cost[yyexpressao_NT]);
+		if (3 + 0 < p->cost[yyexpressao_NT]) {
+			p->cost[yyexpressao_NT] = 3 + 0;
 			p->rule.yyexpressao = 3;
-			yyclosure_expressao(a, 0 + 0);
+			yyclosure_expressao(a, 3 + 0);
 		}
 		break;
 	case 261: /* WHILE */
@@ -694,8 +694,8 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 	case 287: /* ATRIB */
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
-		/* expressao: ATRIB(expressao,duplval) */
-		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyduplval_NT] + 3;
+		/* expressao: ATRIB(dupexp,lvalue) */
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yydupexp_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yylvalue_NT] + 1;
 		yytrace(a, 31, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
@@ -759,7 +759,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		if (	/* expressao: CALL2(IDENTIF,stack) */
 			OP_LABEL(LEFT_CHILD(a)) == 259 /* IDENTIF */
 		) {
-			c = ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yystack_NT] + 2;
+			c = ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yystack_NT] + 3;
 			yytrace(a, 29, c + 0, p->cost[yyexpressao_NT]);
 			if (c + 0 < p->cost[yyexpressao_NT]) {
 				p->cost[yyexpressao_NT] = c + 0;
@@ -771,7 +771,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 	case 294: /* NEG */
 		yylabel(LEFT_CHILD(a),a);
 		/* expressao: NEG(expressao) */
-		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + 1;
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + 2;
 		yytrace(a, 50, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
@@ -794,7 +794,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: AND(expressao,expressao) */
-		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 7;
 		yytrace(a, 48, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
@@ -806,7 +806,7 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		yylabel(LEFT_CHILD(a),a);
 		yylabel(RIGHT_CHILD(a),a);
 		/* expressao: OR(expressao,expressao) */
-		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 1;
+		c = ((struct yystate *)STATE_LABEL(LEFT_CHILD(a)))->cost[yyexpressao_NT] + ((struct yystate *)STATE_LABEL(RIGHT_CHILD(a)))->cost[yyexpressao_NT] + 7;
 		yytrace(a, 49, c + 0, p->cost[yyexpressao_NT]);
 		if (c + 0 < p->cost[yyexpressao_NT]) {
 			p->cost[yyexpressao_NT] = c + 0;
@@ -1197,7 +1197,7 @@ static void yykids(NODEPTR_TYPE p, int eruleno, NODEPTR_TYPE kids[]) {
 	case 1: /* corpo: NIL */
 		break;
 	case 57: /* stack: expressao */
-	case 54: /* duplval: lvalue */
+	case 54: /* dupexp: expressao */
 	case 28: /* expressao: lvalue */
 	case 9: /* instrucao: corpo */
 	case 8: /* instrucao: expressao */
@@ -1219,7 +1219,7 @@ static void yykids(NODEPTR_TYPE p, int eruleno, NODEPTR_TYPE kids[]) {
 	case 39: /* expressao: MOD(expressao,expressao) */
 	case 38: /* expressao: DIV(expressao,expressao) */
 	case 37: /* expressao: MUL(expressao,expressao) */
-	case 31: /* expressao: ATRIB(expressao,duplval) */
+	case 31: /* expressao: ATRIB(dupexp,lvalue) */
 	case 6: /* instrucao: LIST(instrucao,instrucao) */
 	case 4: /* instrucoes: INSTRS(instrucoes,instrucao) */
 		kids[0] = LEFT_CHILD(p);
@@ -1370,7 +1370,7 @@ static void yyreduce(NODEPTR_TYPE p, int goalnt)
 		break;
 	case 25: /* expressao: INT */
 #line 117 "factorial.brg"
-{ fprintf(outfp, pfIMM, p->value.i); }
+{ fprintf(outfp, pfIMM, p->value.i); printf("INT: %d\n", p->value.i);}
 		break;
 	case 26: /* expressao: NUM */
 #line 118 "factorial.brg"
@@ -1379,9 +1379,9 @@ static void yyreduce(NODEPTR_TYPE p, int goalnt)
 	case 27: /* expressao: STRN */
 #line 119 "factorial.brg"
 { int l = ++lbl; char *s = p->value.s;
-                        fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
-                        do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
-                        fprintf(outfp, pfTEXT pfADDR, mklbl(l)); }
+                                              fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
+                                              do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
+                                              fprintf(outfp, pfTEXT pfADDR, mklbl(l)); }
 		break;
 	case 28: /* expressao: lvalue */
 #line 123 "factorial.brg"
@@ -1389,19 +1389,19 @@ static void yyreduce(NODEPTR_TYPE p, int goalnt)
 		break;
 	case 29: /* expressao: CALL2(IDENTIF,stack) */
 #line 124 "factorial.brg"
-{ fprintf(outfp, pfCALL pfTRASH pfPUSH, p->SUB(0)->value.s, stk); printf("%d - call- 2 args\n", p->SUB(0)->user);}
+{ fprintf(outfp, pfCALL pfTRASH pfPUSH, p->SUB(0)->value.s, stk); printf("CALL2- 2 args\n"); stk = 0;}
 		break;
 	case 30: /* expressao: CALL(IDENTIF) */
 #line 125 "factorial.brg"
-{ fprintf(outfp, pfCALL pfPUSH, p->SUB(0)->value.s); printf("%d - call\n", p->SUB(0)->user);}
+{ fprintf(outfp, pfCALL pfPUSH, p->SUB(0)->value.s); printf("CALL\n"); stk = 0;}
 		break;
-	case 31: /* expressao: ATRIB(expressao,duplval) */
+	case 31: /* expressao: ATRIB(dupexp,lvalue) */
 #line 126 "factorial.brg"
-{ fprintf(outfp, pfSTORE); }
+{ fprintf(outfp, pfSTORE /*pfSWAP pfSTORE*/); printf("STORE: %d\n", p->SUB(0)->value.i); /*ATRIB(duplval,expressao)*/}
 		break;
 	case 32: /* expressao: UMINUS(expressao) */
 #line 127 "factorial.brg"
-{ fprintf(outfp, pfNEG); }
+{ fprintf(outfp, pfNEG); printf("UMINUS: %d\n", p->SUB(0)->value.i);}
 		break;
 	case 33: /* expressao: INC(lvalue,NIL) */
 #line 128 "factorial.brg"
@@ -1465,50 +1465,52 @@ static void yyreduce(NODEPTR_TYPE p, int goalnt)
 		break;
 	case 48: /* expressao: AND(expressao,expressao) */
 #line 143 "factorial.brg"
-{ fprintf(outfp, pfAND); }
+{ char *l = mklbl(++lbl); 
+                                             fprintf(outfp, pfSWAP pfDUP pfJZ pfTRASH pfLABEL pfSWAP pfTRASH, l, 4, l, 4); }
 		break;
 	case 49: /* expressao: OR(expressao,expressao) */
-#line 144 "factorial.brg"
-{ fprintf(outfp, pfOR); }
+#line 145 "factorial.brg"
+{ char *l = mklbl(++lbl); 
+                                             fprintf(outfp, pfSWAP pfDUP pfJNZ pfTRASH pfLABEL pfSWAP pfTRASH, l, 4, l, 4);  }
 		break;
 	case 50: /* expressao: NEG(expressao) */
-#line 145 "factorial.brg"
-{ fprintf(outfp, pfNOT); }
+#line 147 "factorial.brg"
+{ fprintf(outfp, pfIMM pfEQ, 0);}
 		break;
 	case 51: /* expressao: FACT(expressao) */
-#line 146 "factorial.brg"
+#line 148 "factorial.brg"
 
 		break;
 	case 52: /* expressao: ADDR(lvalue) */
-#line 147 "factorial.brg"
-{ }
+#line 149 "factorial.brg"
+{ /* empty */ }
 		break;
 	case 53: /* expressao: POINTER(lvalue) */
-#line 148 "factorial.brg"
+#line 150 "factorial.brg"
 { fprintf(outfp, pfLOAD); }
 		break;
-	case 54: /* duplval: lvalue */
-#line 150 "factorial.brg"
+	case 54: /* dupexp: expressao */
+#line 154 "factorial.brg"
 { fprintf(outfp, pfDUP); }
 		break;
 	case 55: /* lvalue: IDENTIF */
-#line 152 "factorial.brg"
+#line 156 "factorial.brg"
 {   if (p->user == GLOBAL)
-                          fprintf(outfp, pfADDR, p->value.s); 
+                          {fprintf(outfp, pfADDR, p->value.s); printf("GLOBAL - %d\n", p->user);}
                         else
-                          fprintf(outfp, pfLOCAL, p->user); 
+                          {fprintf(outfp, pfLOCAL, p->user); printf("LOCAL - %d\n", p->user);}
                     }
 		break;
 	case 56: /* stack: EXPS(stack,stack) */
-#line 159 "factorial.brg"
+#line 163 "factorial.brg"
 
 		break;
 	case 57: /* stack: expressao */
-#line 160 "factorial.brg"
+#line 164 "factorial.brg"
 { stk += 4; }
 		break;
 	case 58: /* stack: NIL */
-#line 161 "factorial.brg"
+#line 165 "factorial.brg"
 { stk = 0; }
 		break;
 	default: break;
@@ -1527,15 +1529,12 @@ int yyselect(NODEPTR_TYPE p)
 }
 
 
-#line 163 "factorial.brg"
+#line 167 "factorial.brg"
 
 
 void function(char *name, int enter, Node *body) {
   int i;
   extern int trace;
-
-//alterado para conter o _entry, no entanto o codigo assembly do ficheiro gerado
-// tem uma referencia a $entry e diz que está undefined
 
   if(trace) printNode(body, stdout, yynames);
   if (body == 0 || body->attrib == NIL) /* forward declaration */
@@ -1549,19 +1548,14 @@ void function(char *name, int enter, Node *body) {
     fprintf(outfp, pfLEAVE pfRET); /* just in case there is no 'return' */
     //  freeNode(body);
   }
-
-  /*if (!strcmp(name, "entry")) { // deve ser corrigido - serve para o caso da entry
-    fprintf(outfp, pfEXTRN pfEXTRN pfEXTRN pfEXTRN,
-      U_"prints", U_"printi", U_"println", U_"readi");    
-  }*/
-
 }
 
+/*   contido no function
 void program(int enter, Node *body) {
   function("_entry", enter, body);
   fprintf(outfp, pfEXTRN pfEXTRN pfEXTRN pfEXTRN,
   		U_"prints", U_"printi", U_"println", U_"readi");
-}
+}*/
 
 void declare(char *name, int value) {
   //IDnew(INTEGER, name, 0);

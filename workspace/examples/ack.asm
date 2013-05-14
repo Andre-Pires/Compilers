@@ -1,53 +1,11 @@
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$prints:function
-; LABEL
-$prints:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$printi:function
-; LABEL
-$printi:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
+; EXTRN
+extern	$prints
+; EXTRN
+extern	$printi
 ; EXTRN
 extern	$println
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$atoi:function
-; LABEL
-$atoi:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
+; EXTRN
+extern	$atoi
 ; DATA
 segment	.data
 ; ALIGN
@@ -69,11 +27,12 @@ $ackermann:
 ; ENTER
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 0
-; ADDRV
-	push	dword [$cnt]
-; ADDRV
-	push	dword [$cnt]
+	sub	esp, 4
+; ADDR
+	push	dword $cnt
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; ADD
@@ -87,8 +46,14 @@ $ackermann:
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
-; ADDRV
-	push	dword [$m]
+; TRASH
+	add	esp, 4
+; LOCAL
+	lea	eax, [ebp+12]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 0
 ; JNE
@@ -96,10 +61,12 @@ $ackermann:
 	pop	ecx
 	cmp	ecx, eax
 	jne	near $_i3
-; ADDRV
-	push	dword [$ackermann]
-; ADDRV
-	push	dword [$n]
+; LOCAL
+	lea	eax, [ebp+16]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; ADD
@@ -107,18 +74,25 @@ $ackermann:
 	add	dword [esp], eax
 ; COPY
 	push	dword [esp]
-; ADDR
-	push	dword $ackermann
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
+; TRASH
+	add	esp, 4
 ; JMP
 	jmp	dword $_i4
 ; LABEL
 $_i3:
-; ADDRV
-	push	dword [$n]
+; LOCAL
+	lea	eax, [ebp+16]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 0
 ; JNE
@@ -126,10 +100,12 @@ $_i3:
 	pop	ecx
 	cmp	ecx, eax
 	jne	near $_i1
-; ADDRV
-	push	dword [$ackermann]
-; ADDRV
-	push	dword [$m]
+; LOCAL
+	lea	eax, [ebp+12]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; SUB
@@ -140,32 +116,47 @@ $_i3:
 ; CALL
 	call	$ackermann
 ; TRASH
-	add	esp, 0
+	add	esp, 8
+; PUSH
+	push	eax
 ; COPY
 	push	dword [esp]
-; ADDR
-	push	dword $ackermann
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
+; TRASH
+	add	esp, 4
 ; JMP
 	jmp	dword $_i2
 ; LABEL
 $_i1:
-; ADDRV
-	push	dword [$ackermann]
-; ADDRV
-	push	dword [$m]
+; LOCAL
+	lea	eax, [ebp+12]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; SUB
 	pop	eax
 	sub	dword [esp], eax
-; ADDRV
-	push	dword [$m]
-; ADDRV
-	push	dword [$n]
+; LOCAL
+	lea	eax, [ebp+12]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
+; LOCAL
+	lea	eax, [ebp+16]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; SUB
@@ -174,19 +165,26 @@ $_i1:
 ; CALL
 	call	$ackermann
 ; TRASH
-	add	esp, 0
+	add	esp, 12
+; PUSH
+	push	eax
 ; CALL
 	call	$ackermann
 ; TRASH
-	add	esp, 0
+	add	esp, 4
+; PUSH
+	push	eax
 ; COPY
 	push	dword [esp]
-; ADDR
-	push	dword $ackermann
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
+; TRASH
+	add	esp, 4
 ; LABEL
 $_i2:
 ; LABEL
@@ -206,9 +204,13 @@ $_entry:
 ; ENTER
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 0
-; ADDRV
-	push	dword [$argc]
+	sub	esp, 4
+; LOCAL
+	lea	eax, [ebp+12]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 2
 ; JLE
@@ -216,54 +218,100 @@ $_entry:
 	pop	ecx
 	cmp	ecx, eax
 	jle	near $_i5
-; ADDRV
-	push	dword [$argv]
+; ADDR
+	push	dword $argv
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; CALL
 	call	$atoi
 ; TRASH
-	add	esp, 0
-; ADDRV
-	push	dword [$argv]
+	add	esp, 4
+; PUSH
+	push	eax
+; ADDR
+	push	dword $argv
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; CALL
 	call	$atoi
 ; TRASH
-	add	esp, 0
+	add	esp, 8
+; PUSH
+	push	eax
 ; CALL
 	call	$ackermann
 ; TRASH
-	add	esp, 0
+	add	esp, 4
+; PUSH
+	push	eax
 ; CALL
 	call	$printi
 ; TRASH
-	add	esp, 0
+	add	esp, 4
+; PUSH
+	push	eax
+; TRASH
+	add	esp, 4
+; RODATA
+segment	.rodata
+; ALIGN
+align	4
+; LABEL
+$_i6:
+; CHAR
+	db	0x20
+; CHAR
+	db	0x23
+; CHAR
+	db	0x00
+; TEXT
+segment	.text
+; ADDR
+	push	dword $_i6
 ; CALL
 	call	$prints
 ; TRASH
-	add	esp, 0
-; ADDRV
-	push	dword [$cnt]
+	add	esp, 4
+; PUSH
+	push	eax
+; TRASH
+	add	esp, 4
+; ADDR
+	push	dword $cnt
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; CALL
 	call	$printi
 ; TRASH
-	add	esp, 0
+	add	esp, 4
+; PUSH
+	push	eax
+; TRASH
+	add	esp, 4
 ; CALL
 	call	$println
+; PUSH
+	push	eax
 ; TRASH
-	add	esp, 0
+	add	esp, 4
 ; LABEL
 $_i5:
-; ADDRV
-	push	dword [$entry]
 ; IMM
 	push	dword 0
 ; COPY
 	push	dword [esp]
-; ADDR
-	push	dword $entry
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
+; TRASH
+	add	esp, 4
 ; LEAVE
 	leave
 ; RET

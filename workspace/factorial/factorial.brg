@@ -114,21 +114,21 @@ instrucao: JNZ(NE(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJNE, p->SUB(
 %! expressoes: EXPS(expressoes, expressao)
 %! expressoes: expressao
 
-expressao: INT      1 { fprintf(outfp, pfIMM, p->value.i); }
-expressao: NUM      0 { fprintf(outfp, pfIMM, p->value.i); }
-expressao: STRN     0 { int l = ++lbl; char *s = p->value.s;
-                        fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
-                        do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
-                        fprintf(outfp, pfTEXT pfADDR, mklbl(l)); }
+expressao: INT                            1 { fprintf(outfp, pfIMM, p->value.i); printf("INT: %d\n", p->value.i);}
+expressao: NUM                            1 { fprintf(outfp, pfIMM, p->value.i); }
+expressao: STRN                           3 { int l = ++lbl; char *s = p->value.s;
+                                              fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
+                                              do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
+                                              fprintf(outfp, pfTEXT pfADDR, mklbl(l)); }
 expressao: lvalue                         1 { fprintf(outfp, pfLOAD); }
-expressao: CALL2(IDENTIF, stack)     2 { fprintf(outfp, pfCALL pfTRASH pfPUSH, p->SUB(0)->value.s, stk); printf("%d - call- 2 args\n", p->SUB(0)->user);}
-expressao: CALL(IDENTIF)                  2 { fprintf(outfp, pfCALL pfPUSH, p->SUB(0)->value.s); printf("%d - call\n", p->SUB(0)->user);}
-expressao: ATRIB(expressao, duplval)      3 { fprintf(outfp, pfSTORE); }
-expressao: UMINUS(expressao)              1 { fprintf(outfp, pfNEG); }
-expressao: INC(lvalue, NIL)              1 { fprintf(outfp, pfINCR, 1);}
-expressao: DEC(lvalue, NIL)              1 { fprintf(outfp, pfDECR, 1);}
-expressao: INC(NIL, lvalue)              1 { fprintf(outfp, pfINCR, 1);}
-expressao: DEC(NIL, lvalue)              1 { fprintf(outfp, pfDECR, 1);}
+expressao: CALL2(IDENTIF, stack)          3 { fprintf(outfp, pfCALL pfTRASH pfPUSH, p->SUB(0)->value.s, stk); printf("CALL2- 2 args\n"); stk = 0;}
+expressao: CALL(IDENTIF)                  2 { fprintf(outfp, pfCALL pfPUSH, p->SUB(0)->value.s); printf("CALL\n"); stk = 0;}
+expressao: ATRIB(dupexp, lvalue)          1 { fprintf(outfp, pfSTORE /*pfSWAP pfSTORE*/); printf("STORE: %d\n", p->SUB(0)->value.i); /*ATRIB(duplval,expressao)*/}
+expressao: UMINUS(expressao)              1 { fprintf(outfp, pfNEG); printf("UMINUS: %d\n", p->SUB(0)->value.i);}
+expressao: INC(lvalue, NIL)               1 { fprintf(outfp, pfINCR, 1);}
+expressao: DEC(lvalue, NIL)               1 { fprintf(outfp, pfDECR, 1);}
+expressao: INC(NIL, lvalue)               1 { fprintf(outfp, pfINCR, 1);}
+expressao: DEC(NIL, lvalue)               1 { fprintf(outfp, pfDECR, 1);}
 expressao: MUL(expressao, expressao)      1 { fprintf(outfp, pfMUL); } 
 expressao: DIV(expressao, expressao)      1 { fprintf(outfp, pfDIV); } 
 expressao: MOD(expressao, expressao)      1 { fprintf(outfp, pfMOD); } 
@@ -140,19 +140,23 @@ expressao: EQ(expressao, expressao)       1 { fprintf(outfp, pfEQ); }
 expressao: NE(expressao, expressao)       1 { fprintf(outfp, pfNE); } 
 expressao: GE(expressao, expressao)       1 { fprintf(outfp, pfGE); } 
 expressao: LE(expressao, expressao)       1 { fprintf(outfp, pfLE); } 
-expressao: AND(expressao, expressao)      1 { fprintf(outfp, pfAND); }
-expressao: OR(expressao, expressao)       1 { fprintf(outfp, pfOR); }
-expressao: NEG(expressao)                 1 { fprintf(outfp, pfNOT); }
+expressao: AND(expressao, expressao)      7 { char *l = mklbl(++lbl); 
+                                             fprintf(outfp, pfSWAP pfDUP pfJZ pfTRASH pfLABEL pfSWAP pfTRASH, l, 4, l, 4); }
+expressao: OR(expressao, expressao)       7 { char *l = mklbl(++lbl); 
+                                             fprintf(outfp, pfSWAP pfDUP pfJNZ pfTRASH pfLABEL pfSWAP pfTRASH, l, 4, l, 4);  }
+expressao: NEG(expressao)                 2 { fprintf(outfp, pfIMM pfEQ, 0);}
 expressao: FACT(expressao)
-expressao: ADDR(lvalue)                   0 { }
+expressao: ADDR(lvalue)                   0 { /* empty */ }
 expressao: POINTER(lvalue)                1 { fprintf(outfp, pfLOAD); }
 
-duplval: lvalue                 1 { fprintf(outfp, pfDUP); }
+
+
+dupexp: expressao                 1 { fprintf(outfp, pfDUP); }
 
 lvalue: IDENTIF   1 {   if (p->user == GLOBAL)
-                          fprintf(outfp, pfADDR, p->value.s); 
+                          {fprintf(outfp, pfADDR, p->value.s); printf("GLOBAL - %d\n", p->user);}
                         else
-                          fprintf(outfp, pfLOCAL, p->user); 
+                          {fprintf(outfp, pfLOCAL, p->user); printf("LOCAL - %d\n", p->user);}
                     }
 
 
@@ -166,9 +170,6 @@ void function(char *name, int enter, Node *body) {
   int i;
   extern int trace;
 
-//alterado para conter o _entry, no entanto o codigo assembly do ficheiro gerado
-// tem uma referencia a $entry e diz que está undefined
-
   if(trace) printNode(body, stdout, yynames);
   if (body == 0 || body->attrib == NIL) /* forward declaration */
     fprintf(outfp, pfEXTRN, name);
@@ -181,19 +182,14 @@ void function(char *name, int enter, Node *body) {
     fprintf(outfp, pfLEAVE pfRET); /* just in case there is no 'return' */
     //  freeNode(body);
   }
-
-  /*if (!strcmp(name, "entry")) { // deve ser corrigido - serve para o caso da entry
-    fprintf(outfp, pfEXTRN pfEXTRN pfEXTRN pfEXTRN,
-      U_"prints", U_"printi", U_"println", U_"readi");    
-  }*/
-
 }
 
+/*   contido no function
 void program(int enter, Node *body) {
   function("_entry", enter, body);
   fprintf(outfp, pfEXTRN pfEXTRN pfEXTRN pfEXTRN,
   		U_"prints", U_"printi", U_"println", U_"readi");
-}
+}*/
 
 void declare(char *name, int value) {
   //IDnew(INTEGER, name, 0);

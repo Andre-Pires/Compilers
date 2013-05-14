@@ -22,13 +22,14 @@ $(LANG): $(LANG).y $(LANG).l $(LANG).brg
 	$(GCC) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c yyselect.c lib/libutil.a
 	make -C run
 	
+clean_if:
+	rm ../examples/if.o ../examples/if.asm ../examples/if
 
 %:%.$(EXT) 
-#	rm $*.asm $*.o
+#	rm $*.o $*.asm $*
 	./$(LANG) -trace $<
 	$(NASM) $*.asm -o $*.o
-	ld -o $@ $*.o run/libfactorial.a
-
+	ld -g -o $@ $*.o run/librun.a
 
 ########################### EXEMPLOS ###############################
  
@@ -140,5 +141,5 @@ zip: 	clean_zip
 install: $(LANG)
 	cp $(LANG) ..
 
-clean:
+clean:		
 	rm -f *.o $(LANG) lex.yy.c y.tab.c y.tab.h y.output *~

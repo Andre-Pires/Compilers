@@ -100,12 +100,12 @@ tipo  : VOID                 { $$ = uniNode(VOID, 0); $$->info = 0; }
       | NUMBER               { $$ = uniNode(NUMBER, 0); $$->info = 3; }
       ;
 
-init  : ATRIB INT            { $$ = intNode(INT, $2); $$->info = 1;}
-      | ATRIB '-' INT        { $$ = intNode(INT, -$3); $$->info = 1;}
-      | ATRIB cons STRN      { $$ = strNode(STRN, $3); $$->info = $2->info +2;}
-      | ATRIB NUM            { $$ = realNode(NUM, $2); $$->info = 3;}
-      | ATRIB '-' NUM        { $$ = realNode(NUM, -$3); $$->info = 3;}
-      | ATRIB IDENTIF        { $$ = strNode(IDENTIF, $2); $$->info = IDfind($2, 0)+4;}
+init  : ATRIB INT                     { $$ = intNode(INT, $2); $$->info = 1;}
+      | ATRIB '-' INT                 { $$ = intNode(INT, -$3); $$->info = 1;}
+      | ATRIB cons STRN               { $$ = strNode(STRN, $3); $$->info = $2->info +2;}
+      | ATRIB NUM                     { $$ = realNode(NUM, $2); $$->info = 3;}
+      | ATRIB '-' NUM                 { $$ = realNode(NUM, -$3); $$->info = 3;}
+      | ATRIB IDENTIF                 { $$ = strNode(IDENTIF, $2); $$->info = IDfind($2, 0)+4;}
       ;
 
 
@@ -113,7 +113,7 @@ parametros  : parametros ',' parametro          { $$ = binNode(PARAMS, $1, $3); 
             | parametro                         { $$ = uniNode(PARAMS, $1);  $$->info = $1->info; /* tentar alterar o IDnew para fazer as variaveis dos parametros das funcoes (positivos) compact*/}
             ;
 
-parametro : tipo ptr IDENTIF                    { $$ = strNode(IDENTIF, $3); IDnew($1->info+$2->info, $3, 0); if (pos >= 8) { $$->user = pos; pos += 4; } else { pos -= 4; $$->user = pos;} $$->info = $1->info + $2->info; printf("%d -- yacc\n", $$->user);} // parametros da funcao sao positivos e as variaveis locais negativas
+parametro : tipo ptr IDENTIF                    { $$ = strNode(IDENTIF, $3); if (pos >= 8) { $$->user = pos; pos += 4; } else { pos -= 4; $$->user = pos;} $$->info = $1->info + $2->info; IDnew($1->info+$2->info, $3, pos);  printf("%d -- par - yacc\n", $$->user);} // parametros da funcao sao positivos e as variaveis locais negativas
           ;
 
 pars2 : parametro ';'                           { $$ = $1; /* tentar alterar o IDnew para fazer as variaveis locais das funcoes (negativos) compact*/}
@@ -147,7 +147,7 @@ instrucao : IF expressao THEN instrucao %prec IFX                      { int lbl
                                                                       }
 
           | DO { nciclo++; } instrucao { nciclo--; } WHILE expressao ';'      { int lbl1 = ++lbl, lbl2 = ++lbl;
-                                                                                $$ = seqNode(WHILE, 5,
+                                                                                $$ = seqNode(LIST, 5,
                                                                                 strNode(JMP, mklbl(lbl1)),
                                                                                 strNode(LABEL, mklbl(lbl2)),
                                                                                 $3, /* instr */
@@ -186,7 +186,7 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
           | IDENTIF '(' expressoes ')'                { int n; n = IDfind($1, 0) & (0x7); if(n != -1 && n == 4) {$$ = binNode(CALL2, strNode(IDENTIF, $1), $3); $$->info = n;} else {$$ = binNode(CALL2, strNode(IDENTIF, $1), $3); $$->info = IDsearch($1, 0, IDlevel(), 0) & (0x7);}}    /* fazer o search no nivel 0 para nao confundir a funcao com a variavel */
           | IDENTIF '(' ')'                           { int n; n = IDfind($1, 0) & (0x7); if(n != -1 && n == 4) {$$ = uniNode(CALL, strNode(IDENTIF, $1)); $$->info = n;} else {$$ = uniNode(CALL, strNode(IDENTIF, $1)); $$->info = IDsearch($1, 0, IDlevel(), 0) & (0x7);}}                                                                                      
           | '(' expressao ')'                         { $$ = $2; }
-          | left_value ATRIB expressao                { if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} $$ = binNode(ATRIB, $3, $1);  $$->info = $3->info;}
+          | left_value ATRIB expressao                { if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} $$ = binNode(ATRIB, $3, $1);  $$->info = $3->info;} // trocar $1 com $3
           | '-' expressao %prec UMINUS                { if($2->info == 0 || $2->info == 2) yyerror("Simétrico : Tipo inválido"); $$ = uniNode(UMINUS, $2); $$->info = $2->info;}
           | DEC left_value                            { if($2->info != 1) yyerror("Decremento : Tipo inválido"); $$ = binNode(DEC, nilNode(NIL), $2); $$->info = 1;}
           | INC left_value                            { if($2->info != 1) yyerror("Incremento : Tipo inválido"); $$ = binNode(INC, nilNode(NIL), $2); $$->info = 1;}
@@ -211,9 +211,9 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
           | '*' left_value %prec POINTER              { $$ = uniNode(POINTER, $2); $$->info = $2->info;}
           ;
 
-left_value: IDENTIF                                   { long pos; $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, &pos); $$->user = pos; } // deslocamento as variaveis para o place, para sber se é global
+left_value: IDENTIF                                   { long pos; $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, &pos); $$->user = pos; printf("%ld - pos da var\n", pos);} // deslocamento as variaveis para o place, para sber se é global
 
-          | IDENTIF '[' expressao ']'                 {int x = IDfind($1, 0); $$ = binNode(POINTER, strNode(IDENTIF, $1), $3);
+          | IDENTIF '[' expressao ']'                 {long pos; int x = IDfind($1, &pos); $$->user = pos; $$ = binNode(POINTER, strNode(IDENTIF, $1), $3); /* eu adicionei o pos sem ter a certeza se está correcto */
                                                         if (((x & 0x4) == 4)) 
                                                               $$->info = x - 4;
                                                         else if (((x & 0x7) == 2))

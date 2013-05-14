@@ -1,35 +1,7 @@
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$prints:function
-; LABEL
-$prints:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$printi:function
-; LABEL
-$printi:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
+; EXTRN
+extern	$prints
+; EXTRN
+extern	$printi
 ; EXTRN
 extern	$println
 ; EXTRN
@@ -55,7 +27,7 @@ $_entry:
 ; ENTER
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 4
+	sub	esp, 8
 ; LEAVE
 	leave
 ; RET

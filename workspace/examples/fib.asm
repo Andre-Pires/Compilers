@@ -1,35 +1,7 @@
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$prints:function
-; LABEL
-$prints:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$printi:function
-; LABEL
-$printi:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
+; EXTRN
+extern	$prints
+; EXTRN
+extern	$printi
 ; EXTRN
 extern	$println
 ; EXTRN
@@ -55,26 +27,38 @@ $fibonacci:
 ; ENTER
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 0
-; ADDRV
-	push	dword [$cnt]
-; ADDRV
-	push	dword [$cnt]
+	sub	esp, 4
+; ADDR
+	push	dword $cnt
+; COPY
+	push	dword [esp]
+; ADDR
+	push	dword $cnt
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; ADD
 	pop	eax
 	add	dword [esp], eax
-; COPY
-	push	dword [esp]
-; ADDR
-	push	dword $cnt
+; SWAP
+	pop	eax
+	pop	ecx
+	push	eax
+	mov	eax, ecx
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
-; ADDRV
-	push	dword [$n]
+; TRASH
+	add	esp, 4
+; ADDR
+	push	dword $n
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; JGT
@@ -82,26 +66,42 @@ $fibonacci:
 	pop	ecx
 	cmp	ecx, eax
 	jg	near $_i1
-; ADDRV
-	push	dword [$fibonacci]
-; ADDRV
-	push	dword [$n]
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
 ; COPY
 	push	dword [esp]
 ; ADDR
-	push	dword $fibonacci
+	push	dword $n
+; LOAD
+	pop	eax
+	push	dword [eax]
+; SWAP
+	pop	eax
+	pop	ecx
+	push	eax
+	mov	eax, ecx
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
+; TRASH
+	add	esp, 4
 ; JMP
 	jmp	dword $_i2
 ; LABEL
 $_i1:
-; ADDRV
-	push	dword [$fibonacci]
-; ADDRV
-	push	dword [$n]
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
+; COPY
+	push	dword [esp]
+; ADDR
+	push	dword $n
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 1
 ; SUB
@@ -110,9 +110,14 @@ $_i1:
 ; CALL
 	call	$fibonacci
 ; TRASH
-	add	esp, 0
-; ADDRV
-	push	dword [$n]
+	add	esp, 4
+; PUSH
+	push	eax
+; ADDR
+	push	dword $n
+; LOAD
+	pop	eax
+	push	dword [eax]
 ; IMM
 	push	dword 2
 ; SUB
@@ -121,18 +126,24 @@ $_i1:
 ; CALL
 	call	$fibonacci
 ; TRASH
-	add	esp, 0
+	add	esp, 8
+; PUSH
+	push	eax
 ; ADD
 	pop	eax
 	add	dword [esp], eax
-; COPY
-	push	dword [esp]
-; ADDR
-	push	dword $fibonacci
+; SWAP
+	pop	eax
+	pop	ecx
+	push	eax
+	mov	eax, ecx
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
+; TRASH
+	add	esp, 4
 ; LABEL
 $_i2:
 ; LEAVE
@@ -150,7 +161,7 @@ $_entry:
 ; ENTER
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 4
+	sub	esp, 8
 ; LEAVE
 	leave
 ; RET

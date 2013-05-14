@@ -1078,7 +1078,7 @@ case 33:
 break;
 case 34:
 #line 116 "factorial.y"
-	{ yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info, yystack.l_mark[0].s, 0); if (pos >= 8) { yyval.n->user = pos; pos += 4; } else { pos -= 4; yyval.n->user = pos;} yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info; printf("%d -- yacc\n", yyval.n->user);}
+	{ yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); if (pos >= 8) { yyval.n->user = pos; pos += 4; } else { pos -= 4; yyval.n->user = pos;} yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info; IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info, yystack.l_mark[0].s, pos);  printf("%d -- par - yacc\n", yyval.n->user);}
 break;
 case 35:
 #line 119 "factorial.y"
@@ -1144,7 +1144,7 @@ break;
 case 47:
 #line 149 "factorial.y"
 	{ int lbl1 = ++lbl, lbl2 = ++lbl;
-                                                                                yyval.n = seqNode(WHILE, 5,
+                                                                                yyval.n = seqNode(LIST, 5,
                                                                                 strNode(JMP, mklbl(lbl1)),
                                                                                 strNode(LABEL, mklbl(lbl2)),
                                                                                 yystack.l_mark[-4].n, /* instr */
@@ -1338,11 +1338,11 @@ case 93:
 break;
 case 94:
 #line 214 "factorial.y"
-	{ long pos; yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); yyval.n->info = IDfind(yystack.l_mark[0].s, &pos); yyval.n->user = pos; }
+	{ long pos; yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); yyval.n->info = IDfind(yystack.l_mark[0].s, &pos); yyval.n->user = pos; printf("%ld - pos da var\n", pos);}
 break;
 case 95:
 #line 216 "factorial.y"
-	{int x = IDfind(yystack.l_mark[-3].s, 0); yyval.n = binNode(POINTER, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n);
+	{long pos; int x = IDfind(yystack.l_mark[-3].s, &pos); yyval.n->user = pos; yyval.n = binNode(POINTER, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); /* eu adicionei o pos sem ter a certeza se está correcto */
                                                         if (((x & 0x4) == 4)) 
                                                               yyval.n->info = x - 4;
                                                         else if (((x & 0x7) == 2))

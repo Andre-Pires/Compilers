@@ -16,7 +16,6 @@
 #endif
 
 #define GLOBAL 0
-
 extern FILE *outfp;
 extern int lbl;
 extern char *mklbl(int n);
@@ -82,7 +81,10 @@ static int sameLoc(NODEPTR_TYPE p) {
 
 corpo: NIL
 corpo: instrucoes
-corpo: PINTR
+corpo: PINTR(pars2, instrucoes)
+
+pars2: PARS2  
+pars2: IDENTIF
 
 instrucoes: INSTRS(instrucoes, instrucao)
 instrucoes: instrucao
@@ -115,7 +117,7 @@ instrucao: JNZ(NE(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJNE, p->SUB(
 %! expressoes: expressao
 
 expressao: INT                            1 { fprintf(outfp, pfIMM, p->value.i); printf("INT: %d\n", p->value.i);}
-expressao: NUM                            1 { fprintf(outfp, pfIMM, p->value.i); }
+%!expressao: NUM                            999 { fprintf(outfp, pfIMM, p->value.i); }
 expressao: STRN                           3 { int l = ++lbl; char *s = p->value.s;
                                               fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
                                               do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
@@ -123,7 +125,7 @@ expressao: STRN                           3 { int l = ++lbl; char *s = p->value.
 expressao: lvalue                         1 { fprintf(outfp, pfLOAD); }
 expressao: CALL2(IDENTIF, stack)          3 { fprintf(outfp, pfCALL pfTRASH pfPUSH, p->SUB(0)->value.s, stk); printf("CALL2- 2 args\n"); stk = 0;}
 expressao: CALL(IDENTIF)                  2 { fprintf(outfp, pfCALL pfPUSH, p->SUB(0)->value.s); printf("CALL\n"); stk = 0;}
-expressao: ATRIB(dupexp, lvalue)          1 { fprintf(outfp, pfSTORE /*pfSWAP pfSTORE*/); printf("STORE: %d\n", p->SUB(0)->value.i); /*ATRIB(duplval,expressao)*/}
+expressao: ATRIB(dupexp, lvalue)          1 { fprintf(outfp, pfSTORE /*pfSWAP pfSTORE*/); printf("STORE: %d\n", p->SUB(0)->value.i);}
 expressao: UMINUS(expressao)              1 { fprintf(outfp, pfNEG); printf("UMINUS: %d\n", p->SUB(0)->value.i);}
 expressao: INC(lvalue, NIL)               1 { fprintf(outfp, pfINCR, 1);}
 expressao: DEC(lvalue, NIL)               1 { fprintf(outfp, pfDECR, 1);}
@@ -150,15 +152,16 @@ expressao: ADDR(lvalue)                   0 { /* empty */ }
 expressao: POINTER(lvalue)                1 { fprintf(outfp, pfLOAD); }
 
 
+dupexp: expressao                         1 { fprintf(outfp, pfDUP); }
 
-dupexp: expressao                 1 { fprintf(outfp, pfDUP); }
-
-lvalue: IDENTIF   1 {   if (p->user == GLOBAL)
-                          {fprintf(outfp, pfADDR, p->value.s); printf("GLOBAL - %d\n", p->user);}
+lvalue: IDENTIF   1 { if (p->user == GLOBAL)
+                          {fprintf(outfp, pfADDR, p->value.s); printf("GLOBAL - %s\n", p->value.s);}
                         else
                           {fprintf(outfp, pfLOCAL, p->user); printf("LOCAL - %d\n", p->user);}
                     }
+lvalue: VECTOR(lvalue2,expressao)  3 {fprintf(outfp, pfIMM pfMUL pfADD, 4);printf("VECTOR - lvalue\n");}
 
+lvalue2: lvalue     1{ fprintf(outfp, pfLOAD); printf("LOAD - lvalue - %d\n", p->user); }
 
 stack:  EXPS(stack,stack)
 stack:  expressao { stk += 4; }
@@ -191,29 +194,34 @@ void program(int enter, Node *body) {
   		U_"prints", U_"printi", U_"println", U_"readi");
 }*/
 
-void declare(char *name, int value) {
-  //IDnew(INTEGER, name, 0);
-  if (value == 0)
+
+/* pfID para o pointer */
+void declare(char *name, Node * value) {
+  int tipo = IDfind(name, 0);
+  if (tipo == 0)
     fprintf(outfp, pfBSS pfALIGN pfLABEL pfBYTE pfTEXT, name, 4);
-  else if ((value & 0x3) == 1){ //Se for inteiro
-    if ((value & 0x15) == 9){ //Se for cons
-      if ((value & 0x31) == 17){ //Se for public
-        fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfINTEGER pfTEXT, name, pfINTEGER, name, value);
+  else if ((tipo & 0x3) == 1){ //Se for inteiro
+    if ((tipo & 0x7) == 5) fprintf(outfp, pfDATA pfALIGN pfLABEL pfID pfTEXT, name, value->value.s);
+    else{
+    if ((tipo & 0x15) == 9){ //Se for cons
+      if ((tipo & 0x31) == 17){ //Se for public
+        fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfINTEGER pfTEXT, name, pfINTEGER, name, value->value.i);
       } else
-        fprintf(outfp, pfRODATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+        fprintf(outfp, pfRODATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value->value.i);
     } else
-      fprintf(outfp, pfDATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value);
+      fprintf(outfp, pfDATA pfALIGN pfLABEL pfINTEGER pfTEXT, name, value->value.i);
+    }
   }
-  else if((value & 0x3) == 2){
-    if ((value & 0x15) == 10){ //Se for cons
-      if ((value & 0x31) == 18){ //Se for public
+  else if((tipo & 0x3) == 2){
+    if ((tipo & 0x15) == 10){ //Se for cons
+      if ((tipo & 0x31) == 18){ //Se for public
         fprintf(outfp, pfRODATA pfALIGN pfGLOBL pfLABEL pfSTR pfTEXT, name, pfSTR, name, name, value);
       } else
         fprintf(outfp, pfRODATA pfALIGN pfLABEL pfSTR pfTEXT, name, name, value);
     } else
       fprintf(outfp, pfDATA pfALIGN pfLABEL pfSTR pfTEXT, name, name, value);
   }
-  else if((value & 0x3) == 3){
+  else if((tipo & 0x3) == 3){
 
   }
 }

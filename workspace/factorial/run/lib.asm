@@ -13,7 +13,7 @@ section .bss
 section .text
 	global _println, _printsp, _printi, _readln, _readi, _debug
 	global _strlen, _atoi, _itoa, _argc, _argv, _envp
-	global printi, println, readi, atoi, argc, argv, envp, strlen
+	global printi, println, readi, atoi, argc, argv, envp, strlen, readln, itoa
 	extern _prints, _readb
 
 argc:
@@ -71,6 +71,7 @@ _printsp:
 
 _debug:	ret
 
+itoa:
 _itoa:
 	mov	ecx, [esp+4]	; load arg
 	mov	edi, $buffer+15
@@ -137,6 +138,7 @@ _atoi:
 	mul	ecx
 	ret
 
+readln:
 _readln:			; readln(buf, siz)
 	mov	ecx, [esp+8]	;
 	mov	edi, [esp+4]	;

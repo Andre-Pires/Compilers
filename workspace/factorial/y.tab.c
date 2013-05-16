@@ -26,7 +26,7 @@ static const char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 #include "y.tab.h"
 
 extern void yyerror(char *s);
-extern void program(int enter, Node *body), declare(char *name, int value);
+extern void program(int enter, Node *body), declare(char *name, Node * value);
 extern void function(char *name, int enter, Node *body);
 int pos; /* local variable offset (no functions inside a function) */
 int lbl; /* label counter for generated labels */
@@ -112,41 +112,42 @@ extern int YYPARSE_DECL();
 #define POINTER 289
 #define IFX 290
 #define LIST 291
-#define CALL 292
-#define CALL2 293
-#define NEG 294
-#define FACT 295
-#define AND 296
-#define OR 297
-#define PROG 298
-#define ADD 299
-#define SUBT 300
-#define MUL 301
-#define DIV 302
-#define LT 303
-#define GT 304
-#define MOD 305
-#define PARAMS 306
-#define PARS2 307
-#define PARS 308
-#define PINTR 309
-#define INTR 310
-#define DECL 311
-#define DECLS 312
-#define INIT 313
-#define NIL 314
-#define PNTR 315
-#define EXPS 316
-#define EXP 317
-#define MALL 318
-#define BODY 319
-#define JZ 320
-#define ETIQ 321
-#define LABEL 322
-#define JNZ 323
-#define JMP 324
-#define INSTRS 325
-#define UMINUS 326
+#define VECTOR 292
+#define CALL 293
+#define CALL2 294
+#define NEG 295
+#define FACT 296
+#define AND 297
+#define OR 298
+#define PROG 299
+#define ADD 300
+#define SUBT 301
+#define MUL 302
+#define DIV 303
+#define LT 304
+#define GT 305
+#define MOD 306
+#define PARAMS 307
+#define PARS2 308
+#define PARS 309
+#define PINTR 310
+#define INTR 311
+#define DECL 312
+#define DECLS 313
+#define INIT 314
+#define NIL 315
+#define PNTR 316
+#define EXPS 317
+#define EXP 318
+#define MALL 319
+#define BODY 320
+#define JZ 321
+#define ETIQ 322
+#define LABEL 323
+#define JNZ 324
+#define JMP 325
+#define INSTRS 326
+#define UMINUS 327
 #define YYERRCODE 256
 static const short yylhs[] = {                           -1,
     0,    0,   10,   10,   11,   11,   20,   21,   11,   22,
@@ -540,7 +541,7 @@ static const short yycheck[] = {                         40,
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 326
+#define YYMAXTOKEN 327
 #if YYDEBUG
 static const char *yyname[] = {
 
@@ -554,10 +555,11 @@ static const char *yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INT","NUM","IDENTIF","STRN",
 "WHILE","IF","END","RETURN","VOID","PUBLIC","CONST","THEN","ELSE","DO","FOR",
 "IN","STEP","UPTO","DOWNTO","BREAK","CONTINUE","INTEGER","STRING","NUMBER","GE",
-"LE","EQ","NE","INC","DEC","ATRIB","ADDR","POINTER","IFX","LIST","CALL","CALL2",
-"NEG","FACT","AND","OR","PROG","ADD","SUBT","MUL","DIV","LT","GT","MOD",
-"PARAMS","PARS2","PARS","PINTR","INTR","DECL","DECLS","INIT","NIL","PNTR",
-"EXPS","EXP","MALL","BODY","JZ","ETIQ","LABEL","JNZ","JMP","INSTRS","UMINUS",
+"LE","EQ","NE","INC","DEC","ATRIB","ADDR","POINTER","IFX","LIST","VECTOR",
+"CALL","CALL2","NEG","FACT","AND","OR","PROG","ADD","SUBT","MUL","DIV","LT",
+"GT","MOD","PARAMS","PARS2","PARS","PINTR","INTR","DECL","DECLS","INIT","NIL",
+"PNTR","EXPS","EXP","MALL","BODY","JZ","ETIQ","LABEL","JNZ","JMP","INSTRS",
+"UMINUS",
 };
 static const char *yyrule[] = {
 "$accept : ficheiro",
@@ -736,7 +738,7 @@ char **yynames =
 #else
      0;
 #endif
-#line 739 "y.tab.c"
+#line 741 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -956,7 +958,7 @@ case 4:
 break;
 case 5:
 #line 60 "factorial.y"
-	{ IDnew(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info, yystack.l_mark[-2].s, 0); declare(yystack.l_mark[-2].s, yystack.l_mark[-1].n->info); /* alterar o declare para não fazer IDnew e usar o que vem antes dele na declaracao */
+	{ IDnew(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info, yystack.l_mark[-2].s, 0); declare(yystack.l_mark[-2].s, yystack.l_mark[-1].n); /* alterar o declare para não fazer IDnew e usar o que vem antes dele na declaracao */
                                                               yyval.n=binNode(INIT, strNode(IDENTIF, yystack.l_mark[-2].s), yystack.l_mark[-1].n);
                                                               yyval.n->info = yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info; 
                                                               if(yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info != 4) {
@@ -1218,15 +1220,15 @@ case 63:
 break;
 case 64:
 #line 182 "factorial.y"
-	{ yyval.n = intNode(INT, yystack.l_mark[0].i); yyval.n->info = 1; }
+	{ yyval.n = intNode(INT, yystack.l_mark[0].i); yyval.n->info = 1; printf("%d constante  i\n", yystack.l_mark[0].i); }
 break;
 case 65:
 #line 183 "factorial.y"
-	{ yyval.n = realNode(NUM, yystack.l_mark[0].d); yyval.n->info = 3;}
+	{ yyval.n = realNode(NUM, yystack.l_mark[0].d); yyval.n->info = 3; printf("%f constante  r\n", yystack.l_mark[0].d);}
 break;
 case 66:
 #line 184 "factorial.y"
-	{ yyval.n = strNode(STRN, yystack.l_mark[0].s); yyval.n->info = 2;}
+	{ yyval.n = strNode(STRN, yystack.l_mark[0].s); yyval.n->info = 2; printf("%s constante  str\n", yystack.l_mark[0].s);}
 break;
 case 67:
 #line 185 "factorial.y"
@@ -1246,7 +1248,7 @@ case 70:
 break;
 case 71:
 #line 189 "factorial.y"
-	{ if(yystack.l_mark[-2].n->info != 4){if (yystack.l_mark[-2].n->info != yystack.l_mark[0].n->info) yyerror("Atribuição entre tipos diferentes.");} yyval.n = binNode(ATRIB, yystack.l_mark[0].n, yystack.l_mark[-2].n);  yyval.n->info = yystack.l_mark[0].n->info;}
+	{ /*if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} */ yyval.n = binNode(ATRIB, yystack.l_mark[0].n, yystack.l_mark[-2].n);  yyval.n->info = yystack.l_mark[0].n->info;}
 break;
 case 72:
 #line 190 "factorial.y"
@@ -1342,15 +1344,15 @@ case 94:
 break;
 case 95:
 #line 216 "factorial.y"
-	{long pos; int x = IDfind(yystack.l_mark[-3].s, &pos); yyval.n->user = pos; yyval.n = binNode(POINTER, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); /* eu adicionei o pos sem ter a certeza se está correcto */
+	{long pos; int x = IDfind(yystack.l_mark[-3].s, &pos); yyval.n = binNode(VECTOR, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->user = pos; yyval.n->value.sub.n[0]->user = pos; 
                                                         if (((x & 0x4) == 4)) 
-                                                              yyval.n->info = x - 4;
+                                                              {yyval.n->info = x - 4; yyval.n->value.sub.n[0]->info = yyval.n->info; printf("%d -- vector - yacc\n", yyval.n->info);}
                                                         else if (((x & 0x7) == 2))
-                                                              yyval.n->info = 1;
+                                                              {yyval.n->info = 1; yyval.n->value.sub.n[0]->info = 1;printf("%d -- func - yacc\n", yyval.n->info);}
                                                         else yyerror("Ponteiro: Tipo inválido.");
                                                         /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
 break;
-#line 1353 "y.tab.c"
+#line 1355 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

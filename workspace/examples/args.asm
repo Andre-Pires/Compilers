@@ -52,15 +52,16 @@ segment	.text
 	push	eax
 ; TRASH
 	add	esp, 4
-; ADDR
-	push	dword $argc
+; LOCAL
+	lea	eax, [ebp+12]
+	push	eax
 ; LOAD
 	pop	eax
 	push	dword [eax]
 ; CALL
 	call	$printi
 ; TRASH
-	add	esp, 8
+	add	esp, 4
 ; PUSH
 	push	eax
 ; TRASH
@@ -71,8 +72,9 @@ segment	.text
 	push	eax
 ; TRASH
 	add	esp, 4
-; ADDR
-	push	dword $argc
+; LOCAL
+	lea	eax, [ebp+12]
+	push	eax
 ; LOAD
 	pop	eax
 	push	dword [eax]
@@ -118,20 +120,32 @@ segment	.text
 ; CALL
 	call	$prints
 ; TRASH
-	add	esp, 12
+	add	esp, 4
 ; PUSH
 	push	eax
 ; TRASH
 	add	esp, 4
-; ADDR
-	push	dword $argv
+; LOCAL
+	lea	eax, [ebp+16]
+	push	eax
+; IMM
+	push	dword 1
+; IMM
+	push	dword 4
+; MUL
+	pop	eax
+	imul	dword eax, [esp]
+	mov	[esp], eax
+; ADD
+	pop	eax
+	add	dword [esp], eax
 ; LOAD
 	pop	eax
 	push	dword [eax]
 ; CALL
 	call	$prints
 ; TRASH
-	add	esp, 16
+	add	esp, 4
 ; PUSH
 	push	eax
 ; TRASH
@@ -144,18 +158,12 @@ segment	.text
 	add	esp, 4
 ; LABEL
 $_i1:
-; LOCAL
-	lea	eax, [ebp+-4]
-	push	eax
-; COPY
-	push	dword [esp]
 ; IMM
 	push	dword 0
-; SWAP
-	pop	eax
-	pop	ecx
-	push	eax
-	mov	eax, ecx
+; COPY
+	push	dword [esp]
+; LOCAL
+	lea	eax, [ebp+-4]
 	push	eax
 ; STORE
 	pop	ecx

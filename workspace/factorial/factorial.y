@@ -8,7 +8,7 @@
 #include "y.tab.h"
 
 extern void yyerror(char *s);
-extern void program(int enter, Node *body), declare(char *name, int value);
+extern void program(int enter, Node *body), declare(char *name, Node * value);
 extern void function(char *name, int enter, Node *body);
 int pos; /* local variable offset (no functions inside a function) */
 int lbl; /* label counter for generated labels */
@@ -29,7 +29,7 @@ int pos = 0;
 %token <d> NUM
 %token <s> IDENTIF STRN
 %token WHILE IF END RETURN VOID PUBLIC CONST THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
-%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX LIST
+%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX LIST VECTOR
 
 %token CALL CALL2 NEG FACT AND OR PROG ADD SUBT MUL DIV LT GT MOD PARAMS PARS2 PARS PINTR INTR DECL DECLS INIT NIL PNTR EXPS EXP MALL BODY JZ ETIQ LABEL JNZ JMP INSTRS
 
@@ -57,7 +57,7 @@ declaracoes  : declaracao                     {$$ = $1;}
              | declaracoes declaracao         {$$ = binNode(DECLS, $1, $2);}
              ;
 
-declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1->info+$2->info+$3->info+$4->info, $5, 0); declare($5, $6->info); /* alterar o declare para não fazer IDnew e usar o que vem antes dele na declaracao */
+declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1->info+$2->info+$3->info+$4->info, $5, 0); declare($5, $6); /* alterar o declare para não fazer IDnew e usar o que vem antes dele na declaracao */
                                                               $$=binNode(INIT, strNode(IDENTIF, $5), $6);
                                                               $$->info = $1->info+$2->info+$3->info+$4->info; 
                                                               if($3->info+$4->info != 4) {
@@ -179,14 +179,14 @@ expressoes  : expressoes ',' expressao                { $$ = binNode(EXPS, $1 ,$
             | expressao                               { $$ = $1; }
             ;
 
-expressao : INT                                       { $$ = intNode(INT, $1); $$->info = 1; }
-          | NUM                                       { $$ = realNode(NUM, $1); $$->info = 3;}
-          | STRN                                      { $$ = strNode(STRN, $1); $$->info = 2;}
+expressao : INT                                       { $$ = intNode(INT, $1); $$->info = 1; printf("%d constante  i\n", $1); }
+          | NUM                                       { $$ = realNode(NUM, $1); $$->info = 3; printf("%f constante  r\n", $1);}
+          | STRN                                      { $$ = strNode(STRN, $1); $$->info = 2; printf("%s constante  str\n", $1);}
           | left_value                                { $$ = $1;}
           | IDENTIF '(' expressoes ')'                { int n; n = IDfind($1, 0) & (0x7); if(n != -1 && n == 4) {$$ = binNode(CALL2, strNode(IDENTIF, $1), $3); $$->info = n;} else {$$ = binNode(CALL2, strNode(IDENTIF, $1), $3); $$->info = IDsearch($1, 0, IDlevel(), 0) & (0x7);}}    /* fazer o search no nivel 0 para nao confundir a funcao com a variavel */
           | IDENTIF '(' ')'                           { int n; n = IDfind($1, 0) & (0x7); if(n != -1 && n == 4) {$$ = uniNode(CALL, strNode(IDENTIF, $1)); $$->info = n;} else {$$ = uniNode(CALL, strNode(IDENTIF, $1)); $$->info = IDsearch($1, 0, IDlevel(), 0) & (0x7);}}                                                                                      
           | '(' expressao ')'                         { $$ = $2; }
-          | left_value ATRIB expressao                { if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} $$ = binNode(ATRIB, $3, $1);  $$->info = $3->info;} // trocar $1 com $3
+          | left_value ATRIB expressao                { /*if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} */ $$ = binNode(ATRIB, $3, $1);  $$->info = $3->info;} // trocar $1 com $3
           | '-' expressao %prec UMINUS                { if($2->info == 0 || $2->info == 2) yyerror("Simétrico : Tipo inválido"); $$ = uniNode(UMINUS, $2); $$->info = $2->info;}
           | DEC left_value                            { if($2->info != 1) yyerror("Decremento : Tipo inválido"); $$ = binNode(DEC, nilNode(NIL), $2); $$->info = 1;}
           | INC left_value                            { if($2->info != 1) yyerror("Incremento : Tipo inválido"); $$ = binNode(INC, nilNode(NIL), $2); $$->info = 1;}
@@ -213,11 +213,11 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
 
 left_value: IDENTIF                                   { long pos; $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, &pos); $$->user = pos; printf("%ld - pos da var\n", pos);} // deslocamento as variaveis para o place, para sber se é global
 
-          | IDENTIF '[' expressao ']'                 {long pos; int x = IDfind($1, &pos); $$->user = pos; $$ = binNode(POINTER, strNode(IDENTIF, $1), $3); /* eu adicionei o pos sem ter a certeza se está correcto */
+          | IDENTIF '[' expressao ']'                 {long pos; int x = IDfind($1, &pos); $$ = binNode(VECTOR, strNode(IDENTIF, $1), $3); $$->user = pos; $$->value.sub.n[0]->user = pos; 
                                                         if (((x & 0x4) == 4)) 
-                                                              $$->info = x - 4;
+                                                              {$$->info = x - 4; $$->value.sub.n[0]->info = $$->info; printf("%d -- vector - yacc\n", $$->info);}
                                                         else if (((x & 0x7) == 2))
-                                                              $$->info = 1;
+                                                              {$$->info = 1; $$->value.sub.n[0]->info = 1;printf("%d -- func - yacc\n", $$->info);}
                                                         else yyerror("Ponteiro: Tipo inválido.");
                                                         /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
           ;

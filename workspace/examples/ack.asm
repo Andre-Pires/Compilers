@@ -218,8 +218,20 @@ $_entry:
 	pop	ecx
 	cmp	ecx, eax
 	jle	near $_i5
-; ADDR
-	push	dword $argv
+; LOCAL
+	lea	eax, [ebp+16]
+	push	eax
+; IMM
+	push	dword 1
+; IMM
+	push	dword 4
+; MUL
+	pop	eax
+	imul	dword eax, [esp]
+	mov	[esp], eax
+; ADD
+	pop	eax
+	add	dword [esp], eax
 ; LOAD
 	pop	eax
 	push	dword [eax]
@@ -229,8 +241,20 @@ $_entry:
 	add	esp, 4
 ; PUSH
 	push	eax
-; ADDR
-	push	dword $argv
+; LOCAL
+	lea	eax, [ebp+16]
+	push	eax
+; IMM
+	push	dword 2
+; IMM
+	push	dword 4
+; MUL
+	pop	eax
+	imul	dword eax, [esp]
+	mov	[esp], eax
+; ADD
+	pop	eax
+	add	dword [esp], eax
 ; LOAD
 	pop	eax
 	push	dword [eax]

@@ -1,19 +1,5 @@
-; TEXT
-segment	.text
-; ALIGN
-align	4
-; GLOBL
-global	$printi:function
-; LABEL
-$printi:
-; ENTER
-	push	ebp
-	mov	ebp, esp
-	sub	esp, 0
-; LEAVE
-	leave
-; RET
-	ret
+; EXTRN
+extern	$printi
 ; EXTRN
 extern	$println
 ; EXTRN
@@ -23,33 +9,49 @@ segment	.text
 ; ALIGN
 align	4
 ; GLOBL
-global	$entry:function
+global	$_entry:function
 ; LABEL
-$entry:
+$_entry:
 ; ENTER
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 0
+	sub	esp, 4
+; CALL
+	call	$readi
+; PUSH
+	push	eax
+; IMM
+	push	dword 12
+; ADD
+	pop	eax
+	add	dword [esp], eax
 ; CALL
 	call	$printi
 ; TRASH
-	add	esp, 0
+	add	esp, 4
+; PUSH
+	push	eax
+; TRASH
+	add	esp, 4
 ; CALL
 	call	$println
+; PUSH
+	push	eax
 ; TRASH
-	add	esp, 0
-; ADDRV
-	push	dword [$entry]
+	add	esp, 4
 ; IMM
 	push	dword 0
 ; COPY
 	push	dword [esp]
-; ADDR
-	push	dword $entry
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
 ; STORE
 	pop	ecx
 	pop	eax
 	mov	[ecx], eax
+; TRASH
+	add	esp, 4
 ; LEAVE
 	leave
 ; RET

@@ -131,8 +131,18 @@ clean_examples:
 	rm -f ../examples/upto.out
 	rm -f ../examples/while.out
 
+
+clean_exemplos3:		
+	-cd ../exemplos3/exemplos/ && ls | grep -v "\." | xargs rm
+
+
+# runs gdb with input
+gdb:
+	(echo commands; cat) | gdb 
+
 clean_zip: 
 	rm -f proj.zip
+
 
 zip: 	clean_zip
 	zip -r proj.zip lib Makefile $(LANG).l $(LANG).y string.$(EXT) rand.$(EXT) mean.$(EXT) iter.$(EXT) recurs.$(EXT) fact.$(EXT)

@@ -24,10 +24,8 @@ $_entry:
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 4
-; JMP
-	jmp	dword $_i1
 ; LABEL
-$_i2:
+$_i1:
 ; ADDR
 	push	dword $x
 ; LOAD
@@ -67,8 +65,6 @@ $_i2:
 	mov	[ecx], eax
 ; TRASH
 	add	esp, 4
-; LABEL
-$_i1:
 ; ADDR
 	push	dword $x
 ; LOAD
@@ -80,7 +76,9 @@ $_i1:
 	pop	eax
 	pop	ecx
 	cmp	ecx, eax
-	jl	near $_i2
+	jl	near $_i1
+; LABEL
+$_i2:
 ; IMM
 	push	dword 0
 ; COPY

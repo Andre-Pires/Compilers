@@ -52,6 +52,14 @@ $_entry:
 	mov	[ecx], eax
 ; TRASH
 	add	esp, 4
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
+; POP
+	pop	eax
 ; LEAVE
 	leave
 ; RET

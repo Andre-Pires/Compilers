@@ -66,10 +66,9 @@ instrucao: JNZ(GT(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJGT, p->SUB(
 instrucao: JNZ(GE(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJGE, p->SUB(1)->value.s); }
 instrucao: JNZ(EQ(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJEQ, p->SUB(1)->value.s); }
 instrucao: JNZ(NE(expressao,expressao), ETIQ)  1 { fprintf(outfp, pfJNE, p->SUB(1)->value.s); }
-
+instrucao: MALL(lvalue, expressao)             1 { fprintf(outfp, pfALLOC);}
 
 expressao: INT                            1 { fprintf(outfp, pfIMM, p->value.i); printf("INT: %d\n", p->value.i);}
-%!expressao: NUM                            999 { fprintf(outfp, pfIMM, p->value.i); }
 expressao: STRN                           3 { int l = ++lbl; char *s = p->value.s;
                                               fprintf(outfp, pfRODATA pfALIGN pfLABEL, mklbl(l));
                                               do fprintf(outfp, pfCHAR, (unsigned char)*s); while (*s++ != 0);
@@ -107,20 +106,21 @@ dupexp: expressao                         1 { fprintf(outfp, pfDUP); }
 lvalue: IDENTIF   1 { if (p->user == GLOBAL)
                           {fprintf(outfp, pfADDR, p->value.s); printf("GLOBAL - %s\n", p->value.s);}
                         else
-                          {fprintf(outfp, pfLOCAL, p->user); printf("LOCAL - %d\n", p->user);}
+                          {fprintf(outfp, pfLOCAL, p->user); printf("LOCAL - %d (%s) \n", p->user, p->value.s);}
                     }
 lvalue: VECTOR(lvalue2,expressao)  3 {fprintf(outfp, pfIMM pfMUL pfADD, 4);printf("VECTOR - lvalue\n");}
 
 lvalue2: lvalue     1{ fprintf(outfp, pfLOAD); printf("LOAD - lvalue - %d\n", p->user); }
 
 stack:  EXPS(stack,stack)
-stack:  expressao { stk += 4; }
-stack:  NIL { stk = 0; }
+stack:  expressao { stk += 4; printf("a stack %d\n", stk); }
+stack:  NIL { stk = 0; printf("o nil\n");}
 
 %%
 
 void function(char *name, int enter, Node *body) {
   int i;
+  int tipo = IDfind(name, 0) & (0x7);
   extern int trace;
 
   if(trace) printNode(body, stdout, yynames);
@@ -132,8 +132,10 @@ void function(char *name, int enter, Node *body) {
     else
     fprintf(outfp, pfTEXT pfALIGN pfGLOBL pfLABEL pfENTER, name, pfFUNC, name, enter);
     if (yyselect(body) == 1) yyerror("No match for syntactic tree.");
-    fprintf(outfp, pfLEAVE pfRET); /* just in case there is no 'return' */
-    //  freeNode(body);
+    if(tipo != 0)
+    {fprintf(outfp, pfLOCAL pfLOAD pfPOP pfLEAVE pfRET, -4);}
+
+    else fprintf(outfp, pfLEAVE pfRET); /* just in case there is no 'return' */
   }
 }
 
@@ -160,6 +162,6 @@ void declare(char *name, Node * value) {
     else if ((tipo & 0x3) == 1) fprintf(outfp, pfINTEGER, value->value.i);
     else if ((tipo & 0x3) == 1) fprintf(outfp, pfSTR, value->value.s);
 
-    fprintf(outfp, pfLABEL, name);
+    fprintf(outfp, pfTEXT);
   }
 }

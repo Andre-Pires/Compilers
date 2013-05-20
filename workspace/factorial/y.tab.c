@@ -47,9 +47,9 @@ int pos;
 #ifndef YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
 typedef union {
-	int i;			/* integer value */
+  int i;      /* integer value */
   double d;    /* double value */
-	char *s;		/* symbol name or string literal */
+  char *s;    /* symbol name or string literal */
   Node * n;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
@@ -700,7 +700,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 229 "factorial.y"
+#line 230 "factorial.y"
 static int oper(Node * name, Node * name2) {
  
   if (name->info == 0 || name2->info == 0 || name->info == 2 || name2->info == 2) 
@@ -986,7 +986,7 @@ break;
 case 10:
 #line 78 "factorial.y"
 	{IDnew(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info+32, yystack.l_mark[-2].s, 0); IDpush();
-                                                  if((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info) != 0) {IDnew((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info), yystack.l_mark[-2].s,0);} pos = 0;}
+                                                  if((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info) != 0) {IDnew((yystack.l_mark[-4].n->info+yystack.l_mark[-3].n->info), yystack.l_mark[-2].s,pos = -4);}}
 break;
 case 11:
 #line 80 "factorial.y"
@@ -1082,7 +1082,7 @@ case 33:
 break;
 case 34:
 #line 121 "factorial.y"
-	{ yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); if (pos >= 8) { yyval.n->user = pos; pos += 4; } else { pos -= 4; yyval.n->user = pos;} yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info; IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info, yystack.l_mark[0].s, pos);  printf("%d -- par - yacc\n", yyval.n->user);}
+	{ yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); if (pos >= 8) { yyval.n->user = pos; IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info, yystack.l_mark[0].s, pos); pos += 4; } else { pos -= 4; yyval.n->user = pos; IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info, yystack.l_mark[0].s, pos); } yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info;}
 break;
 case 35:
 #line 124 "factorial.y"
@@ -1098,7 +1098,7 @@ case 37:
 break;
 case 38:
 #line 129 "factorial.y"
-	{yyval.n = uniNode(PARS, yystack.l_mark[-1].n);}
+	{yyval.n = uniNode(PARS, yystack.l_mark[-1].n); }
 break;
 case 39:
 #line 130 "factorial.y"
@@ -1152,198 +1152,199 @@ case 47:
                                                                                 yystack.l_mark[-4].n, /* instr */
                                                                                 binNode(JNZ,yystack.l_mark[-1].n, strNode(ETIQ, clbl(lbl1))),
                                                                                 strNode(LABEL,clbl(lbl2)));
+                                                                                lbl1-=2; lbl2-=2;
                                                                               }
 break;
 case 48:
-#line 161 "factorial.y"
+#line 162 "factorial.y"
 	{ nciclo++; }
 break;
 case 49:
-#line 161 "factorial.y"
+#line 162 "factorial.y"
 	{ nciclo--; }
 break;
 case 50:
-#line 163 "factorial.y"
+#line 164 "factorial.y"
 	{yyval.n = yystack.l_mark[-1].n;}
 break;
 case 51:
-#line 164 "factorial.y"
+#line 165 "factorial.y"
 	{yyval.n = yystack.l_mark[0].n;}
 break;
 case 52:
-#line 165 "factorial.y"
+#line 166 "factorial.y"
 	{ if (yystack.l_mark[-1].i == 0 || yystack.l_mark[-1].i > nciclo) yyerror("Break inválido: Fora de um ciclo"); {yyval.n = strNode(JMP, clbl(lbl2 - 2*(yystack.l_mark[-1].i - 1)));}}
 break;
 case 53:
-#line 166 "factorial.y"
+#line 167 "factorial.y"
 	{yyval.n = strNode(JMP, clbl(lbl1 - 2*(yystack.l_mark[-1].i -1)));}
 break;
 case 54:
-#line 167 "factorial.y"
+#line 168 "factorial.y"
 	{ if (nciclo == 0) yyerror("Break inválido: Fora de um ciclo"); yyval.n = strNode(JMP, clbl(lbl2));}
 break;
 case 55:
-#line 168 "factorial.y"
+#line 169 "factorial.y"
 	{yyval.n = strNode(JMP, clbl(lbl1));}
 break;
 case 56:
-#line 169 "factorial.y"
+#line 170 "factorial.y"
 	{yyval.n = binNode(MALL, yystack.l_mark[-3].n, yystack.l_mark[-1].n); yyval.n->info = yystack.l_mark[-3].n->info;}
 break;
 case 57:
-#line 170 "factorial.y"
+#line 171 "factorial.y"
 	{ yyerrok; }
 break;
 case 58:
-#line 173 "factorial.y"
+#line 174 "factorial.y"
 	{ yyval.n = uniNode(UPTO, 0); }
 break;
 case 59:
-#line 174 "factorial.y"
+#line 175 "factorial.y"
 	{ yyval.n = uniNode(DOWNTO, 0);}
 break;
 case 60:
-#line 177 "factorial.y"
+#line 178 "factorial.y"
 	{ yyval.n = nilNode(NIL);}
 break;
 case 61:
-#line 178 "factorial.y"
+#line 179 "factorial.y"
 	{ yyval.n = uniNode(STEP, yystack.l_mark[0].n); }
 break;
 case 62:
-#line 181 "factorial.y"
-	{ yyval.n = binNode(EXPS, yystack.l_mark[-2].n ,yystack.l_mark[0].n);}
+#line 182 "factorial.y"
+	{ yyval.n = binNode(EXPS, yystack.l_mark[0].n ,yystack.l_mark[-2].n);}
 break;
 case 63:
-#line 182 "factorial.y"
+#line 183 "factorial.y"
 	{ yyval.n = yystack.l_mark[0].n; }
 break;
 case 64:
-#line 185 "factorial.y"
+#line 186 "factorial.y"
 	{ yyval.n = intNode(INT, yystack.l_mark[0].i); yyval.n->info = 1; }
 break;
 case 65:
-#line 186 "factorial.y"
+#line 187 "factorial.y"
 	{ yyval.n = realNode(NUM, yystack.l_mark[0].d); yyval.n->info = 3; }
 break;
 case 66:
-#line 187 "factorial.y"
+#line 188 "factorial.y"
 	{ yyval.n = strNode(STRN, yystack.l_mark[0].s); yyval.n->info = 2; }
 break;
 case 67:
-#line 188 "factorial.y"
+#line 189 "factorial.y"
 	{ yyval.n = yystack.l_mark[0].n;}
 break;
 case 68:
-#line 189 "factorial.y"
+#line 190 "factorial.y"
 	{ int n; n = IDfind(yystack.l_mark[-3].s, 0) & (0x7); if(n != -1 && n == 4) {yyval.n = binNode(CALL2, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->info = n;} else {yyval.n = binNode(CALL2, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->info = IDsearch(yystack.l_mark[-3].s, 0, IDlevel(), 0) & (0x7);}}
 break;
 case 69:
-#line 190 "factorial.y"
+#line 191 "factorial.y"
 	{ int n; n = IDfind(yystack.l_mark[-2].s, 0) & (0x7); if(n != -1 && n == 4) {yyval.n = uniNode(CALL, strNode(IDENTIF, yystack.l_mark[-2].s)); yyval.n->info = n;} else {yyval.n = uniNode(CALL, strNode(IDENTIF, yystack.l_mark[-2].s)); yyval.n->info = IDsearch(yystack.l_mark[-2].s, 0, IDlevel(), 0) & (0x7);}}
 break;
 case 70:
-#line 191 "factorial.y"
+#line 192 "factorial.y"
 	{ yyval.n = yystack.l_mark[-1].n; }
 break;
 case 71:
-#line 192 "factorial.y"
+#line 193 "factorial.y"
 	{ /*if($1->info != 4){if ($1->info != $3->info) yyerror("Atribuição entre tipos diferentes.");} */ yyval.n = binNode(ATRIB, yystack.l_mark[0].n, yystack.l_mark[-2].n);  yyval.n->info = yystack.l_mark[0].n->info;}
 break;
 case 72:
-#line 193 "factorial.y"
+#line 194 "factorial.y"
 	{ if(yystack.l_mark[0].n->info == 0 || yystack.l_mark[0].n->info == 2) yyerror("Simétrico : Tipo inválido"); yyval.n = uniNode(UMINUS, yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[0].n->info;}
 break;
 case 73:
-#line 194 "factorial.y"
+#line 195 "factorial.y"
 	{ if(yystack.l_mark[0].n->info != 1) yyerror("Decremento : Tipo inválido"); yyval.n = uniNode(DEC, yystack.l_mark[0].n); yyval.n->info = 1;}
 break;
 case 74:
-#line 195 "factorial.y"
+#line 196 "factorial.y"
 	{ if(yystack.l_mark[0].n->info != 1) yyerror("Incremento : Tipo inválido"); yyval.n = uniNode(INC, yystack.l_mark[0].n); yyval.n->info = 1;}
 break;
 case 75:
-#line 196 "factorial.y"
+#line 197 "factorial.y"
 	{ if(yystack.l_mark[-1].n->info != 1) yyerror("Incremento : Tipo inválido"); yyval.n = uniNode(INC, yystack.l_mark[-1].n); yyval.n->info = 1;}
 break;
 case 76:
-#line 197 "factorial.y"
+#line 198 "factorial.y"
 	{ if(yystack.l_mark[-1].n->info != 1) yyerror("Decremento : Tipo inválido"); yyval.n = uniNode(DEC, yystack.l_mark[-1].n); yyval.n->info = 1;}
 break;
 case 77:
-#line 198 "factorial.y"
+#line 199 "factorial.y"
 	{ yyval.n = binNode(MUL, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = oper(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 78:
-#line 199 "factorial.y"
+#line 200 "factorial.y"
 	{ yyval.n = binNode(DIV, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = oper(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 79:
-#line 200 "factorial.y"
+#line 201 "factorial.y"
 	{ yyval.n = binNode(MOD, yystack.l_mark[-2].n, yystack.l_mark[0].n);  yyval.n->info = oper(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 80:
-#line 201 "factorial.y"
+#line 202 "factorial.y"
 	{ yyval.n = binNode(ADD, yystack.l_mark[-2].n, yystack.l_mark[0].n);  yyval.n->info = oper(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 81:
-#line 202 "factorial.y"
+#line 203 "factorial.y"
 	{ yyval.n = binNode(SUBT, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = oper(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 82:
-#line 203 "factorial.y"
+#line 204 "factorial.y"
 	{ yyval.n = binNode(GT, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = comp(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 83:
-#line 204 "factorial.y"
+#line 205 "factorial.y"
 	{ yyval.n = binNode(LT, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = comp(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 84:
-#line 205 "factorial.y"
+#line 206 "factorial.y"
 	{ yyval.n = binNode(EQ, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = comp(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 85:
-#line 206 "factorial.y"
+#line 207 "factorial.y"
 	{ yyval.n = binNode(NE, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = comp(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 86:
-#line 207 "factorial.y"
+#line 208 "factorial.y"
 	{ yyval.n = binNode(GE, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = comp(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 87:
-#line 208 "factorial.y"
+#line 209 "factorial.y"
 	{ yyval.n = binNode(LE, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = comp(yystack.l_mark[-2].n, yystack.l_mark[0].n); }
 break;
 case 88:
-#line 209 "factorial.y"
+#line 210 "factorial.y"
 	{ if(yystack.l_mark[-2].n->info != 1 || yystack.l_mark[0].n->info != 1) yyerror("Junção Lógica : Tipo inválido"); yyval.n = binNode(AND, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = 1;}
 break;
 case 89:
-#line 210 "factorial.y"
+#line 211 "factorial.y"
 	{ if(yystack.l_mark[-2].n->info != 1 || yystack.l_mark[0].n->info != 1) yyerror("Alternativa Lógica : Tipo inválido"); yyval.n = binNode(OR, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = 1;}
 break;
 case 90:
-#line 211 "factorial.y"
+#line 212 "factorial.y"
 	{ if(yystack.l_mark[0].n->info != 1) yyerror("Negação Lógica : Tipo inválido"); yyval.n = uniNode(NEG, yystack.l_mark[0].n); yyval.n->info = 1;}
 break;
 case 91:
-#line 212 "factorial.y"
+#line 213 "factorial.y"
 	{ if(yystack.l_mark[-1].n->info != 1) yyerror("Factorial : Tipo inválido"); yyval.n = uniNode(FACT, yystack.l_mark[-1].n); yyval.n->info = 1;}
 break;
 case 92:
-#line 213 "factorial.y"
+#line 214 "factorial.y"
 	{ yyval.n = uniNode(ADDR, yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[0].n->info;}
 break;
 case 93:
-#line 214 "factorial.y"
+#line 215 "factorial.y"
 	{ yyval.n = uniNode(POINTER, yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[0].n->info;}
 break;
 case 94:
-#line 217 "factorial.y"
+#line 218 "factorial.y"
 	{ long pos; yyval.n = strNode(IDENTIF, yystack.l_mark[0].s); yyval.n->info = IDfind(yystack.l_mark[0].s, &pos); yyval.n->user = pos;}
 break;
 case 95:
-#line 219 "factorial.y"
+#line 220 "factorial.y"
 	{long pos; int x = IDfind(yystack.l_mark[-3].s, &pos); yyval.n = binNode(VECTOR, strNode(IDENTIF, yystack.l_mark[-3].s), yystack.l_mark[-1].n); yyval.n->user = pos; yyval.n->value.sub.n[0]->user = pos; 
                                                         if (((x & 0x4) == 4)) 
                                                               {yyval.n->info = x - 4; yyval.n->value.sub.n[0]->info = yyval.n->info;}
@@ -1352,7 +1353,7 @@ case 95:
                                                         else yyerror("Ponteiro: Tipo inválido.");
                                                         /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
 break;
-#line 1355 "y.tab.c"
+#line 1356 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

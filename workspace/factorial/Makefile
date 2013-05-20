@@ -6,7 +6,7 @@ YYDEBUG=YYDEBUG=1
 
 LEX=flex -l
 YACC=byacc -dv
-PBURG=pburg -T
+PBURG=pburg #-T
 NASM=nasm -felf
 GCC= gcc -g
 
@@ -19,8 +19,9 @@ $(LANG): $(LANG).y $(LANG).l $(LANG).brg
 	$(LEX) $(LANG).l
 	$(PBURG) $(LANG).brg
 	make -C lib
-	$(GCC) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c yyselect.c lib/libutil.a
 	make -C run
+	$(GCC) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c yyselect.c lib/libutil.a
+	cd run; cp libfactorial.a ..
 	
 clean_if:
 	rm ../examples/if.o ../examples/if.asm ../examples/if
@@ -29,7 +30,7 @@ clean_if:
 #	rm $*.o $*.asm $*
 	./$(LANG) -trace $<
 	$(NASM) $*.asm -o $*.o
-	ld -g -o $@ $*.o run/librun.a
+	ld -g -o $@ $*.o run/libfactorial.a
 
 ########################### EXEMPLOS ###############################
  
@@ -38,14 +39,14 @@ iter: iter.fac fact.fac
 	nasm -felf iter.asm
 	./factorial fact.fac
 	nasm -felf fact.asm
-	ld -o  $@ iter.o fact.o lib/libutil.a
+	ld -o  $@ iter.o fact.o libfactorial.a
 
 recurs: recurs.fac fact.fac
 	./factorial $<
 	nasm -felf recurs.asm
 	./factorial fact.fac
 	nasm -felf fact.asm
-	ld -o  $@ recurs.o fact.o lib/libutil.a
+	ld -o  $@ recurs.o fact.o libfactorial.a
 
 
 examples: clean_examples run_examples
@@ -145,11 +146,13 @@ clean_zip:
 
 
 zip: 	clean_zip
-	zip -r proj.zip lib Makefile $(LANG).l $(LANG).y string.$(EXT) rand.$(EXT) mean.$(EXT) iter.$(EXT) recurs.$(EXT) fact.$(EXT)
+	zip -r proj.zip lib run Makefile $(LANG).l $(LANG).y $(LANG).brg string.$(EXT) rand.$(EXT) mean.$(EXT) iter.$(EXT) recurs.$(EXT) fact.$(EXT)
 
 
 install: $(LANG)
 	cp $(LANG) ..
 
-clean:		
-	rm -f *.o $(LANG) lex.yy.c y.tab.c y.tab.h y.output *~
+clean:	
+	make clean -C lib
+	make clean -C run	
+	rm -f *.o $(LANG) lex.yy.c y.tab.c y.tab.h y.output lib$(LANG).a *~

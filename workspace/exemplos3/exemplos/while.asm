@@ -25,7 +25,7 @@ $_entry:
 	mov	ebp, esp
 	sub	esp, 4
 ; LABEL
-$_i1:
+$_c1:
 ; ADDR
 	push	dword $x
 ; LOAD
@@ -76,9 +76,9 @@ $_i1:
 	pop	eax
 	pop	ecx
 	cmp	ecx, eax
-	jl	near $_i1
+	jl	near $_c1
 ; LABEL
-$_i2:
+$_c2:
 ; IMM
 	push	dword 0
 ; COPY
@@ -92,6 +92,14 @@ $_i2:
 	mov	[ecx], eax
 ; TRASH
 	add	esp, 4
+; LOCAL
+	lea	eax, [ebp+-4]
+	push	eax
+; LOAD
+	pop	eax
+	push	dword [eax]
+; POP
+	pop	eax
 ; LEAVE
 	leave
 ; RET

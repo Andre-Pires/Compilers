@@ -1,4 +1,4 @@
-LIB=run
+LIB=factorial
 CFLAGS=-g -Dunderscore # -fno-stack-protector # em Ubunto
 RUNTIME=lib$(LIB).a # stand-alone runtime
 

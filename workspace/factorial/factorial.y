@@ -24,9 +24,9 @@ int pos;
 %}
 
 %union {
-	int i;			/* integer value */
+  int i;      /* integer value */
   double d;    /* double value */
-	char *s;		/* symbol name or string literal */
+  char *s;    /* symbol name or string literal */
   Node * n;
 };
 
@@ -76,7 +76,7 @@ declaracao  : pub cons tipo ptr IDENTIF init ';'            { IDnew($1->info+$2-
                                               {$$=binNode(DECL, strNode(IDENTIF, $5), binNode(BODY, $8, $11)); IDpop(); function($5, -pos, $11); pos = 0; }
 
             | pub cons tipo ptr IDENTIF '(' ')' {IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); IDpush();
-                                                  if(($3->info+$4->info) != 0) {IDnew(($3->info+$4->info), $5,0);} pos = 0;}  corpo ';' 
+                                                  if(($3->info+$4->info) != 0) {IDnew(($3->info+$4->info), $5,pos = -4);}}  corpo ';' 
                                                   { $$=binNode(DECL, strNode(IDENTIF, $5), $9); IDpop(); function($5, -pos, $9); pos = 0;}
 
             | pub cons tipo ptr IDENTIF '(' ')' ';'    {$$=binNode(DECL, strNode(IDENTIF, $5), nilNode(NIL)); IDnew($1->info+$2->info+$3->info+$4->info+32, $5, 0); function($5, -pos, 0); pos = 0;} 
@@ -118,7 +118,7 @@ parametros  : parametros ',' parametro          { $$ = binNode(PARAMS, $1, $3); 
             | parametro                         { $$ = uniNode(PARAMS, $1);  $$->info = $1->info; /* tentar alterar o IDnew para fazer as variaveis dos parametros das funcoes (positivos) compact*/}
             ;
 
-parametro : tipo ptr IDENTIF                    { $$ = strNode(IDENTIF, $3); if (pos >= 8) { $$->user = pos; pos += 4; } else { pos -= 4; $$->user = pos;} $$->info = $1->info + $2->info; IDnew($1->info+$2->info, $3, pos);  printf("%d -- par - yacc\n", $$->user);} // parametros da funcao sao positivos e as variaveis locais negativas
+parametro : tipo ptr IDENTIF                    { $$ = strNode(IDENTIF, $3); if (pos >= 8) { $$->user = pos; IDnew($1->info+$2->info, $3, pos); pos += 4; } else { pos -= 4; $$->user = pos; IDnew($1->info+$2->info, $3, pos); } $$->info = $1->info + $2->info;} // parametros da funcao sao positivos e as variaveis locais negativas
           ;
 
 pars2 : parametro ';'                           { $$ = $1; /* tentar alterar o IDnew para fazer as variaveis locais das funcoes (negativos) compact*/}
@@ -126,7 +126,7 @@ pars2 : parametro ';'                           { $$ = $1; /* tentar alterar o I
       ;
 
 corpo : '{' '}'                                 {$$ = nilNode(NIL);}
-      | '{' pars2 '}'                           {$$ = uniNode(PARS, $2);}
+      | '{' pars2 '}'                           {$$ = uniNode(PARS, $2); }
       | '{' instrucoes '}'                      {$$ = $2;}
       | '{' pars2 instrucoes '}'                {$$ = binNode(PINTR, $2 , $3);}
       ;
@@ -156,6 +156,7 @@ instrucao : IF expressao THEN instrucao %prec IFX                      { int lbl
                                                                                 $3, /* instr */
                                                                                 binNode(JNZ,$6, strNode(ETIQ, clbl(lbl1))),
                                                                                 strNode(LABEL,clbl(lbl2)));
+                                                                                lbl1-=2; lbl2-=2;
                                                                               }
 
           | FOR left_value IN expressao updown expressao step DO { nciclo++; } instrucao { nciclo--; }  // fazer o for
@@ -178,7 +179,7 @@ step    :                                              { $$ = nilNode(NIL);}
         | STEP expressao                               { $$ = uniNode(STEP, $2); }
         ;
 
-expressoes  : expressoes ',' expressao                { $$ = binNode(EXPS, $1 ,$3);}
+expressoes  : expressoes ',' expressao                { $$ = binNode(EXPS, $3 ,$1);}
             | expressao                               { $$ = $1; }
             ;
 

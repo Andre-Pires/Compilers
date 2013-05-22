@@ -19,6 +19,7 @@ OCTAL 0([0-9])+
 BIN (0b|0B)(0|1)+
 EXP [Ee][+-]?{DIG}
 REAL {DIG}"."{DIG}({EXP})?
+HEXA (0x|0X)[0-9a-fA-Z]+
 
 
 %x COMMENTS STR
@@ -29,6 +30,7 @@ REAL {DIG}"."{DIG}({EXP})?
 "--"				newline = 0; return DEC;
 ":="				newline = 0; return ATRIB;
 "="					newline = 0; return EQ;
+"<<"                 newline = 0; return SHIFT;
 ">="				newline = 0; return GE;
 "<="				newline = 0; return LE;
 "<>"				newline = 0; return NE;
@@ -41,6 +43,7 @@ REAL {DIG}"."{DIG}({EXP})?
 "if"				newline = 0; return IF;
 "then"				newline = 0; return THEN;
 "else"				newline = 0; return ELSE;
+"elif"              newline = 0; return ELIF;
 "while"				newline = 0; return WHILE;
 "do"				newline = 0; return DO;
 "for"				newline = 0; return FOR;
@@ -93,6 +96,13 @@ REAL {DIG}"."{DIG}({EXP})?
 										yyerror(string); 
 								   }
 							}
+
+{HEXA}                     { errno = 0; newline = 1; yylval.i = strtol(yytext, 0, 16); if(errno != ERANGE) return INT;   /* Literal - Octal */  
+                                else{
+                                        sprintf(string, "LEX error: Number %s caused overflow", yytext);
+                                        yyerror(string); 
+                                   }
+                            }                            
 
 {BIN}						{ errno = 0; newline = 1; yylval.i = strtol(yytext, 0, 2); if(errno != ERANGE) return INT;   /* Literal - Binario */  
 						   		else{

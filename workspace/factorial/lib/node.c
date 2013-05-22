@@ -171,7 +171,7 @@ static int print(Node *p, FILE *fp, char *tab[], int lev) {
     int i, cnt = 0;
     
     if(p != NULL)
-    fprintf(fp," %d:", p->user);
+    fprintf(fp," USER: %d", p->user);
     
     if (p == 0) return cnt;
     cnt++;

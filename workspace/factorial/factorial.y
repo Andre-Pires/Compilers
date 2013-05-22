@@ -33,17 +33,19 @@ int pos;
 %token <i> INT
 %token <d> NUM
 %token <s> IDENTIF STRN
-%token WHILE IF END RETURN VOID PUBLIC CONST THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER
-%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX LIST VECTOR
+%token WHILE IF END RETURN VOID PUBLIC CONST THEN ELSE DO FOR IN STEP UPTO DOWNTO BREAK CONTINUE INTEGER STRING NUMBER SHIFT
+%token ELSE GE LE EQ NE INC DEC ATRIB ADDR POINTER IFX LIST VECTOR ELIF
 
 %token CALL CALL2 NEG FACT AND OR PROG ADD SUBT MUL DIV LT GT MOD PARAMS PARS2 PARS PINTR INTR DECL DECLS INIT NIL PNTR EXPS EXP MALL BODY JZ ETIQ LABEL JNZ JMP INSTRS
 
 %nonassoc IFX
 %nonassoc ELSE
+%nonassoc ELIF
 %right ATRIB
 %left '|'
 %left '&'
 %nonassoc '~'
+%left SHIFT
 %left EQ NE
 %left GE LE '>' '<'
 %left '+' '-'
@@ -51,7 +53,7 @@ int pos;
 %nonassoc  POINTER ADDR '!' UMINUS INC DEC
 %nonassoc '(' ')' '[' ']'
 
-%type <n> left_value init expressao expressoes corpo corpop instrucao instrucoes pars2 declaracoes declaracao tipo ptr cons pub parametro parametros  updown step
+%type <n> left_value elifs init expressao expressoes corpo corpop instrucao instrucoes pars2 declaracoes declaracao tipo ptr cons pub parametro parametros  updown step
 %%
 
 ficheiro  : declaracoes                      {Node * n = uniNode(PROG, $1); printNode(n, 0, yynames);}
@@ -135,28 +137,54 @@ instrucoes : instrucao                          {$$ = $1;}
            | instrucoes instrucao               {$$ = binNode(INSTRS, $1, $2);}
            ;
 
-instrucao : IF expressao THEN instrucao %prec IFX                      { int lbl1 = ++lbl;
-                                                                        $$ = seqNode(LIST, 3,
-                                                                        binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
-                                                                        $4, /* instr */
-                                                                        strNode(LABEL, mklbl(lbl1)));
-                                                                       }
-          | IF expressao THEN instrucao ELSE instrucao                { int lbl1 = ++lbl, lbl2 = ++lbl;
+
+elifs : ELIF expressao THEN instrucao elifs      %prec ELIF           { int lbl1 = ++lbl, lbl2 = ++lbl;
                                                                         $$ = seqNode(LIST, 6,
                                                                         binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
                                                                         $4, /* instr */
                                                                         strNode(JMP, mklbl(lbl2)),
                                                                         strNode(LABEL, mklbl(lbl1)),
-                                                                        $6, /* else */
+                                                                        $5, /* else */
                                                                         strNode(LABEL, mklbl(lbl2)));
+                                                                       }
+
+      | ELIF expressao THEN instrucao       %prec IFX                 { int lbl1 = ++lbl, lbl2 = ++lbl;
+                                                                        $$ = seqNode(LIST, 3,
+                                                                        binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
+                                                                        $4, /* instr */
+                                                                        strNode(LABEL, mklbl(lbl1)));
                                                                       }
+
+      | ELSE instrucao     %prec ELSE                                 { $$ = $2; }
+
+      ;
+
+
+instrucao : IF expressao THEN instrucao  %prec IFX                     { int lbl1 = ++lbl;
+                                                                        $$ = seqNode(LIST, 3,
+                                                                        binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
+                                                                        $4, /* instr */
+                                                                        strNode(LABEL, mklbl(lbl1)));
+                                                                       }
+
+          | IF expressao THEN instrucao elifs                         { int lbl1 = ++lbl, lbl2 = ++lbl;
+                                                                        $$ = seqNode(LIST, 6,
+                                                                        binNode(JZ,$2, strNode(ETIQ, mklbl(lbl1))),
+                                                                        $4, /* instr */
+                                                                        strNode(JMP, mklbl(lbl2)),
+                                                                        strNode(LABEL, mklbl(lbl1)),
+                                                                        $5, /* elifs */
+                                                                        strNode(LABEL, mklbl(lbl2)));
+                                                                       }
+
+         
 
           | DO { nciclo++; lbl1 = ++cclbl; lbl2 = ++cclbl;} instrucao { nciclo--; } WHILE expressao ';'      { $$ = seqNode(LIST, 4,
                                                                                 strNode(LABEL, clbl(lbl1)),
                                                                                 $3, /* instr */
                                                                                 binNode(JNZ,$6, strNode(ETIQ, clbl(lbl1))),
                                                                                 strNode(LABEL,clbl(lbl2)));
-                                                                                lbl1-=2; lbl2-=2;
+                                                                                lbl1-=2; lbl2-=2; // causam conflitos entre labels em certas situaçoes
                                                                               }
 
           | FOR left_value IN expressao updown expressao step DO { nciclo++; } instrucao { nciclo--; }  // fazer o for
@@ -196,6 +224,7 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
           | INC left_value                            { if($2->info != 1) yyerror("Incremento : Tipo inválido"); $$ = uniNode(INC, $2); $$->info = 1;}
           | left_value INC                            { if($1->info != 1) yyerror("Incremento : Tipo inválido"); $$ = uniNode(INC, $1); $$->info = 1;}
           | left_value DEC                            { if($1->info != 1) yyerror("Decremento : Tipo inválido"); $$ = uniNode(DEC, $1); $$->info = 1;}
+          | expressao SHIFT expressao                   { $$ = binNode(SHIFT, $1, $3); /*$$->info = oper($1, $3)<-;*/ }
           | expressao '*' expressao                   { $$ = binNode(MUL, $1, $3); $$->info = oper($1, $3); }
           | expressao '/' expressao                   { $$ = binNode(DIV, $1, $3); $$->info = oper($1, $3); }
           | expressao '%' expressao                   { $$ = binNode(MOD, $1, $3);  $$->info = oper($1, $3); }
@@ -215,7 +244,7 @@ expressao : INT                                       { $$ = intNode(INT, $1); $
           | '*' left_value %prec POINTER              { $$ = uniNode(POINTER, $2); $$->info = $2->info;}
           ;
 
-left_value: IDENTIF                                   { long pos; $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, &pos); $$->user = pos;} // deslocamento as variaveis para o place, para saber se é global
+left_value: IDENTIF                                   {long pos; $$ = strNode(IDENTIF, $1); $$->info = IDfind($1, &pos); $$->user = pos;} // deslocamento as variaveis para o place, para saber se é global
 
           | IDENTIF '[' expressao ']'                 {long pos; int x = IDfind($1, &pos); $$ = binNode(VECTOR, strNode(IDENTIF, $1), $3); $$->user = pos; $$->value.sub.n[0]->user = pos; 
                                                         if (((x & 0x4) == 4)) 
@@ -225,7 +254,6 @@ left_value: IDENTIF                                   { long pos; $$ = strNode(I
                                                         else yyerror("Ponteiro: Tipo inválido.");
                                                         /* tem de ser ponteiro ou string e devolve tipo base (sem ponteiro) ou integer se for string */ }
           ;
-     
 %%
 static int oper(Node * name, Node * name2) {
  

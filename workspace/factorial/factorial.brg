@@ -80,6 +80,7 @@ expressao: ATRIB(dupexp, lvalue)          1 { fprintf(outfp, pfSTORE); printf("S
 expressao: UMINUS(expressao)              1 { fprintf(outfp, pfNEG); printf("UMINUS: %d\n", p->SUB(0)->value.i);}
 expressao: INC(lvalue)                    1 { fprintf(outfp, pfINCR, 1);}
 expressao: DEC(lvalue)                    1 { fprintf(outfp, pfDECR, 1);}
+expressao: SHIFT(expressao, expressao)      1 { fprintf(outfp, pfSHTL); }
 expressao: MUL(expressao, expressao)      1 { fprintf(outfp, pfMUL); } 
 expressao: DIV(expressao, expressao)      1 { fprintf(outfp, pfDIV); } 
 expressao: MOD(expressao, expressao)      1 { fprintf(outfp, pfMOD); } 
@@ -90,7 +91,7 @@ expressao: LT(expressao, expressao)       1 { fprintf(outfp, pfLT); }
 expressao: EQ(expressao, expressao)       1 { fprintf(outfp, pfEQ); } 
 expressao: NE(expressao, expressao)       1 { fprintf(outfp, pfNE); } 
 expressao: GE(expressao, expressao)       1 { fprintf(outfp, pfGE); } 
-expressao: LE(expressao, expressao)       1 { fprintf(outfp, pfLE); } 
+expressao: LE(expressao, expressao)       1 { fprintf(outfp, pfLE); }
 expressao: AND(expressao, expressao)      7 { char *l = mklbl(++lbl); 
                                              fprintf(outfp, pfSWAP pfDUP pfJZ pfTRASH pfLABEL pfSWAP pfTRASH, l, 4, l, 4); }
 expressao: OR(expressao, expressao)       7 { char *l = mklbl(++lbl); 
@@ -113,14 +114,18 @@ lvalue: VECTOR(lvalue2,expressao)  3 {fprintf(outfp, pfIMM pfMUL pfADD, 4);print
 lvalue2: lvalue     1{ fprintf(outfp, pfLOAD); printf("LOAD - lvalue - %d\n", p->user); }
 
 stack:  EXPS(stack,stack)
-stack:  expressao { stk += 4; printf("a stack %d\n", stk); }
+stack:  expressao { stk += 4; printf("a stack %d\n", stk);}
 stack:  NIL { stk = 0; printf("o nil\n");}
 
 %%
 
 void function(char *name, int enter, Node *body) {
   int i;
-  int tipo = IDfind(name, 0) & (0x7);
+  int tipo = IDfind(name, 0);
+
+  if (tipo >= 32) 
+      tipo -= 32;
+
   extern int trace;
 
   if(trace) printNode(body, stdout, yynames);
@@ -133,7 +138,7 @@ void function(char *name, int enter, Node *body) {
     fprintf(outfp, pfTEXT pfALIGN pfGLOBL pfLABEL pfENTER, name, pfFUNC, name, enter);
     if (yyselect(body) == 1) yyerror("No match for syntactic tree.");
     if(tipo != 0)
-    {fprintf(outfp, pfLOCAL pfLOAD pfPOP pfLEAVE pfRET, -4);}
+    { fprintf(outfp, pfLOCAL pfLOAD pfPOP pfLEAVE pfRET, -4);}
 
     else fprintf(outfp, pfLEAVE pfRET); /* just in case there is no 'return' */
   }

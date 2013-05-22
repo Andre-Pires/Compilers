@@ -21,10 +21,10 @@ $_entry:
 ; PUSH
 	push	eax
 ; IMM
-	push	dword 12
-; ADD
-	pop	eax
-	add	dword [esp], eax
+	push	dword 3
+; SHTL
+	pop	ecx
+	sal	dword [esp], cl
 ; CALL
 	call	$printi
 ; TRASH

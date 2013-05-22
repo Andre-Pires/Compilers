@@ -26,11 +26,8 @@ $_entry:
 	sub	esp, 4
 ; LABEL
 $_c1:
-; ADDR
-	push	dword $x
-; LOAD
-	pop	eax
-	push	dword [eax]
+; IMM
+	push	dword 15
 ; CALL
 	call	$printi
 ; TRASH
